@@ -1,0 +1,40 @@
+# Ignore node_modules in both app and server
+app/node_modules/
+server/node_modules/
+
+# Ignore package-lock.json in both app and server
+app/package-lock.json
+server/package-lock.json
+
+# Ignore .env files in bot app and server
+app/.env
+server/.env
+
+# production
+app/dist
+app/dist-ssr
+app/*.local
+
+# Logs
+app/logs
+app/*.log
+app/npm-debug.log*
+app/yarn-debug.log*
+app/yarn-error.log*
+app/pnpm-debug.log*
+app/lerna-debug.log*
+
+# Editor directories and files
+app/.vscode/*
+app/!.vscode/extensions.json
+app/.idea
+app/.DS_Store
+app/*.suo
+app/*.ntvs*
+app/*.njsproj
+app/*.sln
+app/*.sw?
+
+# (Optional) If you ever have top-level node_modules or env files
+node_modules/
+.env
