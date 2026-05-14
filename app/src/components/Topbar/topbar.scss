@@ -1,0 +1,90 @@
+.topbar {
+	width: 100%;
+	position: fixed;
+	top: 0;
+	font-size: 14px;
+	padding: 20px;
+	background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
+	color: var(--text-primary);
+	z-index: 999;
+
+	&.scrolled {
+		background: var(--surface);
+	}
+
+	.top-bar-wrapper {
+		padding: 0 10px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		height: 70px;
+
+		.left {
+			.brand {
+				margin-right: 20px;
+				font-family: 'Bebas Neue', cursive;
+				color: var(--accent);
+				font-size: 40px;
+				text-shadow:
+					0 0 8px black,
+					0 0 20px black,
+					0 0 40px black;
+			}
+		}
+	}
+
+	&.active {
+		.wrapper {
+			justify-content: space-between;
+		}
+
+		.left,
+		.right {
+			display: flex;
+			align-items: center;
+		}
+
+		.left {
+			span {
+				margin-right: 20px;
+				cursor: pointer;
+			}
+		}
+
+		.right {
+			img {
+				width: 30px;
+				height: 30px;
+				border-radius: 100%;
+				object-fit: cover;
+				cursor: pointer;
+			}
+
+			.icon {
+				margin: 0 15px;
+				cursor: pointer;
+			}
+
+			.profile {
+				span {
+					padding: 10px;
+					cursor: pointer;
+				}
+
+				.options {
+					display: none;
+					background-color: var(--surface);
+					border-radius: 5px;
+				}
+
+				&:hover {
+					.options {
+						display: flex;
+						flex-direction: column;
+						position: absolute;
+					}
+				}
+			}
+		}
+	}
+}

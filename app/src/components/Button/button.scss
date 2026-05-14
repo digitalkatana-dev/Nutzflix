@@ -1,0 +1,22 @@
+.btn {
+	height: 40px;
+	border-radius: 5px;
+	border: none;
+	background-color: var(--accent);
+	color: var(--text-on-accent);
+	font-weight: bold;
+	transition: all 0.4s;
+	cursor: pointer;
+
+	&.today-btn {
+		padding: 4px 6px;
+		margin-right: 5px;
+		font-size: x-small;
+		border: 3px inset var(--btn-border);
+	}
+
+	&:hover {
+		background-color: var(--accent-hover);
+		box-shadow: var(--btn-elevation);
+	}
+}
