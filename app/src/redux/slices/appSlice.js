@@ -4,8 +4,6 @@ export const appAdapter = createEntityAdapter();
 const initialState = appAdapter.getInitialState({
 	loading: false,
 	theme: 'dark',
-	// activeUser: { id: 1, name: 'Jim' },
-	activeUser: null,
 	appSuccess: null,
 	appErrors: null,
 });
@@ -20,20 +18,19 @@ export const appSlice = createSlice({
 		resetApp: (state) => {
 			state.loading = false;
 			state.theme = 'dark';
-			state.activeUser = null;
 			state.appSuccess = null;
 			state.appErrors = null;
 		},
-		clearSuccess: (state) => {
+		clearAppSuccess: (state) => {
 			state.appSuccess = null;
 		},
-		clearErrors: (state) => {
+		clearAppErrors: (state) => {
 			state.appErrors = null;
 		},
 	},
 });
 
-export const { setTheme, resetApp, clearSuccess, clearErrors } =
+export const { setTheme, resetApp, clearAppSuccess, clearAppErrors } =
 	appSlice.actions;
 
 export default appSlice.reducer;

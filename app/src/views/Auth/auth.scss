@@ -7,23 +7,6 @@
 	background-size: cover;
 	position: relative;
 
-	.header {
-		padding: 20px 50px;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-
-		h3 {
-			font-family: 'Bebas Neue', cursive;
-			color: var(--brand);
-			font-size: 40px;
-			text-shadow:
-				0 0 8px black,
-				0 0 20px black,
-				0 0 40px black;
-		}
-	}
-
 	.wrapper {
 		width: 100%;
 		height: 100%;

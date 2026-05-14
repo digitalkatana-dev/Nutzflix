@@ -48,16 +48,16 @@ const TextInput = ({
 	const themeStyles = {
 		// Input text (user entered)
 		'& .MuiInputBase-input': {
-			color: 'var(--text)',
+			color: 'var(--text-primary)',
 		},
 		// Placeholder
 		'& .MuiInputBase-input::placeholder': {
-			color: 'var(--text-s)',
+			color: 'var(--text-secondary)',
 			opacity: 1, // MUI sets opacity on placeholders, override it
 		},
 		// Label (resting)
 		'& .MuiInputLabel-root': {
-			color: 'var(--text-s)',
+			color: 'var(--text-secondary)',
 		},
 		// Label (focused)
 		'& .MuiInputLabel-root.Mui-focused': {
@@ -69,11 +69,11 @@ const TextInput = ({
 		},
 		// Outlined border (hover)
 		'& .MuiOutlinedInput-root:hover .MuiOutlinedInput-notchedOutline': {
-			borderColor: 'var(--border-hover)',
+			borderColor: 'var(--accent-hover)',
 		},
 		// Outlined border (focused)
 		'& .MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
-			borderColor: 'var(--border-focus)',
+			borderColor: 'var(--accent)',
 		},
 		// Underline (standard variant, resting)
 		'& .MuiInput-underline:before': {
@@ -81,7 +81,7 @@ const TextInput = ({
 		},
 		// Underline (standard variant, hover)
 		'& .MuiInput-underline:hover:before': {
-			borderBottomColor: 'var(--accent-border-hover)',
+			borderBottomColor: 'var(--accent-hover)',
 		},
 		// Underline (standard variant, focused)
 		'& .MuiInput-underline:after': {
@@ -89,11 +89,11 @@ const TextInput = ({
 		},
 		// Icons (adornments)
 		'& .MuiInputAdornment-root svg': {
-			color: 'var(--icon)',
+			color: 'var(--text-secondary)',
 		},
 		// Helper text
 		'& .MuiFormHelperText-root': {
-			color: 'var(--text-muted)',
+			color: 'var(--text-secondary)',
 		},
 		// Helper text (error state)
 		'& .MuiFormHelperText-root.Mui-error': {
@@ -105,8 +105,8 @@ const TextInput = ({
 		},
 		// Disabled input text
 		'& .MuiInputBase-input.Mui-disabled': {
-			color: 'var(--text-disabled)',
-			WebkitTextFillColor: 'var(--text-disabled)',
+			color: 'var(--text-muted)',
+			WebkitTextFillColor: 'var(--text-muted)',
 		},
 		// Disabled border
 		'& .MuiOutlinedInput-root.Mui-disabled .MuiOutlinedInput-notchedOutline': {
@@ -115,11 +115,11 @@ const TextInput = ({
 		},
 		// Disabled label
 		'& .MuiInputLabel-root.Mui-disabled': {
-			color: 'var(--text-disabled)',
+			color: 'var(--text-muted)',
 		},
 		// Disabled icon
 		'& .MuiOutlinedInput-root.Mui-disabled .MuiInputAdornment-root svg': {
-			color: 'var(--text-disabled)',
+			color: 'var(--text-muted)',
 		},
 	};
 

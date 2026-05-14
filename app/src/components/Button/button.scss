@@ -2,8 +2,8 @@
 	height: 40px;
 	border-radius: 5px;
 	border: none;
-	background-color: var(--brand);
-	color: var(--text);
+	background-color: var(--accent);
+	color: var(--text-on-accent);
 	font-weight: bold;
 	transition: all 0.4s;
 	cursor: pointer;
@@ -16,7 +16,7 @@
 	}
 
 	&:hover {
-		background-color: var(--btn-bg-hover);
+		background-color: var(--accent-hover);
 		box-shadow: var(--btn-elevation);
 	}
 }

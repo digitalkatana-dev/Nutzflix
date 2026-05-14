@@ -11,18 +11,21 @@ import Auth from './views/Auth';
 import Home from './views/Home';
 
 const App = () => {
-	const { activeUser } = useSelector((state) => state.app);
+	const { theme } = useSelector((state) => state.app);
+	const { activeUser } = useSelector((state) => state.user);
 
 	return (
-		<Router>
-			<Routes>
-				<Route
-					path='/'
-					element={activeUser ? <Navigate to='/home' replace /> : <Auth />}
-				/>
-				<Route path='/home' element={<ProtectedRoute element={<Home />} />} />
-			</Routes>
-		</Router>
+		<div className='app' data-theme={theme}>
+			<Router>
+				<Routes>
+					<Route
+						path='/'
+						element={activeUser ? <Navigate to='/home' replace /> : <Auth />}
+					/>
+					<Route path='/home' element={<ProtectedRoute element={<Home />} />} />
+				</Routes>
+			</Router>
+		</div>
 	);
 };
 
