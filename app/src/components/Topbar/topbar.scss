@@ -12,9 +12,12 @@
 		background: var(--surface);
 	}
 
-	.top-bar-wrapper {
+	.mobile {
+	}
+
+	.desktop {
 		padding: 0 10px;
-		display: flex;
+		display: none;
 		justify-content: space-between;
 		align-items: center;
 		height: 70px;
@@ -34,54 +37,134 @@
 	}
 
 	&.active {
-		.wrapper {
-			justify-content: space-between;
-		}
-
-		.left,
-		.right {
-			display: flex;
-			align-items: center;
-		}
-
-		.left {
-			span {
-				margin-right: 20px;
-				cursor: pointer;
-			}
-		}
-
-		.right {
-			img {
-				width: 30px;
-				height: 30px;
-				border-radius: 100%;
-				object-fit: cover;
-				cursor: pointer;
+		.desktop {
+			.left,
+			.right {
+				display: flex;
+				align-items: center;
 			}
 
-			.icon {
-				margin: 0 15px;
-				cursor: pointer;
-			}
-
-			.profile {
+			.left {
 				span {
-					padding: 10px;
+					margin-right: 20px;
+					cursor: pointer;
+				}
+			}
+
+			.right {
+				img {
+					width: 30px;
+					height: 30px;
+					border-radius: 100%;
+					object-fit: cover;
 					cursor: pointer;
 				}
 
-				.options {
-					display: none;
-					background-color: var(--surface);
-					border-radius: 5px;
+				.icon {
+					margin: 0 15px;
+					cursor: pointer;
 				}
 
-				&:hover {
+				.profile {
+					span {
+						padding: 10px;
+						cursor: pointer;
+					}
+
 					.options {
-						display: flex;
-						flex-direction: column;
-						position: absolute;
+						display: none;
+						background-color: var(--surface);
+						border-radius: 5px;
+					}
+
+					&:hover {
+						.options {
+							display: flex;
+							flex-direction: column;
+							position: absolute;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 800px) {
+	.topbar {
+		.mobile {
+			display: none;
+		}
+
+		.desktop {
+			padding: 0 10px;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 70px;
+
+			.left {
+				.brand {
+					margin-right: 20px;
+					font-family: 'Bebas Neue', cursive;
+					color: var(--accent);
+					font-size: 40px;
+					text-shadow:
+						0 0 8px black,
+						0 0 20px black,
+						0 0 40px black;
+				}
+			}
+		}
+
+		&.active {
+			.desktop {
+				.left,
+				.right {
+					display: flex;
+					align-items: center;
+				}
+
+				.left {
+					span {
+						margin-right: 20px;
+						cursor: pointer;
+					}
+				}
+
+				.right {
+					img {
+						width: 30px;
+						height: 30px;
+						border-radius: 100%;
+						object-fit: cover;
+						cursor: pointer;
+					}
+
+					.icon {
+						margin: 0 15px;
+						cursor: pointer;
+					}
+
+					.profile {
+						span {
+							padding: 10px;
+							cursor: pointer;
+						}
+
+						.options {
+							display: none;
+							background-color: var(--surface);
+							border-radius: 5px;
+						}
+
+						&:hover {
+							.options {
+								display: flex;
+								flex-direction: column;
+								position: absolute;
+							}
+						}
 					}
 				}
 			}
