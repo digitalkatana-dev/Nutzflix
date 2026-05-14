@@ -34,7 +34,8 @@ const Topbar = () => {
 		<header
 			className={`topbar${isScrolled ? ' scrolled' : ''}${activeUser ? ' active' : ''}`}
 		>
-			<div className='top-bar-wrapper'>
+			<div className='mobile'></div>
+			<div className='desktop'>
 				<div className='left'>
 					<h2 className='brand'>NUTZFLIX</h2>
 					{activeUser && (
