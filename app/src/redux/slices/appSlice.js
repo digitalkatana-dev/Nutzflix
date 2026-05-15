@@ -4,6 +4,7 @@ export const appAdapter = createEntityAdapter();
 const initialState = appAdapter.getInitialState({
 	loading: false,
 	theme: 'dark',
+	drawerOpen: false,
 	appSuccess: null,
 	appErrors: null,
 });
@@ -14,6 +15,9 @@ export const appSlice = createSlice({
 	reducers: {
 		setTheme: (state, action) => {
 			state.theme = action.payload;
+		},
+		setDrawerOpen: (state, action) => {
+			state.drawerOpen = !state.drawerOpen;
 		},
 		resetApp: (state) => {
 			state.loading = false;
@@ -30,7 +34,12 @@ export const appSlice = createSlice({
 	},
 });
 
-export const { setTheme, resetApp, clearAppSuccess, clearAppErrors } =
-	appSlice.actions;
+export const {
+	setTheme,
+	setDrawerOpen,
+	resetApp,
+	clearAppSuccess,
+	clearAppErrors,
+} = appSlice.actions;
 
 export default appSlice.reducer;

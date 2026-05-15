@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { ArrowDropDown, Notifications, Search } from '@mui/icons-material';
-import { setTheme } from '../../redux/slices/appSlice';
+import { Box, IconButton } from '@mui/material';
+import { setTheme, setDrawerOpen } from '../../redux/slices/appSlice';
 import { setActiveUser, logout } from '../../redux/slices/userSlice';
 import './topbar.scss';
+import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import MenuUnfoldOutlinedIcon from '@ant-design/icons/MenuFoldOutlined';
+import SearchIcon from '@mui/icons-material/Search';
 import Helmet from '../../assets/Helmet.jpg';
 
 const Topbar = () => {
@@ -23,6 +26,10 @@ const Topbar = () => {
 		dispatch(logout());
 	};
 
+	const handleDrawer = () => {
+		dispatch(setDrawerOpen(true));
+	};
+
 	useEffect(() => {
 		window.onscroll = () => {
 			setIsScrolled(window.pageYOffset > 0 ? true : false);
@@ -34,7 +41,14 @@ const Topbar = () => {
 		<header
 			className={`topbar${isScrolled ? ' scrolled' : ''}${activeUser ? ' active' : ''}`}
 		>
-			<div className='mobile'></div>
+			<div className='mobile'>
+				<IconButton sx={{ mr: 2 }} className='menu-btn' onClick={handleDrawer}>
+					<MenuUnfoldOutlinedIcon />
+				</IconButton>
+				<Box sx={{ display: 'flex', justifyContent: 'center', flexGrow: 1 }}>
+					<h2 className='brand'>NUTZFLIX</h2>
+				</Box>
+			</div>
 			<div className='desktop'>
 				<div className='left'>
 					<h2 className='brand'>NUTZFLIX</h2>
@@ -49,7 +63,6 @@ const Topbar = () => {
 							<Link to='/movies' className='link'>
 								<span>Movies</span>
 							</Link>
-							<span>New and Popular</span>
 							<span>My List</span>
 						</>
 					)}
@@ -57,12 +70,13 @@ const Topbar = () => {
 				<div className='right'>
 					{activeUser && (
 						<>
-							<Search className='icon' />
-							<span>KID</span>
-							<Notifications className='icon' />
+							<div className='search'>
+								<SearchIcon className='icon' />
+								<span>KID</span>
+							</div>
 							<img src={Helmet} alt='' />
 							<div className='profile'>
-								<ArrowDropDown className='icon' />
+								<ArrowDropDownIcon className='icon' />
 								<div className='options'>
 									<span onClick={handleReset}>Settings</span>
 									<span onClick={handleLogout}>Logout</span>
