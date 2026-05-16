@@ -74,7 +74,7 @@ const Topbar = () => {
 								<SearchIcon className='icon' />
 								<span>KID</span>
 							</div>
-							<img src={Helmet} alt='' />
+							<img src={activeUser?.profilePhoto | Helmet} alt='' />
 							<div className='profile'>
 								<ArrowDropDownIcon className='icon' />
 								<div className='options'>

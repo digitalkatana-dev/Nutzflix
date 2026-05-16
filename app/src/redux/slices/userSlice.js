@@ -3,6 +3,23 @@ import {
 	createEntityAdapter,
 	createSlice,
 } from '@reduxjs/toolkit';
+import { PURGE } from 'redux-persist';
+import nutzflixApi from '../../api/nutflixApi';
+
+export const userAuth = createAsyncThunk(
+	'user/auth',
+	async (data, { rejectWithValue }) => {
+		try {
+			const res = await nutzflixApi.post('/users/auth', data);
+			const { token, userProfile, success } = res.data;
+			console.log('Response', res.data);
+			localStorage.setItem('token', token);
+			return { userProfile, success };
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	},
+);
 
 export const userAdapter = createEntityAdapter();
 const initialState = userAdapter.getInitialState({
@@ -40,6 +57,7 @@ export const userSlice = createSlice({
 			};
 		},
 		logout: (state) => {
+			localStorage.removeItem('token');
 			state.loading = false;
 			state.activeUser = null;
 			state.userSuccess = null;
@@ -51,6 +69,27 @@ export const userSlice = createSlice({
 		clearUserErrors: (state) => {
 			state.userErrors = null;
 		},
+	},
+	extraReducers: (builder) => {
+		builder
+			.addCase(userAuth.pending, (state) => {
+				state.loading = true;
+				state.userErrors = null;
+			})
+			.addCase(userAuth.fulfilled, (state, action) => {
+				state.loading = false;
+				state.activeUser = action.payload.userProfile;
+				state.userSuccess = action.payload.success;
+				state.userErrors = null;
+			})
+			.addCase(userAuth.rejected, (state, action) => {
+				state.loading = false;
+				state.userErrors = action.payload;
+			})
+			.addCase(PURGE, () => {
+				localStorage.removeItem('token');
+				return initialState;
+			});
 	},
 });
 

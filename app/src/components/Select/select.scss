@@ -1,0 +1,29 @@
+.select {
+	width: 100%;
+	align-self: center;
+	text-align: center;
+	text-align-last: center;
+	margin: 10px;
+	margin-top: 0;
+	padding: 9px;
+	border: 1px ridge;
+	border-radius: 10px !important;
+	background-color: transparent;
+	color: var(--txt-primary);
+
+	option {
+		background-color: var(--paper-background);
+	}
+
+	.options {
+		color: var(--txt-primary);
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&:has(option:checked[value='']) {
+		color: rgb(117, 117, 117) !important;
+	}
+}

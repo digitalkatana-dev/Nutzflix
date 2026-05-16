@@ -1,0 +1,12 @@
+.list-item-btn {
+	// background: rgba(26, 16, 32, 0.7) !important;
+	background: rgba(63, 35, 80, 0.366) !important;
+
+	&:hover {
+		background: rgba(64, 35, 82, 0.46) !important;
+	}
+
+	.list-item-btn-text {
+		color: var(--text-on-accent);
+	}
+}
