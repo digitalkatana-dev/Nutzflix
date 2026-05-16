@@ -74,7 +74,15 @@ const Topbar = () => {
 								<SearchIcon className='icon' />
 								<span>KID</span>
 							</div>
-							<img src={activeUser?.profilePhoto | Helmet} alt='' />
+							<img
+								src={
+									activeUser?.profilePhoto.replace(
+										'http://localhost:3005',
+										'https://nutzflix-backend.onrender.com',
+									) | Helmet
+								}
+								alt=''
+							/>
 							<div className='profile'>
 								<ArrowDropDownIcon className='icon' />
 								<div className='options'>

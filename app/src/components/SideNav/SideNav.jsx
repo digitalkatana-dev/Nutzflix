@@ -68,7 +68,15 @@ const SideNav = () => {
 					<Box sx={listStyles}>
 						<div className='profile'>
 							<div className='user-info'>
-								<img src={activeUser?.profilePhoto | Helmet} alt='' />
+								<img
+									src={
+										activeUser?.profilePhoto.replace(
+											'http://localhost:3005',
+											'https://nutzflix-backend.onrender.com',
+										) | Helmet
+									}
+									alt=''
+								/>
 								<h2>Nutz</h2>
 							</div>
 							<div className='profile-options'>
