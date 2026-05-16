@@ -7,6 +7,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
 import NavItem from '../NavItem';
 import './sideNav.scss';
+import Helmet from '../../assets/Helmet.jpg';
 
 const SideNav = () => {
 	const { theme, drawerOpen } = useSelector((state) => state.app);
@@ -67,7 +68,7 @@ const SideNav = () => {
 					<Box sx={listStyles}>
 						<div className='profile'>
 							<div className='user-info'>
-								<img src={activeUser?.profilePhoto} alt='' />
+								<img src={activeUser?.profilePhoto | Helmet} alt='' />
 								<h2>Nutz</h2>
 							</div>
 							<div className='profile-options'>

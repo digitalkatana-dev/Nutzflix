@@ -8,6 +8,7 @@ import './topbar.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import MenuUnfoldOutlinedIcon from '@ant-design/icons/MenuFoldOutlined';
 import SearchIcon from '@mui/icons-material/Search';
+import Helmet from '../../assets/Helmet.jpg';
 
 const Topbar = () => {
 	const { theme } = useSelector((state) => state.app);
@@ -73,7 +74,7 @@ const Topbar = () => {
 								<SearchIcon className='icon' />
 								<span>KID</span>
 							</div>
-							<img src={activeUser?.profilePhoto} alt='' />
+							<img src={activeUser?.profilePhoto | Helmet} alt='' />
 							<div className='profile'>
 								<ArrowDropDownIcon className='icon' />
 								<div className='options'>
