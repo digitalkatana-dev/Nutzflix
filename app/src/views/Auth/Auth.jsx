@@ -1,18 +1,20 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setTheme, resetApp } from '../../redux/slices/appSlice';
-import { setActiveUser, userAuth } from '../../redux/slices/userSlice';
+import { userAuth, clearUserErrors } from '../../redux/slices/userSlice';
 import './auth.scss';
-import Topbar from '../../components/Topbar';
 import Paper from '../../components/Paper';
 import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 
 const Auth = () => {
-	const { theme } = useSelector((state) => state.app);
+	const { userErrors } = useSelector((state) => state.user);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const dispatch = useDispatch();
+
+	const handleFocus = () => {
+		dispatch(clearUserErrors());
+	};
 
 	const handleChange = (input, value) => {
 		const actionMap = {
@@ -32,31 +34,32 @@ const Auth = () => {
 			password,
 		};
 		dispatch(userAuth(data));
-		// dispatch(setActiveUser());
-	};
-
-	const handleReset = (e) => {
-		e.preventDefault();
-		const newTheme = theme === 'light' ? 'dark' : 'light';
-		dispatch(setTheme(newTheme));
 	};
 
 	return (
 		<div className='auth'>
-			<Topbar />
+			<header>
+				<h2 className='brand'>NUTZFLIX</h2>
+			</header>
 			<div className='wrapper'>
-				<Paper elevation={0}>
+				<Paper elevation={0} className='auth-paper'>
 					<h1>Sign In</h1>
 					<form action='' onSubmit={handleSubmit}>
 						<TextInput
 							type='email'
 							placeholder='Email'
+							onFocus={handleFocus}
 							onChange={(e) => handleChange('email', e.target.value)}
+							error={userErrors?.email}
+							helperText={userErrors?.email}
 						/>
 						<TextInput
 							type='password'
 							placeholder='Password'
+							onFocus={handleFocus}
 							onChange={(e) => handleChange('pass', e.target.value)}
+							error={userErrors?.password}
+							helperText={userErrors?.password}
 						/>
 						<Button type='submit'>Sign In</Button>
 					</form>

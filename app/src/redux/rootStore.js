@@ -18,7 +18,7 @@ const resolvedStorage = storage?.default || storage;
 const appPersistConfig = {
 	key: 'app',
 	storage: resolvedStorage,
-	whitelist: ['theme'],
+	whitelist: ['theme', 'viewMode'],
 };
 
 const userPersistConfig = {

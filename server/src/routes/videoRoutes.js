@@ -6,6 +6,8 @@ const Profile = model('Profile');
 
 const router = Router();
 
+const roles = ['superAdmin', 'admin'];
+
 // router.put('/videos/all', async (req, res) => {
 // 	try {
 // 		const updated = await Video.updateMany(
@@ -31,7 +33,7 @@ router.post('/videos/add', requireAuth, async (req, res) => {
 		return res.status(401).json(errors);
 	}
 
-	if (user?.isAdmin) {
+	if (roles?.includes(user?.role)) {
 		const newVideo = new Video(req?.body);
 		try {
 			const video = await newVideo.save();
@@ -59,7 +61,7 @@ router.put('/videos/update/:id', requireAuth, async (req, res) => {
 		return res.status(401).json(errors);
 	}
 
-	if (user?.isAdmin) {
+	if (roles?.includes(user?.role)) {
 		try {
 			const updatedVideo = await Video.findByIdAndUpdate(
 				id,
@@ -93,7 +95,7 @@ router.get('/videos', requireAuth, async (req, res) => {
 		return res.status(401).json(errors);
 	}
 
-	if (user?.isAdmin) {
+	if (roles?.includes(user?.role)) {
 		try {
 			const videos = await Video.find({}).sort('-createdAt');
 			res.status(200).json(videos);
@@ -158,7 +160,7 @@ router.delete('/videos/:id', requireAuth, async (req, res) => {
 		return res.status(401).json(errors);
 	}
 
-	if (user?.isAdmin) {
+	if (roles?.includes(user?.role)) {
 		try {
 			const deletedVideo = await Video.findByIdAndDelete(id);
 			const updatedVideoList = await Video.find({});

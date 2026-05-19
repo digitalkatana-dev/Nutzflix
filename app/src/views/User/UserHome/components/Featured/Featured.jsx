@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
-import { genreOptions } from '../../../../util/data';
+import { genreOptions } from '../../../../../util/data';
 import './featured.scss';
-import Select from '../../../../components/Select';
+import Select from '../../../../../components/Select';
 import { InfoOutlined, PlayArrow } from '@mui/icons-material';
 
 const Featured = ({ type, featured }) => {
