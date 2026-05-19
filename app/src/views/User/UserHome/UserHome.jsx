@@ -1,11 +1,9 @@
 import React from 'react';
-import Topbar from '../../components/Topbar';
-import SideNav from '../../components/SideNav';
 import Featured from './components/Featured';
-import List from '../../components/List';
-import './home.scss';
+import List from '../../../components/List';
+import './userhome.scss';
 
-const Home = ({ type, lists }) => {
+const UserHome = ({ type, lists }) => {
 	return (
 		<div className='home'>
 			<div className='wrapper'>
@@ -18,4 +16,4 @@ const Home = ({ type, lists }) => {
 	);
 };
 
-export default Home;
+export default UserHome;

@@ -14,9 +14,11 @@ const profileSchema = new Schema(
 			type: String,
 			default: 'http://localhost:3005/assets/avatars/avatar_26.jpg',
 		},
-		isAdmin: {
-			type: Boolean,
-			default: true,
+		role: {
+			type: String,
+			enum: ['superAdmin', 'admin', 'user'],
+			required: [true, 'Role is required'],
+			default: 'user',
 		},
 		user: {
 			type: Schema.Types.ObjectId,

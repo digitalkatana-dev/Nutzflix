@@ -6,6 +6,8 @@ const Profile = model('Profile');
 
 const router = Router();
 
+const roles = ['superAdmin', 'admin'];
+
 // Create New List
 router.post('/lists', requireAuth, async (req, res) => {
 	let errors = {};
@@ -17,7 +19,7 @@ router.post('/lists', requireAuth, async (req, res) => {
 		return res.status(401).json(errors);
 	}
 
-	if (user?.isAdmin) {
+	if (roles.includes(user?.role)) {
 		const newList = new List(req?.body);
 
 		try {
@@ -75,7 +77,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
 		return res.status(401).json(errors);
 	}
 
-	if (user?.isAdmin) {
+	if (roles?.includes(user?.role)) {
 		try {
 			await List.findByIdAndDelete(id);
 			res.status(200).json('List deleted...');

@@ -1,4 +1,77 @@
-.drawer-content {
+.css-cyqh1t-MuiPaper-root-MuiDrawer-paper {
+	background: var(--bg) !important;
+	// border-right: 0.5px ridge rgb(230, 227, 227);
+}
+
+.admin-side-nav {
+	flex: 1;
+
+	.MuiPaper-root {
+		background-color: var(--bg);
+		border-right: 0.5px ridge rgb(230, 227, 227);
+	}
+
+	.admin-drawer-content {
+		flex: 1;
+		color: var(--text-primary);
+
+		.router-link {
+			text-decoration: none;
+			color: var(--text-primary);
+		}
+
+		.brand {
+			font-family: 'Bebas Neue', cursive;
+			color: var(--accent);
+			font-size: 40px;
+			text-shadow:
+				0 0 8px black,
+				0 0 20px black,
+				0 0 40px black;
+		}
+
+		.label {
+			font-size: 10px;
+			font-weight: bold;
+			margin-top: 15px;
+			margin-bottom: 5px;
+		}
+
+		li {
+			display: flex;
+			align-items: center;
+			padding: 5px;
+			cursor: pointer;
+
+			.icon {
+				font-size: 18px;
+				color: var(--text-primary);
+			}
+
+			span {
+				font-size: 13px;
+				font-weight: bold;
+				margin-left: 10px;
+				color: var(--text-primary);
+			}
+
+			&:hover {
+				background: rgba(64, 35, 82, 0.692) !important;
+
+				span,
+				.icon {
+					color: var(--text-on-accent);
+				}
+			}
+		}
+	}
+}
+
+.user-drawer-content {
+	flex: 1;
+	// background-color: rgb(26, 16, 32);
+	background: linear-gradient(to top, transparent 0%, rgb(26, 16, 32, 0.6) 50%);
+
 	.profile {
 		width: 100%;
 		display: flex;

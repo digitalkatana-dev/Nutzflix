@@ -8,33 +8,49 @@ import {
 } from 'react-router-dom';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
+import AdminLayout from './layouts/AdminLayout/AdminLayout';
 import Auth from './views/Auth';
-import Home from './views/Home';
-import Watch from './views/Watch';
+import UserHome from './views/User/UserHome';
+import Watch from './views/User/Watch';
+import AdminHome from './views/Admin/AdminHome';
 
 const App = () => {
-	const { theme } = useSelector((state) => state.app);
+	const { theme, roles } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
+	let element;
+
+	if (activeUser) {
+		if (roles?.includes(activeUser?.role)) {
+			element = <Navigate to='/home-admin' />;
+		} else if (!roles.includes(activeUser?.role)) {
+			element = <Navigate to='/home-user' />;
+		}
+	} else {
+		element = <Auth />;
+	}
 
 	return (
 		<div className='app' data-theme={theme}>
 			<Router>
 				<Routes>
-					<Route
+					{/* <Route
 						path='/'
-						element={activeUser ? <Navigate to='/home' replace /> : <Auth />}
-					/>
+						element={activeUser ? <Navigate to='/home-user' /> : <Auth />}
+					/> */}
+					<Route path='/' element={element} />
 					<Route
-						path='/home'
+						path='/home-user'
 						element={
-							<ProtectedRoute element={<MainLayout children={<Home />} />} />
+							<ProtectedRoute
+								element={<MainLayout children={<UserHome />} />}
+							/>
 						}
 					/>
 					<Route
 						path='/movies'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<Home type='movies' />} />}
+								element={<MainLayout children={<UserHome type='movies' />} />}
 							/>
 						}
 					/>
@@ -42,13 +58,21 @@ const App = () => {
 						path='/series'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<Home type='series' />} />}
+								element={<MainLayout children={<UserHome type='series' />} />}
 							/>
 						}
 					/>
 					<Route
 						path='/watch'
 						element={<ProtectedRoute element={<Watch />} />}
+					/>
+					<Route
+						path='/home-admin'
+						element={
+							<ProtectedRoute
+								element={<AdminLayout children={<AdminHome />} />}
+							/>
+						}
 					/>
 				</Routes>
 			</Router>

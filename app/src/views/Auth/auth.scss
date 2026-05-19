@@ -7,6 +7,29 @@
 	background-size: cover;
 	position: relative;
 
+	header {
+		width: 100%;
+		position: fixed;
+		top: 0;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		font-size: 14px;
+		padding: 20px 50px;
+		background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
+		color: var(--text-primary);
+
+		.brand {
+			font-family: 'Bebas Neue', cursive;
+			color: var(--accent);
+			font-size: 45px;
+			text-shadow:
+				0 0 8px black,
+				0 0 20px black,
+				0 0 40px black;
+		}
+	}
+
 	.wrapper {
 		width: 100%;
 		height: 100%;
@@ -18,10 +41,23 @@
 		justify-content: center;
 		align-items: center;
 
-		form {
-			display: flex;
-			flex-direction: column;
-			gap: 10px;
+		.auth-paper {
+			width: 350px;
+			height: fit-content;
+
+			form {
+				display: flex;
+				flex-direction: column;
+				gap: 10px;
+			}
+		}
+	}
+}
+
+@media only screen and (min-width: 650px) {
+	.auth {
+		header {
+			justify-content: flex-start;
 		}
 	}
 }

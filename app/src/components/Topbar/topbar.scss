@@ -1,10 +1,88 @@
+.admin-topbar {
+	height: 50px;
+	display: flex;
+	align-items: center;
+	font-size: 14px;
+	border-bottom: 1px ridge rgb(230, 227, 227);
+
+	.admin-menu-btn {
+		display: flex;
+		background-color: var(--accent);
+		color: var(--text-on-accent);
+		border-radius: 7px;
+
+		&:hover {
+			box-shadow: var(--btn-elevation);
+		}
+	}
+
+	.admin-topbar-wrapper {
+		width: 100%;
+		padding: 20px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+
+		.admin-search {
+			display: flex;
+			align-items: center;
+			padding: 3px;
+		}
+
+		.admin-items {
+			display: flex;
+			align-items: center;
+
+			.admin-item {
+				position: relative;
+				display: flex;
+				align-items: center;
+				margin-right: 20px;
+				color: var(--text-primary);
+
+				span {
+					margin-left: 5px;
+				}
+
+				.icon {
+					font-size: 20px;
+					color: var(--accent-hover);
+				}
+
+				.avatar {
+					width: 30px;
+					height: 30px;
+					border-radius: 100%;
+					cursor: pointer;
+				}
+
+				.counter {
+					width: 15px;
+					height: 15px;
+					background: var(--error);
+					border-radius: 100%;
+					color: var(--text-on-accent);
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					font-size: 10px;
+					font-weight: bold;
+					position: absolute;
+					top: -5px;
+					right: -5px;
+				}
+			}
+		}
+	}
+}
+
 .topbar {
 	width: 100%;
 	position: fixed;
 	top: 0;
 	font-size: 14px;
 	padding: 20px;
-	background: linear-gradient(to top, transparent 0%, rgb(0, 0, 0, 0.3) 50%);
+	background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.3) 50%);
 	color: var(--text-primary);
 	z-index: 1201;
 
@@ -59,6 +137,15 @@
 }
 
 @media only screen and (min-width: 650px) {
+	.admin-topbar {
+		width: calc(100% - 280px);
+		margin-left: 280px;
+
+		.admin-menu-btn {
+			display: none;
+		}
+	}
+
 	.topbar {
 		.mobile {
 			display: none;
