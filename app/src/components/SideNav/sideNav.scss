@@ -1,15 +1,6 @@
-.css-cyqh1t-MuiPaper-root-MuiDrawer-paper {
-	background: var(--bg) !important;
-	// border-right: 0.5px ridge rgb(230, 227, 227);
-}
-
 .admin-side-nav {
+	width: 280px;
 	flex: 1;
-
-	.MuiPaper-root {
-		background-color: var(--bg);
-		border-right: 0.5px ridge rgb(230, 227, 227);
-	}
 
 	.admin-drawer-content {
 		flex: 1;

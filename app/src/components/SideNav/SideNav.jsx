@@ -1,13 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Avatar, Box, Divider, Drawer, Stack } from '@mui/material';
-import {
-	setTheme,
-	setViewMode,
-	setDrawerOpen,
-	setIsClosing,
-} from '../../redux/slices/appSlice';
+import { Avatar, Box, Divider, Stack } from '@mui/material';
+import { setTheme, setViewMode } from '../../redux/slices/appSlice';
 import { logout } from '../../redux/slices/userSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
@@ -24,30 +18,16 @@ import SettingsSystemDaydreamOutlinedIcon from '@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import NavItem from '../NavItem';
+import Drawer from '../Drawer';
 import './sideNav.scss';
 import Helmet from '../../assets/Helmet.jpg';
 
 const SideNav = () => {
-	const { theme, viewMode, drawerOpen, isClosing, roles } = useSelector(
+	const { theme, viewMode, drawerOpen, roles } = useSelector(
 		(state) => state.app,
 	);
 	const { activeUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
-
-	const handleClose = () => {
-		dispatch(setIsClosing(true));
-		dispatch(setDrawerOpen(false));
-	};
-
-	const handleDrawerTransitionEnd = () => {
-		dispatch(setIsClosing(false));
-	};
-
-	const handleDrawerToggle = () => {
-		if (!isClosing) {
-			dispatch(setDrawerOpen(!drawerOpen));
-		}
-	};
 
 	const handleTheme = () => {
 		const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -66,8 +46,7 @@ const SideNav = () => {
 
 	const boxStyles = {
 		flexShrink: { lg: 0 },
-		width: { lg: 280 },
-		background: 'var(--bg)',
+		width: { sm: 280 },
 	};
 
 	const listStyles = {
@@ -83,7 +62,7 @@ const SideNav = () => {
 
 	const drawerContent = (
 		<div className='admin-drawer-content'>
-			<Box
+			{/* <Box
 				sx={{
 					height: '50px',
 					display: 'flex',
@@ -93,7 +72,7 @@ const SideNav = () => {
 				}}
 			>
 				<span className='brand'>NUTZFLIX</span>
-			</Box>
+			</Box> */}
 			<Box sx={{ pt: '15px', pl: '15px' }}>
 				<p className='label'>Main</p>
 				<NavItem
@@ -186,61 +165,16 @@ const SideNav = () => {
 	if (roles.includes(activeUser?.role) && viewMode === 'admin') {
 		return (
 			<div className='admin-side-nav'>
-				<Box sx={boxStyles}>
-					<Drawer
-						variant='temporary'
-						anchor='left'
-						open={drawerOpen}
-						onTransitionEnd={handleDrawerTransitionEnd}
-						onClose={handleClose}
-						sx={{
-							display: { xs: 'block', sm: 'none' },
-							'& .MuiDrawer-paper': {
-								width: 280,
-								boxSizing: 'border-box',
-								boxShadow: 'none',
-							},
-						}}
-						slotProps={{
-							root: {
-								keepMounted: true,
-							},
-						}}
-					>
-						{drawerContent}
-					</Drawer>
-					<Drawer
-						variant='permanent'
-						sx={{
-							display: { xs: 'none', sm: 'block' },
-							'& .MuiDrawer-paper': {
-								width: 280,
-								boxSizing: 'border-box',
-								boxShadow: 'none',
-							},
-						}}
-					>
-						{drawerContent}
-					</Drawer>
-				</Box>
+				<Drawer open={drawerOpen} variant='temporary'>
+					{drawerContent}
+				</Drawer>
+				<Drawer variant='permanent'>{drawerContent}</Drawer>
 			</div>
 		);
 	} else {
 		return (
 			<Box sx={boxStyles}>
-				<Drawer
-					open={drawerOpen}
-					onClose={handleClose}
-					slotProps={{
-						paper: {
-							sx: {
-								width: 280,
-								background: 'transparent',
-								boxShadow: 'none',
-							},
-						},
-					}}
-				>
+				<Drawer open={drawerOpen} variant='temporary'>
 					<div
 						className='drawer-spacer'
 						style={{

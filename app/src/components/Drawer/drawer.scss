@@ -1,0 +1,32 @@
+.drawer {
+	width: 280px;
+	background: transparent;
+	display: flex;
+	flex-direction: column;
+	box-sizing: border-box;
+	box-shadow: none;
+	transition: all 0.4s;
+
+	&.permanent {
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 600px) {
+	.drawer {
+		&.temporary {
+			display: none;
+		}
+
+		&.permanent {
+			display: flex;
+			border-right: 1px ridge rgb(230, 227, 227);
+		}
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.drawer {
+		flex-shrink: 0;
+	}
+}

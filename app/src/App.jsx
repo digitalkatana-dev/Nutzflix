@@ -13,6 +13,7 @@ import Auth from './views/Auth';
 import UserHome from './views/User/UserHome';
 import Watch from './views/User/Watch';
 import AdminHome from './views/Admin/AdminHome';
+import Drawer from './components/Drawer';
 
 const App = () => {
 	const { theme, roles } = useSelector((state) => state.app);
@@ -73,6 +74,10 @@ const App = () => {
 								element={<AdminLayout children={<AdminHome />} />}
 							/>
 						}
+					/>
+					<Route
+						path='/test'
+						element={<ProtectedRoute element={<Drawer />} />}
 					/>
 				</Routes>
 			</Router>

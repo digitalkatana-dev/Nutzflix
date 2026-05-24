@@ -7,23 +7,19 @@ import {
 	setViewMode,
 	setDrawerOpen,
 } from '../../redux/slices/appSlice';
-import { setActiveUser, logout } from '../../redux/slices/userSlice';
+import { logout } from '../../redux/slices/userSlice';
 import './topbar.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import MenuUnfoldOutlinedIcon from '@ant-design/icons/MenuFoldOutlined';
 import SearchIcon from '@mui/icons-material/Search';
-import SearchOutlinedIcon from '@mui/icons-material/SearchOutlined';
-import LanguageOutlinedIcon from '@mui/icons-material/LanguageOutlined';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
-import FullscreenExitOutlinedIcon from '@mui/icons-material/FullscreenExitOutlined';
-import NotificationsNoneOutlinedIcon from '@mui/icons-material/NotificationsNoneOutlined';
-import ChatBubbleOutlineOutlinedIcon from '@mui/icons-material/ChatBubbleOutlineOutlined';
-import ListOutlinedIcon from '@mui/icons-material/ListOutlined';
 import TextInput from '../TextInput';
 import Helmet from '../../assets/Helmet.jpg';
 
 const Topbar = () => {
-	const { theme, viewMode, roles } = useSelector((state) => state.app);
+	const { theme, viewMode, roles, drawerOpen } = useSelector(
+		(state) => state.app,
+	);
 	const { activeUser } = useSelector((state) => state.user);
 	const [isScrolled, setIsScrolled] = useState(false);
 	const dispatch = useDispatch();
@@ -44,7 +40,7 @@ const Topbar = () => {
 	};
 
 	const handleDrawer = () => {
-		dispatch(setDrawerOpen(true));
+		dispatch(setDrawerOpen(!drawerOpen));
 	};
 
 	useEffect(() => {
@@ -58,13 +54,16 @@ const Topbar = () => {
 		return (
 			<div className='admin-topbar'>
 				<IconButton
-					sx={{ mr: 2 }}
+					sx={{ mr: 2, ml: 2 }}
 					className='admin-menu-btn'
 					onClick={handleDrawer}
 				>
 					<MenuUnfoldOutlinedIcon />
 				</IconButton>
 				<div className='admin-topbar-wrapper'>
+					<div className='brand-wrapper'>
+						<span className='brand'>NUTZFLIX</span>
+					</div>
 					<div className='admin-search'>
 						<TextInput
 							placeholder='Search...'
@@ -73,25 +72,7 @@ const Topbar = () => {
 					</div>
 					<div className='admin-items'>
 						<div className='admin-item'>
-							<LanguageOutlinedIcon className='icon' />
-							<span>English</span>
-						</div>
-						<div className='admin-item'>
 							<DarkModeOutlinedIcon className='icon' onClick={toggleMode} />
-						</div>
-						<div className='admin-item'>
-							<FullscreenExitOutlinedIcon className='icon' />
-						</div>
-						<div className='admin-item'>
-							<NotificationsNoneOutlinedIcon className='icon' />
-							<div className='counter'>1</div>
-						</div>
-						<div className='admin-item'>
-							<ChatBubbleOutlineOutlinedIcon className='icon' />
-							<div className='counter'>2</div>
-						</div>
-						<div className='admin-item'>
-							<ListOutlinedIcon className='icon' />
 						</div>
 						<div className='admin-item'>
 							<Avatar
