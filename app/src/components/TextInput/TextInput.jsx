@@ -28,6 +28,7 @@ const TextInput = ({
 	multiline,
 	maxRows,
 	minRows,
+	name,
 	select,
 	selectOptions,
 	children,
@@ -244,6 +245,7 @@ const TextInput = ({
 					margin='dense'
 					select
 					id={id}
+					name={name}
 					className={className}
 					style={style}
 					sx={handleSx()}

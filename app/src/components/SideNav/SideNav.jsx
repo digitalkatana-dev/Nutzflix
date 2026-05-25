@@ -62,21 +62,12 @@ const SideNav = () => {
 
 	const drawerContent = (
 		<div className='admin-drawer-content'>
-			{/* <Box
-				sx={{
-					height: '50px',
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					borderBottom: '1px ridge rgb(230, 227, 227)',
-				}}
-			>
-				<span className='brand'>NUTZFLIX</span>
-			</Box> */}
 			<Box sx={{ pt: '15px', pl: '15px' }}>
 				<p className='label'>Main</p>
 				<NavItem
 					admin
+					link='/home-admin'
+					className='router-link'
 					icon={<DashboardIcon className='icon' />}
 					label='Dashboard'
 				/>

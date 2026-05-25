@@ -1,0 +1,97 @@
+.data-table {
+	height: 600px;
+	padding: 20px;
+
+	.top,
+	.bottom {
+		-webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+		box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+	}
+
+	.top {
+		padding: 30px;
+		margin: 20px 0;
+		display: flex;
+		justify-content: space-between;
+
+		h2 {
+			color: lightgrey;
+			font-size: 20px;
+		}
+
+		.link {
+			text-decoration: none;
+			color: green;
+			font-size: 16px;
+			font-weight: 400;
+			border: 1px solid green;
+			padding: 5px;
+			border-radius: 5px;
+			cursor: pointer;
+		}
+	}
+
+	.bottom {
+		.cell-wrapper {
+			display: flex;
+			align-items: center;
+
+			.image {
+				width: 32px;
+				height: 32px;
+				border-radius: 100%;
+				margin-right: 10px;
+				object-fit: cover;
+			}
+		}
+
+		span.rating {
+			width: 53px;
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			padding: 5px;
+			border-radius: 5px;
+
+			&.G {
+				color: dodgerblue;
+				background: rgba(30, 143, 255, 0.103);
+			}
+			&.PG {
+				color: green;
+				background: rgba(0, 128, 0, 0.103);
+			}
+			&.PG-13 {
+				color: goldenrod;
+				background: rgba(189, 189, 3, 0.103);
+			}
+			&.R {
+				color: crimson;
+				background: rgba(255, 0, 0, 0.103);
+			}
+		}
+
+		.cell-action {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			gap: 15px;
+
+			.edit-btn {
+				padding: 2px 5px;
+				border-radius: 5px;
+				color: darkgreen;
+				border: 1px dotted rgba(0, 100, 0, 0.562);
+				cursor: pointer;
+			}
+
+			.delete-btn {
+				padding: 2px 5px;
+				border-radius: 5px;
+				color: crimson;
+				border: 1px dotted rgba(220, 20, 60, 0.6);
+				cursor: pointer;
+			}
+		}
+	}
+}
