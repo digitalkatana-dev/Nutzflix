@@ -8,7 +8,7 @@ const videoSchema = new Schema(
 			trim: true,
 			unique: true,
 		},
-		desc: {
+		synopsis: {
 			type: String,
 		},
 		img: {

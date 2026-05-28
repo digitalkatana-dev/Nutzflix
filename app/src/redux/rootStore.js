@@ -12,6 +12,7 @@ import {
 import storage from 'redux-persist/lib/storage'; // ✅ correct (localStorage)
 import appReducer from './slices/appSlice';
 import userReducer from './slices/userSlice';
+import videoReducer from './slices/videoSlice';
 
 const resolvedStorage = storage?.default || storage;
 
@@ -31,6 +32,7 @@ export const store = configureStore({
 	reducer: {
 		app: persistReducer(appPersistConfig, appReducer),
 		user: persistReducer(userPersistConfig, userReducer),
+		video: videoReducer,
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({

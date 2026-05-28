@@ -3,10 +3,16 @@
 	height: 100vh;
 	display: flex;
 	flex-direction: column;
-	background-color: var(--bg);
+	background: var(--bg) !important;
+	overflow-y: hidden;
 
-	.admin-layout-main-content {
-		flex-grow: 1;
-		// margin-left: 0;
+	.flex-wrapper {
+		height: 100%;
+		display: flex;
+
+		main {
+			width: 100%;
+			overflow-y: scroll;
+		}
 	}
 }

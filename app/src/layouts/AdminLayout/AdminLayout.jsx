@@ -7,8 +7,10 @@ const AdminLayout = ({ children }) => {
 	return (
 		<div className='admin-layout'>
 			<Topbar />
-			<SideNav />
-			<main className='admin-layout-main-content'>{children}</main>
+			<div className='flex-wrapper'>
+				<SideNav />
+				<main className='admin-layout-main-content'>{children}</main>
+			</div>
 		</div>
 	);
 };

@@ -11,7 +11,7 @@ const NavItem = ({ page, onClick, admin, icon, label, link, linkState }) => {
 				{link ? (
 					<Link
 						to={link}
-						state={{ linkState }}
+						state={linkState}
 						className='router-link'
 						onClick={onClick}
 					>
