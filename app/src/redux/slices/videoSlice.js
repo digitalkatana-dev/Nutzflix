@@ -17,6 +17,8 @@ const initialState = videoAdapter.getInitialState({
 	isSeries: false,
 	seriesType: '',
 	seriesTitle: '',
+	season: '',
+	episode: '',
 	videos: null,
 	selectedVideo: null,
 	videoSuccess: null,
@@ -48,6 +50,12 @@ export const videoSlice = createSlice({
 		setSeriesTitle: (state, action) => {
 			state.seriesTitle = action.payload;
 		},
+		setSeason: (state, action) => {
+			state.season = action.payload;
+		},
+		setEpisode: (state, action) => {
+			state.episode = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(logout, () => {
@@ -64,6 +72,8 @@ export const {
 	setIsSeries,
 	setSeriesType,
 	setSeriesTitle,
+	setSeason,
+	setEpisode,
 } = videoSlice.actions;
 
 export default videoSlice.reducer;

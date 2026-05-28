@@ -20,6 +20,8 @@ const New = ({ title, type }) => {
 	const [trailer, setTrailer] = useState(null);
 	const [media, setMedia] = useState(null);
 	const [profilePhoto, setProfilePhoto] = useState(null);
+	const [img, setImg] = useState(null);
+	const [uploaded, setUploaded] = useState(0);
 	const {
 		synopsis,
 		runTime,
@@ -28,8 +30,12 @@ const New = ({ title, type }) => {
 		isSeries,
 		seriesType,
 		seriesTitle,
+		season,
+		episode,
 	} = useSelector((state) => state.video);
 	const dispatch = useDispatch();
+
+	const handleFocus = () => {};
 
 	const handleChange = (input, value) => {
 		const actionMap = {
@@ -57,10 +63,10 @@ const New = ({ title, type }) => {
 				<h2>{title}</h2>
 			</header>
 			<section className='content'>
-				<div className={`left${type === 'sub' ? ' left' : ''}`}>
+				<div className={`media-area${type === 'sub' ? ' sub' : ''}`}>
 					{type === 'video' ? (
 						<>
-							<div className='top'>
+							<div className='preview'>
 								<div className='form-input'>
 									<label
 										htmlFor='trailer'
@@ -81,7 +87,7 @@ const New = ({ title, type }) => {
 									controls
 								/>
 							</div>
-							<div className='bottom'>
+							<div className='preview'>
 								<div className='form-input'>
 									<label htmlFor='media' className={media ? 'loaded' : null}>
 										Media:
@@ -109,7 +115,137 @@ const New = ({ title, type }) => {
 						/>
 					)}
 				</div>
-				<div className='right'></div>
+				<form>
+					{type === 'sub' ? (
+						<div className='form-input'>
+							<label htmlFor='profilePhoto'>
+								Profile Photo:
+								<DriveFolderUploadOutlinedIcon className='icon' />
+							</label>
+							<input
+								type='file'
+								id='profilePhoto'
+								onChange={(e) => setProfilePhoto(e.target.files[0])}
+								hidden
+							/>
+						</div>
+					) : (
+						<div className='form-input'>
+							<div className='file-input-wrapper'>
+								<>
+									<label htmlFor='img'>
+										Image:
+										<DriveFolderUploadOutlinedIcon className='icon' />
+									</label>
+									<input
+										type='file'
+										id='img'
+										onChange={(e) => setImg(e.target.files[0])}
+										hidden
+									/>
+								</>
+								<div className='file-preview'>
+									<img
+										src={img ? URL.createObjectURL(img) : NoImageAlt}
+										alt=''
+									/>
+								</div>
+							</div>
+						</div>
+					)}
+					{type === 'video' && (
+						<>
+							<TextInput
+								variant='standard'
+								label='TItle'
+								placeholder='Free Guy...'
+								value={vidTitle}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('vidTitle', e.target.value)}
+							/>
+							<TextInput
+								variant='standard'
+								label='Synopsis'
+								placeholder='Synopsis'
+								value={synopsis}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('synopsis', e.target.value)}
+							/>
+							<TextInput
+								variant='standard'
+								label='Year'
+								placeholder='1974...'
+								value={year}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('year', e.target.value)}
+							/>
+							<TextInput
+								variant='standard'
+								label='Run Time'
+								placeholder='108 min...'
+								value={runTime}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('runTime', e.target.value)}
+							/>
+							<TextInput
+								select
+								variant='standard'
+								label='isSeries'
+								selectOptions={binaryOptions}
+								value={isSeries}
+								onChange={(e) => handleChange('isSeries', e.target.value)}
+								fullWidth
+							/>
+							{isSeries && (
+								<>
+									<TextInput
+										select
+										variant='standard'
+										label='Series Type'
+										selectOptions={seriesTypes}
+										value={seriesType}
+										onChange={(e) => handleChange('seriesType', e.target.value)}
+										// fullWidth
+									/>
+									<TextInput
+										variant='standard'
+										label='Series Title'
+										placeholder='Ally McBeal...'
+										value={seriesTitle}
+										onChange={(e) =>
+											handleChange('seriesTitle', e.target.value)
+										}
+									/>
+									{seriesType === 'TV' && (
+										<>
+											<TextInput
+												variant='standard'
+												label='Season'
+												placeholder='Season 1...'
+												value={season}
+												onChange={(e) => handleChange('season', e.target.value)}
+											/>
+											<TextInput
+												variant='standard'
+												label='Episode'
+												placeholder='Episode 5...'
+												value={episode}
+												onChange={(e) =>
+													handleChange('episode', e.target.value)
+												}
+											/>
+										</>
+									)}
+								</>
+							)}
+						</>
+					)}
+					{uploaded === 3 ? (
+						<Button btnClass='form-btn'>Create</Button>
+					) : (
+						<Button btnClass='form-btn'>Upload</Button>
+					)}
+				</form>
 			</section>
 		</div>
 	);

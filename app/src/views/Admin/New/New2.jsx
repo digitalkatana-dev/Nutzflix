@@ -117,38 +117,38 @@ const New = ({ inputs, title }) => {
 		]);
 	};
 
-	// const videoForm = () => {
-	// 	return (
-	// 		<form>
-	// 			<div className='left'>
-	// 				<div className='form-input'>
-	// 					<div className='file-input-wrapper'>
-	// 						<>
-	// 							<label htmlFor='img'>
-	// 								Image:
-	// 								<DriveFolderUploadOutlinedIcon className='icon' />
-	// 							</label>
-	// 							<input
-	// 								type='file'
-	// 								id='img'
-	// 								onChange={(e) => setImg(e.target.files[0])}
-	// 								hidden
-	// 							/>
-	// 						</>
-	// 						<div className='file-preview'>
-	// 							<img
-	// 								src={img ? URL.createObjectURL(img) : '/no-image-alt.jpg'}
-	// 								alt=''
-	// 							/>
-	// 						</div>
-	// 					</div>
-	// 				</div>
-	// 				<TextInput label='Synopsis' placeholder='Synopsis' />
-	// 			</div>
-	// 			<div className='right'></div>
-	// 		</form>
-	// 	);
-	// };
+	const videoForm = () => {
+		return (
+			<form>
+				<div className='left'>
+					<div className='form-input'>
+						<div className='file-input-wrapper'>
+							<>
+								<label htmlFor='img'>
+									Image:
+									<DriveFolderUploadOutlinedIcon className='icon' />
+								</label>
+								<input
+									type='file'
+									id='img'
+									onChange={(e) => setImg(e.target.files[0])}
+									hidden
+								/>
+							</>
+							<div className='file-preview'>
+								<img
+									src={img ? URL.createObjectURL(img) : '/no-image-alt.jpg'}
+									alt=''
+								/>
+							</div>
+						</div>
+					</div>
+					<TextInput label='Synopsis' placeholder='Synopsis' />
+				</div>
+				<div className='right'></div>
+			</form>
+		);
+	};
 
 	return (
 		<div className='new'>

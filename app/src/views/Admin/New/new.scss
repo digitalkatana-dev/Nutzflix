@@ -1,18 +1,18 @@
 .new {
 	padding: 20px;
+	color: var(--text-primary);
 
-	.top,
-	.bottom {
+	header {
+		font-size: 20px;
+	}
+
+	.content {
 		padding: 30px;
 		margin: 20px;
 		display: flex;
+		gap: 20px;
 		-webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
 		box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
-
-		h2 {
-			color: lightgrey;
-			font-size: 20px;
-		}
 
 		label {
 			display: flex;
@@ -24,7 +24,7 @@
 			}
 		}
 
-		.left {
+		.media-area {
 			flex: 1;
 			display: flex;
 			flex-direction: column;
@@ -45,8 +45,7 @@
 				}
 			}
 
-			.top,
-			.bottom {
+			.preview {
 				position: relative;
 				height: 45%;
 				width: inherit;
@@ -82,48 +81,32 @@
 			object-fit: cover;
 		}
 
-		.right {
-			flex: 2;
-			display: flex;
-			justify-content: center;
-			align-items: center;
+		form {
+			flex: 1;
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 1rem;
+			max-width: 600px;
+			margin: 0 auto;
+			padding: 20px;
 
-			form {
-				display: flex;
-				flex-direction: column;
-				align-items: center;
-				flex-wrap: wrap;
-				gap: 20px;
-				border: 2px solid green;
+			.form-input {
+				width: 90%;
 
-				.form-input {
-					width: 40%;
-
-					.file-input-wrapper {
-						width: 100%;
-						display: flex;
-						justify-content: space-between;
-					}
-
-					input,
-					select {
-						width: 100%;
-						padding: 5px;
-						border: none;
-						border-bottom: 1px solid grey;
-					}
+				.file-input-wrapper {
+					width: 100%;
+					display: flex;
+					justify-content: space-between;
 				}
+			}
 
-				button {
-					width: 180px !important;
-					padding: 10px;
-					margin-top: 10px;
-					border: none;
-					border-radius: 50px;
-					background: var(--accent);
-					color: var(--text-on-accent);
-					font-weight: bold;
-					cursor: pointer;
+			.form-btn {
+				width: 180px !important;
+				grid-column: 1 / -1;
+				margin: 0 auto;
+
+				&:hover {
+					background-color: red !important;
 				}
 			}
 		}
@@ -132,11 +115,10 @@
 
 @media only screen and (min-width: 900px) {
 	.new {
-		.bottom {
-			.right {
-				form {
-					flex-direction: row;
-				}
+		.content {
+			form {
+				max-width: 1200px;
+				grid-template-columns: 1fr 1fr;
 			}
 		}
 	}
