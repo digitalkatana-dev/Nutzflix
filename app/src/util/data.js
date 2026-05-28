@@ -126,14 +126,14 @@ export const subInputs = [
 export const videoInputs = [
 	{
 		id: 1,
-		name: 'title',
+		name: 'vidTitle',
 		label: 'Title',
 		type: 'text',
 		placeholder: 'Free Guy...',
 	},
 	{
 		id: 2,
-		name: 'desc',
+		name: 'synopsis',
 		label: 'Synopsis',
 		type: 'text',
 		placeholder: 'Synopsis',
@@ -157,9 +157,31 @@ export const videoInputs = [
 export const listInputs = [
 	{
 		id: 1,
-		name: 'title',
+		name: 'listTitle',
 		label: 'Title',
 		type: 'text',
 		placeholder: 'Best Movies...',
+	},
+];
+
+export const binaryOptions = [
+	{
+		label: 'No',
+		value: 'false',
+	},
+	{
+		label: 'Yes',
+		value: 'true',
+	},
+];
+
+export const seriesTypes = [
+	{
+		label: 'TV',
+		value: 'TV',
+	},
+	{
+		label: 'Movie',
+		value: 'Movie',
 	},
 ];

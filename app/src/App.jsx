@@ -118,9 +118,7 @@ const App = () => {
 								<ProtectedRoute
 									element={
 										<AdminLayout
-											children={
-												<New inputs={videoInputs} title='Add New Video' />
-											}
+											children={<New title='Add New Video' type='video' />}
 										/>
 									}
 								/>
