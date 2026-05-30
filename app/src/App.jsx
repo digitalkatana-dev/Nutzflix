@@ -94,9 +94,7 @@ const App = () => {
 								<ProtectedRoute
 									element={
 										<AdminLayout
-											children={
-												<New inputs={subInputs} title='Add New Subscriber' />
-											}
+											children={<New type='sub' title='Add New Subscriber' />}
 										/>
 									}
 								/>

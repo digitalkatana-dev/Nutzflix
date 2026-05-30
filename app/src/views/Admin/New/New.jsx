@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { setUsername, setEmail } from '../../../redux/slices/userSlice';
 import {
 	setSynopsis,
 	setRunTime,
@@ -22,6 +23,7 @@ const New = ({ title, type }) => {
 	const [profilePhoto, setProfilePhoto] = useState(null);
 	const [img, setImg] = useState(null);
 	const [uploaded, setUploaded] = useState(0);
+	const { username, email } = useSelector((state) => state.user);
 	const {
 		synopsis,
 		runTime,
@@ -39,6 +41,8 @@ const New = ({ title, type }) => {
 
 	const handleChange = (input, value) => {
 		const actionMap = {
+			username: setUsername,
+			email: setEmail,
 			vidTitle: setVidTitle,
 			synopsis: setSynopsis,
 			year: setYear,
@@ -116,45 +120,63 @@ const New = ({ title, type }) => {
 					)}
 				</div>
 				<form>
-					{type === 'sub' ? (
-						<div className='form-input'>
-							<label htmlFor='profilePhoto'>
-								Profile Photo:
-								<DriveFolderUploadOutlinedIcon className='icon' />
-							</label>
-							<input
-								type='file'
-								id='profilePhoto'
-								onChange={(e) => setProfilePhoto(e.target.files[0])}
-								hidden
-							/>
-						</div>
-					) : (
-						<div className='form-input'>
-							<div className='file-input-wrapper'>
-								<>
-									<label htmlFor='img'>
-										Image:
-										<DriveFolderUploadOutlinedIcon className='icon' />
-									</label>
-									<input
-										type='file'
-										id='img'
-										onChange={(e) => setImg(e.target.files[0])}
-										hidden
-									/>
-								</>
-								<div className='file-preview'>
-									<img
-										src={img ? URL.createObjectURL(img) : NoImageAlt}
-										alt=''
-									/>
-								</div>
+					{type === 'sub' && (
+						<>
+							<div className='form-input'>
+								<label htmlFor='profilePhoto'>
+									Profile Photo:
+									<DriveFolderUploadOutlinedIcon className='icon' />
+								</label>
+								<input
+									type='file'
+									id='profilePhoto'
+									onChange={(e) => setProfilePhoto(e.target.files[0])}
+									hidden
+								/>
 							</div>
-						</div>
+							<TextInput
+								variant='standard'
+								label='Username'
+								placeholder='john_doe'
+								value={username}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('username', e.target.value)}
+							/>
+							<TextInput
+								type='email'
+								variant='standard'
+								label='Email'
+								placeholder='john_doe@gmail.com'
+								value={email}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('email', e.target.value)}
+							/>
+						</>
 					)}
 					{type === 'video' && (
 						<>
+							<div className='form-input'>
+								<div className='file-input-wrapper'>
+									<>
+										<label htmlFor='img'>
+											Image:
+											<DriveFolderUploadOutlinedIcon className='icon' />
+										</label>
+										<input
+											type='file'
+											id='img'
+											onChange={(e) => setImg(e.target.files[0])}
+											hidden
+										/>
+									</>
+									<div className='file-preview'>
+										<img
+											src={img ? URL.createObjectURL(img) : NoImageAlt}
+											alt=''
+										/>
+									</div>
+								</div>
+							</div>
 							<TextInput
 								variant='standard'
 								label='TItle'
@@ -194,7 +216,6 @@ const New = ({ title, type }) => {
 								selectOptions={binaryOptions}
 								value={isSeries}
 								onChange={(e) => handleChange('isSeries', e.target.value)}
-								fullWidth
 							/>
 							{isSeries && (
 								<>
@@ -205,7 +226,6 @@ const New = ({ title, type }) => {
 										selectOptions={seriesTypes}
 										value={seriesType}
 										onChange={(e) => handleChange('seriesType', e.target.value)}
-										// fullWidth
 									/>
 									<TextInput
 										variant='standard'

@@ -10,10 +10,10 @@ import nutzflixApi from '../../api/nutflixApi';
 export const videoAdapter = createEntityAdapter();
 const initialState = videoAdapter.getInitialState({
 	loading: false,
-	synopsis: '',
-	runTime: '',
 	vidTitle: '',
+	synopsis: '',
 	year: '',
+	runTime: '',
 	isSeries: false,
 	seriesType: '',
 	seriesTitle: '',
@@ -29,17 +29,17 @@ export const videoSlice = createSlice({
 	name: 'video',
 	initialState,
 	reducers: {
-		setSynopsis: (state, action) => {
-			state.synopsis = action.payload;
-		},
-		setRunTime: (state, action) => {
-			state.runTime = action.payload;
-		},
 		setVidTitle: (state, action) => {
 			state.vidTitle = action.payload;
 		},
+		setSynopsis: (state, action) => {
+			state.synopsis = action.payload;
+		},
 		setYear: (state, action) => {
 			state.year = action.payload;
+		},
+		setRunTime: (state, action) => {
+			state.runTime = action.payload;
 		},
 		setIsSeries: (state, action) => {
 			state.isSeries = action.payload;

@@ -21,10 +21,24 @@ export const userAuth = createAsyncThunk(
 	},
 );
 
+export const addSubscriber = createAsyncThunk(
+	'user/add_sub',
+	async (data, { rejectWithValue }) => {
+		try {
+			const res = await nutzflixApi.post('/users/add_sub', data);
+			return res.data;
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	},
+);
+
 export const userAdapter = createEntityAdapter();
 const initialState = userAdapter.getInitialState({
 	loading: false,
 	activeUser: null,
+	username: '',
+	email: '',
 	userSuccess: null,
 	userErrors: null,
 });
@@ -33,6 +47,12 @@ export const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
+		setUsername: (state, action) => {
+			state.username = action.payload;
+		},
+		setEmail: (state, action) => {
+			state.email = action.payload;
+		},
 		setActiveUser: (state) => {
 			state.activeUser = {
 				_id: '67c1dd076e664c821c40e936',
@@ -86,6 +106,21 @@ export const userSlice = createSlice({
 				state.loading = false;
 				state.userErrors = action.payload;
 			})
+			.addCase(addSubscriber.pending, (state) => {
+				state.loading = true;
+				state.userErrors = null;
+			})
+			.addCase(addSubscriber.fulfilled, (state, action) => {
+				state.loading = false;
+				state.userSuccess = action.payload;
+				state.username = '';
+				state.email = '';
+				state.userErrors = null;
+			})
+			.addCase(addSubscriber.rejected, (state, action) => {
+				state.loading = false;
+				state.userErrors = action.payload;
+			})
 			.addCase(PURGE, () => {
 				localStorage.removeItem('token');
 				return initialState;
@@ -93,7 +128,13 @@ export const userSlice = createSlice({
 	},
 });
 
-export const { setActiveUser, logout, clearUserErrors, clearUserSuccess } =
-	userSlice.actions;
+export const {
+	setUsername,
+	setEmail,
+	setActiveUser,
+	logout,
+	clearUserErrors,
+	clearUserSuccess,
+} = userSlice.actions;
 
 export default userSlice.reducer;
