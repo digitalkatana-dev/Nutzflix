@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Avatar, IconButton } from '@mui/material';
 import { setUsername, setEmail } from '../../../redux/slices/userSlice';
 import {
 	setSynopsis,
@@ -23,6 +24,7 @@ const New = ({ title, type }) => {
 	const [profilePhoto, setProfilePhoto] = useState(null);
 	const [img, setImg] = useState(null);
 	const [uploaded, setUploaded] = useState(0);
+	const [avatar, setAvatar] = useState('');
 	const { username, email } = useSelector((state) => state.user);
 	const {
 		synopsis,
@@ -59,6 +61,10 @@ const New = ({ title, type }) => {
 		const action = actionMap[input];
 
 		action && dispatch(action(value));
+	};
+
+	const handleClick = (e) => {
+		setAvatar(e.target.src === avatar ? '' : e.target.src);
 	};
 
 	return (
@@ -111,28 +117,37 @@ const New = ({ title, type }) => {
 							</div>
 						</>
 					) : (
-						<img
-							src={
-								profilePhoto ? URL.createObjectURL(profilePhoto) : NoImageAlt
-							}
-							alt=''
-						/>
+						<img src={avatar || NoImageAlt} alt='' />
 					)}
 				</div>
 				<form>
 					{type === 'sub' && (
 						<>
 							<div className='form-input'>
-								<label htmlFor='profilePhoto'>
+								<label>
 									Profile Photo:
 									<DriveFolderUploadOutlinedIcon className='icon' />
 								</label>
-								<input
-									type='file'
-									id='profilePhoto'
-									onChange={(e) => setProfilePhoto(e.target.files[0])}
-									hidden
-								/>
+								<div className='avatar-display'>
+									{[...Array(26)].map((_, index) => {
+										const source = `http://localhost:3005/assets/avatars/avatar_${
+											index + 1
+										}.jpg`;
+
+										return (
+											<IconButton
+												key={index + 1}
+												onClick={handleClick}
+												style={{
+													border:
+														avatar === source ? '3px ridge dodgerblue' : 'none',
+												}}
+											>
+												<Avatar src={source} alt='user' />
+											</IconButton>
+										);
+									})}
+								</div>
 							</div>
 							<TextInput
 								variant='standard'
