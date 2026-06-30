@@ -7,7 +7,7 @@ import TextInput from '../../components/TextInput';
 import Button from '../../components/Button';
 
 const Auth = () => {
-	const { userErrors } = useSelector((state) => state.user);
+	const { loading, userErrors } = useSelector((state) => state.user);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
 	const dispatch = useDispatch();
@@ -61,7 +61,9 @@ const Auth = () => {
 							error={userErrors?.password}
 							helperText={userErrors?.password}
 						/>
-						<Button type='submit'>Sign In</Button>
+						<Button type='submit' loading={loading}>
+							Sign In
+						</Button>
 					</form>
 					<span>
 						New to Nutzflix? <b>Sign up now.</b>

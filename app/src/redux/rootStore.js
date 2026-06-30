@@ -28,11 +28,17 @@ const userPersistConfig = {
 	whitelist: ['activeUser'],
 };
 
+const videoPersistConfig = {
+	key: 'video',
+	storage: resolvedStorage,
+	whitelist: ['allVideos', 'movies', 'series'],
+};
+
 export const store = configureStore({
 	reducer: {
 		app: persistReducer(appPersistConfig, appReducer),
 		user: persistReducer(userPersistConfig, userReducer),
-		video: videoReducer,
+		video: persistReducer(videoPersistConfig, videoReducer),
 	},
 	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({

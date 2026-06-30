@@ -16,7 +16,7 @@ const Watch = () => {
 				</div>
 			</Link>
 			<video
-				src={video?.media}
+				src={`https://server.nutzflix.net/Items/d7e56cd9772272534e94b795187cae9a/Download?api_key=5f84f87fa5584fd8b700cbcc8b5faf2e`}
 				className='video'
 				autoPlay
 				progress={true}
