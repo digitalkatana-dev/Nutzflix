@@ -61,4 +61,33 @@ router.post('/users/auth', async (req, res) => {
 	}
 });
 
+router.post('/users/add_sub', async (req, res) => {
+	let errors = {};
+
+	const tempPass = '';
+
+	try {
+		const newSubData = {
+			email,
+			password: tempPass,
+		};
+
+		const newSub = new User(newSubData);
+		await newSub?.save();
+
+		const profileData = {
+			username,
+			user: newSub?._id,
+		};
+
+		const subProfile = new Profile(profileData);
+		await subProfile?.save();
+
+		res.json({ success: 'Subscriber added successfully!' });
+	} catch (err) {
+		errors.subscriber = 'Error adding subscriber!';
+		return res.status(400).json(errors);
+	}
+});
+
 module.exports = router;

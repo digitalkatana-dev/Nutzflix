@@ -1,5 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Avatar, IconButton } from '@mui/material';
+import { setUsername, setEmail } from '../../../redux/slices/userSlice';
 import {
 	setSynopsis,
 	setRunTime,
@@ -22,6 +24,8 @@ const New = ({ title, type }) => {
 	const [profilePhoto, setProfilePhoto] = useState(null);
 	const [img, setImg] = useState(null);
 	const [uploaded, setUploaded] = useState(0);
+	const [avatar, setAvatar] = useState('');
+	const { username, email } = useSelector((state) => state.user);
 	const {
 		synopsis,
 		runTime,
@@ -39,6 +43,8 @@ const New = ({ title, type }) => {
 
 	const handleChange = (input, value) => {
 		const actionMap = {
+			username: setUsername,
+			email: setEmail,
 			vidTitle: setVidTitle,
 			synopsis: setSynopsis,
 			year: setYear,
@@ -55,6 +61,10 @@ const New = ({ title, type }) => {
 		const action = actionMap[input];
 
 		action && dispatch(action(value));
+	};
+
+	const handleClick = (e) => {
+		setAvatar(e.target.src === avatar ? '' : e.target.src);
 	};
 
 	return (
@@ -107,54 +117,81 @@ const New = ({ title, type }) => {
 							</div>
 						</>
 					) : (
-						<img
-							src={
-								profilePhoto ? URL.createObjectURL(profilePhoto) : NoImageAlt
-							}
-							alt=''
-						/>
+						<img src={avatar || NoImageAlt} alt='' />
 					)}
 				</div>
 				<form>
-					{type === 'sub' ? (
-						<div className='form-input'>
-							<label htmlFor='profilePhoto'>
-								Profile Photo:
-								<DriveFolderUploadOutlinedIcon className='icon' />
-							</label>
-							<input
-								type='file'
-								id='profilePhoto'
-								onChange={(e) => setProfilePhoto(e.target.files[0])}
-								hidden
-							/>
-						</div>
-					) : (
-						<div className='form-input'>
-							<div className='file-input-wrapper'>
-								<>
-									<label htmlFor='img'>
-										Image:
-										<DriveFolderUploadOutlinedIcon className='icon' />
-									</label>
-									<input
-										type='file'
-										id='img'
-										onChange={(e) => setImg(e.target.files[0])}
-										hidden
-									/>
-								</>
-								<div className='file-preview'>
-									<img
-										src={img ? URL.createObjectURL(img) : NoImageAlt}
-										alt=''
-									/>
+					{type === 'sub' && (
+						<>
+							<div className='form-input'>
+								<label>
+									Profile Photo:
+									<DriveFolderUploadOutlinedIcon className='icon' />
+								</label>
+								<div className='avatar-display'>
+									{[...Array(26)].map((_, index) => {
+										const source = `http://localhost:3005/assets/avatars/avatar_${
+											index + 1
+										}.jpg`;
+
+										return (
+											<IconButton
+												key={index + 1}
+												onClick={handleClick}
+												style={{
+													border:
+														avatar === source ? '3px ridge dodgerblue' : 'none',
+												}}
+											>
+												<Avatar src={source} alt='user' />
+											</IconButton>
+										);
+									})}
 								</div>
 							</div>
-						</div>
+							<TextInput
+								variant='standard'
+								label='Username'
+								placeholder='john_doe'
+								value={username}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('username', e.target.value)}
+							/>
+							<TextInput
+								type='email'
+								variant='standard'
+								label='Email'
+								placeholder='john_doe@gmail.com'
+								value={email}
+								onFocus={handleFocus}
+								onChange={(e) => handleChange('email', e.target.value)}
+							/>
+						</>
 					)}
 					{type === 'video' && (
 						<>
+							<div className='form-input'>
+								<div className='file-input-wrapper'>
+									<>
+										<label htmlFor='img'>
+											Image:
+											<DriveFolderUploadOutlinedIcon className='icon' />
+										</label>
+										<input
+											type='file'
+											id='img'
+											onChange={(e) => setImg(e.target.files[0])}
+											hidden
+										/>
+									</>
+									<div className='file-preview'>
+										<img
+											src={img ? URL.createObjectURL(img) : NoImageAlt}
+											alt=''
+										/>
+									</div>
+								</div>
+							</div>
 							<TextInput
 								variant='standard'
 								label='TItle'
@@ -194,7 +231,6 @@ const New = ({ title, type }) => {
 								selectOptions={binaryOptions}
 								value={isSeries}
 								onChange={(e) => handleChange('isSeries', e.target.value)}
-								fullWidth
 							/>
 							{isSeries && (
 								<>
@@ -205,7 +241,6 @@ const New = ({ title, type }) => {
 										selectOptions={seriesTypes}
 										value={seriesType}
 										onChange={(e) => handleChange('seriesType', e.target.value)}
-										// fullWidth
 									/>
 									<TextInput
 										variant='standard'

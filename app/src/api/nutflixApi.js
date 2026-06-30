@@ -4,7 +4,7 @@ import { logout } from '../redux/slices/userSlice';
 import { isTokenExpired } from '../util/helpers';
 
 const instance = axios.create({
-	baseURL: 'https://nutzflix-backend.onrender.com',
+	baseURL: 'https://server.nutzflix.net',
 });
 
 instance.interceptors.request.use(
