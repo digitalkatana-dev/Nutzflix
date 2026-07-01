@@ -59,9 +59,17 @@
 }
 
 .user-drawer-content {
+	width: 280px;
+	height: 100vh;
+	position: fixed;
+	top: 0;
+	left: 0;
 	flex: 1;
-	// background-color: rgb(26, 16, 32);
+	padding-top: 95px;
 	background: linear-gradient(to top, transparent 0%, rgb(26, 16, 32, 0.6) 50%);
+	z-index: 1101;
+	transform: translateX(-100%);
+	transition: all 2s ease;
 
 	.profile {
 		width: 100%;
@@ -118,5 +126,9 @@
 		display: flex;
 		align-items: center;
 		gap: 10px;
+	}
+
+	&.open {
+		transform: translateX(0);
 	}
 }

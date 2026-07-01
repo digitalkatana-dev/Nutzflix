@@ -9,7 +9,7 @@ import {
 import { subInputs, videoInputs, listInputs } from './util/data';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
-import AdminLayout from './layouts/AdminLayout/AdminLayout';
+import AdminLayout from './layouts/AdminLayout';
 import Auth from './views/Auth';
 import UserHome from './views/User/UserHome';
 import Watch from './views/User/Watch';
