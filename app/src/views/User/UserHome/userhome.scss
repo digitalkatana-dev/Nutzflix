@@ -2,10 +2,12 @@
 	width: 100vw;
 	flex: 1;
 	// height: 100vh;
+	border: 2px solid green;
 
 	.wrapper {
 		height: calc(100% - 98.2px);
 		margin-top: 98.2px;
 		overflow-y: scroll;
+		border: 2px solid dodgerblue;
 	}
 }
