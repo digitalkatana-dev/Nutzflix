@@ -1,25 +1,31 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { setSelectedVideo } from '../../../redux/slices/videoSlice';
 import ArrowBackIosOutlined from '@mui/icons-material/ArrowBackIosOutlined';
 import './watch.scss';
 
 const Watch = () => {
-	const location = useLocation();
-	const video = location?.state?.video;
+	const { selectedVideo } = useSelector((state) => state.video);
+	const dispatch = useDispatch();
+
+	const handleClick = () => {
+		dispatch(setSelectedVideo(null));
+	};
 
 	return (
 		<div className='watch'>
-			<Link to='/home'>
+			<Link to='/home-user' onClick={handleClick}>
 				<div className='back'>
 					<ArrowBackIosOutlined />
 					Home
 				</div>
 			</Link>
 			<video
-				src={`https://server.nutzflix.net/Items/d7e56cd9772272534e94b795187cae9a/Download?api_key=5f84f87fa5584fd8b700cbcc8b5faf2e`}
+				src={selectedVideo?.streamURL}
 				className='video'
 				autoPlay
-				progress={true}
+				progress='true'
 				controls
 			/>
 		</div>
