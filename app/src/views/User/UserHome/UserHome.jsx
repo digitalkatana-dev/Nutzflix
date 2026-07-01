@@ -1,17 +1,19 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Featured from './components/Featured';
 import List from '../../../components/List';
 import './userhome.scss';
 
-const UserHome = ({ type, lists }) => {
+const UserHome = ({ type }) => {
+	const { lists } = useSelector((state) => state.video);
+
 	return (
 		<div className='home'>
 			<div className='wrapper'>
 				{/* <Featured type={type} /> */}
-				<List list='Movies' />
-				{/* {lists?.map((list) => (
-					<List key={list._id} list={list} />
-				))} */}
+				{lists?.map((list) => (
+					<List key={list.name} list={list} />
+				))}
 			</div>
 		</div>
 	);
