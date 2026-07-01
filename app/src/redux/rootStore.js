@@ -31,7 +31,7 @@ const userPersistConfig = {
 const videoPersistConfig = {
 	key: 'video',
 	storage: resolvedStorage,
-	whitelist: ['allVideos', 'movies', 'series', 'selectedVideo'],
+	whitelist: ['allVideos', 'movies', 'series', 'lists', 'selectedVideo'],
 };
 
 export const store = configureStore({
