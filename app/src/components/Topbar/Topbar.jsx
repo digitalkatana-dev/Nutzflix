@@ -107,7 +107,7 @@ const Topbar = () => {
 						<h2 className='brand'>NUTZFLIX</h2>
 						{activeUser && (
 							<>
-								<Link to='/home' className='link'>
+								<Link to='/home-user' className='link'>
 									<span>Home</span>
 								</Link>
 								<Link to='/series' className='link'>

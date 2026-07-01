@@ -172,7 +172,7 @@ const SideNav = () => {
 							height: '95px',
 						}}
 					/>
-					<div className='user-drawer-content'>
+					<div className={`user-drawer-content${drawerOpen ? ' open' : ''}`}>
 						<Box sx={listStyles}>
 							<div className='profile'>
 								<div className='user-info'>

@@ -7,7 +7,7 @@ const UserHome = ({ type, lists }) => {
 	return (
 		<div className='home'>
 			<div className='wrapper'>
-				<Featured type={type} />
+				{/* <Featured type={type} /> */}
 				<List list='Movies' />
 				{/* {lists?.map((list) => (
 					<List key={list._id} list={list} />
