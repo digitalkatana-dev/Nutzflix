@@ -8,9 +8,10 @@ const UserHome = ({ type, lists }) => {
 		<div className='home'>
 			<div className='wrapper'>
 				<Featured type={type} />
-				{lists?.map((list) => (
+				<List list='Movies' />
+				{/* {lists?.map((list) => (
 					<List key={list._id} list={list} />
-				))}
+				))} */}
 			</div>
 		</div>
 	);

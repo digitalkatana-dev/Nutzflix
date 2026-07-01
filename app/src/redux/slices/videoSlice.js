@@ -5,7 +5,6 @@ import {
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 import { logout } from './userSlice';
-import nutzflixApi from '../../api/nutflixApi';
 
 export const videoAdapter = createEntityAdapter();
 const initialState = videoAdapter.getInitialState({
@@ -27,6 +26,9 @@ export const videoSlice = createSlice({
 			state.movies = action.payload.movies;
 			state.series = action.payload.series;
 		},
+		setSelectedVideo: (state, action) => {
+			state.selectedVideo = action.payload;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(logout, () => {
@@ -46,6 +48,7 @@ export const {
 	setSeason,
 	setEpisode,
 	setVideos,
+	setSelectedVideo,
 } = videoSlice.actions;
 
 export default videoSlice.reducer;
