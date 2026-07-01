@@ -1,15 +1,14 @@
 import { useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ListItem from '../ListItem/ListItem';
 import './list.scss';
 
 const List = ({ list }) => {
-	const { movies } = useSelector((state) => state.video);
 	const [isMoved, setIsMoved] = useState(false);
 	const [slideNumber, setSlideNumber] = useState(0);
 	const listRef = useRef();
+	const videos = list?.movies;
 
 	const handleClick = (direction) => {
 		setIsMoved(true);
@@ -26,7 +25,7 @@ const List = ({ list }) => {
 
 	return (
 		<div className='list'>
-			<span className='list-title'>{list}</span>
+			<span className='list-title'>{list?.name}</span>
 			<div className='wrapper'>
 				<ArrowBackIosOutlinedIcon
 					className='slider-arrow left'
@@ -34,7 +33,7 @@ const List = ({ list }) => {
 					style={{ display: !isMoved && 'none' }}
 				/>
 				<div className='container' ref={listRef}>
-					{movies.map((item, i) => (
+					{videos.slice(0, 10).map((item, i) => (
 						<ListItem key={item + i} index={i} item={item} />
 					))}
 				</div>
