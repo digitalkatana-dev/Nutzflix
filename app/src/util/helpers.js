@@ -1,5 +1,27 @@
 import { jwtDecode } from 'jwt-decode';
 
+const GENRE_NAMES = [
+	'Action',
+	'Comedy',
+	'Drama',
+	'Horror',
+	'Suspense',
+	'Thriller',
+	'Fantasy',
+	'Romance',
+	'Documentary',
+	'Sci-Fi',
+];
+
+const shuffleArray = (arr) => {
+	const shuffled = [...arr];
+	for (let i = shuffled.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+	}
+	return shuffled;
+};
+
 export const isTokenExpired = (token) => {
 	if (!token) return true;
 
@@ -38,4 +60,37 @@ export const objectMatch = (obj1, obj2) => {
 	}
 
 	return true;
+};
+
+export const getEmbedUrl = (youtubeUrl) => {
+	const match = youtubeUrl.match(/(?:v=|youtu\.be\/)([^&]+)/);
+	const videoId = match ? match[1] : null;
+
+	if (!videoId) return null;
+
+	const params = new URLSearchParams({
+		autoplay: '1',
+		mute: '1', // required by browsers for autoplay to work
+		controls: '0', // hides YouTube's control bar
+		modestbranding: '1',
+		loop: '1',
+		playlist: videoId, // required for loop to work on a single video
+		playsinline: '1',
+		rel: '0', // don't show related videos at the end
+	});
+
+	return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+};
+
+export const buildGenreLists = (movies) => {
+	const lists = [];
+	GENRE_NAMES.forEach((genre) => {
+		lists.push({
+			name: genre,
+			movies: shuffleArray(
+				movies?.filter((movie) => movie.genre?.includes(genre)),
+			),
+		});
+	});
+	return lists;
 };

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setSelectedVideo } from '../../redux/slices/videoSlice';
+import { getEmbedUrl } from '../../util/helpers';
 import AddIcon from '@mui/icons-material/Add';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
@@ -24,10 +25,11 @@ const ListItem = ({ index, item }) => {
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
 			>
-				<img src={item?.backdrop} alt='' />
-				{isHovered && (
+				{isHovered ? (
 					<>
-						<video src={item?.trailer} autoPlay={true} loop />
+						<div className='video-wrapper'>
+							<iframe src={getEmbedUrl(item?.trailer)} frameborder='0' />
+						</div>
 						<div className='item-info'>
 							<div className='icons'>
 								<PlayArrowIcon className='icon' />
@@ -36,7 +38,7 @@ const ListItem = ({ index, item }) => {
 								<ThumbDownAltOutlinedIcon className='icon' />
 							</div>
 							<div className='item-info-top'>
-								{/* <span>{item?.runTime}</span> */}
+								<span>{item?.title}</span>
 								<span className='rating'>{item?.rating}</span>
 								<span>{item?.year}</span>
 							</div>
@@ -44,6 +46,8 @@ const ListItem = ({ index, item }) => {
 							<div className='genre'>{item?.genre?.map((g) => `${g} `)}</div>
 						</div>
 					</>
+				) : (
+					<img src={item?.backdrop} alt='' />
 				)}
 			</div>
 		</Link>

@@ -12,7 +12,6 @@ const initialState = videoAdapter.getInitialState({
 	allVideos: null,
 	movies: null,
 	series: null,
-	lists: null,
 	selectedVideo: null,
 	videoSuccess: null,
 	videoErrors: null,
@@ -26,7 +25,6 @@ export const videoSlice = createSlice({
 			state.allVideos = action.payload.allVideos;
 			state.movies = action.payload.movies;
 			state.series = action.payload.series;
-			state.lists = action.payload.lists;
 		},
 		setSelectedVideo: (state, action) => {
 			state.selectedVideo = action.payload;
