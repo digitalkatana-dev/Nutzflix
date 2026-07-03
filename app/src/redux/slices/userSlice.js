@@ -13,7 +13,6 @@ export const userAuth = createAsyncThunk(
 		try {
 			const res = await nutzflixApi.post('/api/users/auth', data);
 			const { token, userProfile, video, success } = res.data;
-			console.log('Response', res.data);
 			localStorage.setItem('token', token);
 			dispatch(setVideos(video));
 			return { userProfile, success };

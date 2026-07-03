@@ -7,7 +7,6 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import ListIcon from '@mui/icons-material/List';
 import PlayIcon from '@mui/icons-material/PlayCircleOutlined';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
@@ -18,9 +17,8 @@ import SettingsSystemDaydreamOutlinedIcon from '@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import NavItem from '../NavItem';
-import Drawer from '../Drawer';
-import './sideNav.scss';
 import Helmet from '../../assets/Helmet.jpg';
+import './sideNav.scss';
 
 const SideNav = () => {
 	const { theme, viewMode, drawerOpen, roles } = useSelector(
@@ -44,11 +42,6 @@ const SideNav = () => {
 		dispatch(logout());
 	};
 
-	const boxStyles = {
-		flexShrink: { lg: 0 },
-		width: { sm: 280 },
-	};
-
 	const listStyles = {
 		my: 3,
 		mx: 2.5,
@@ -60,158 +53,132 @@ const SideNav = () => {
 		bgcolor: 'rgba(171, 171, 171, .12)',
 	};
 
-	const drawerContent = (
-		<div className='admin-drawer-content'>
-			<Box sx={{ pt: '15px', pl: '15px' }}>
-				<p className='label'>Main</p>
-				<NavItem
-					admin
-					link='/home-admin'
-					className='router-link'
-					icon={<DashboardIcon className='icon' />}
-					label='Dashboard'
-				/>
-				<p className='label'>QUICK MENU</p>
-				<NavItem
-					admin
-					link='/home-user'
-					className='router-link'
-					icon={<PersonOutlineIcon className='icon' />}
-					label='User Home'
-					onClick={handleViewMode}
-				/>
-				<NavItem
-					admin
-					link='/subs'
-					linkState={{ dataType: 'subs' }}
-					className='router-link'
-					icon={<PersonOutlineIcon className='icon' />}
-					label='Subscribers'
-				/>
-				<NavItem
-					admin
-					link='/videos'
-					linkState={{ dataType: 'videos' }}
-					className='router-link'
-					icon={<PlayIcon className='icon' />}
-					label='Videos'
-				/>
-				<NavItem
-					admin
-					link='/lists'
-					linkState={{ dataType: 'lists' }}
-					className='router-link'
-					icon={<ListIcon className='icon' />}
-					label='Lists'
-				/>
-				<NavItem
-					admin
-					icon={<LocalShippingIcon className='icon' />}
-					label='Delivery'
-				/>
-				<p className='label'>USEFUL</p>
-				<NavItem
-					admin
-					icon={<InsertChartIcon className='icon' />}
-					label='Stats'
-				/>
-				<NavItem
-					admin
-					icon={<NotificationsNoneIcon className='icon' />}
-					label='Notificaitons'
-				/>
-				<p className='label'>SERVICE</p>
-				<NavItem
-					admin
-					icon={<SettingsSystemDaydreamOutlinedIcon className='icon' />}
-					label='System Health'
-				/>
-				<NavItem
-					admin
-					icon={<PsychologyOutlinedIcon className='icon' />}
-					label='Logs'
-				/>
-				<NavItem
-					admin
-					icon={<SettingsApplicationsIcon className='icon' />}
-					label='Settings'
-					onClick={handleTheme}
-				/>
-				<p className='label'>USER</p>
-				<NavItem
-					admin
-					icon={<AccountCircleOutlinedIcon className='icon' />}
-					label='Profile'
-				/>
-				<NavItem
-					admin
-					icon={<ExitToAppIcon className='icon' />}
-					label='Logout'
-					onClick={handleLogout}
-				/>
-			</Box>
-		</div>
-	);
-
 	if (roles.includes(activeUser?.role) && viewMode === 'admin') {
 		return (
-			<div className='admin-side-nav'>
-				<Drawer open={drawerOpen} variant='temporary'>
-					{drawerContent}
-				</Drawer>
-				<Drawer variant='permanent'>{drawerContent}</Drawer>
-			</div>
+			<nav className={`sideNav admin${drawerOpen ? ' open' : ''}`}>
+				<div className='admin-content'>
+					<Box sx={{ pt: '15px', pl: '15px' }}>
+						<p className='label'>Main</p>
+						<NavItem
+							admin
+							link='/home-admin'
+							className='router-link'
+							icon={<DashboardIcon className='icon' />}
+							label='Dashboard'
+						/>
+						<p className='label'>QUICK MENU</p>
+						<NavItem
+							admin
+							link='/home-user'
+							className='router-link'
+							icon={<PersonOutlineIcon className='icon' />}
+							label='User Home'
+							onClick={handleViewMode}
+						/>
+						<NavItem
+							admin
+							link='/subs'
+							linkState={{ dataType: 'subs' }}
+							className='router-link'
+							icon={<PersonOutlineIcon className='icon' />}
+							label='Subscribers'
+						/>
+						<NavItem
+							admin
+							link='/videos'
+							linkState={{ dataType: 'videos' }}
+							className='router-link'
+							icon={<PlayIcon className='icon' />}
+							label='Videos'
+						/>
+						<NavItem
+							admin
+							link='/lists'
+							linkState={{ dataType: 'lists' }}
+							className='router-link'
+							icon={<ListIcon className='icon' />}
+							label='Lists'
+						/>
+						<p className='label'>USEFUL</p>
+						<NavItem
+							admin
+							icon={<InsertChartIcon className='icon' />}
+							label='Stats'
+						/>
+						<NavItem
+							admin
+							icon={<NotificationsNoneIcon className='icon' />}
+							label='Notificaitons'
+						/>
+						<p className='label'>SERVICE</p>
+						<NavItem
+							admin
+							icon={<SettingsSystemDaydreamOutlinedIcon className='icon' />}
+							label='System Health'
+						/>
+						<NavItem
+							admin
+							icon={<PsychologyOutlinedIcon className='icon' />}
+							label='Logs'
+						/>
+						<NavItem
+							admin
+							icon={<SettingsApplicationsIcon className='icon' />}
+							label='Settings'
+							onClick={handleTheme}
+						/>
+						<p className='label'>USER</p>
+						<NavItem
+							admin
+							icon={<AccountCircleOutlinedIcon className='icon' />}
+							label='Profile'
+						/>
+						<NavItem
+							admin
+							icon={<ExitToAppIcon className='icon' />}
+							label='Logout'
+							onClick={handleLogout}
+						/>
+					</Box>
+				</div>
+			</nav>
 		);
 	} else {
 		return (
-			<Box sx={boxStyles}>
-				<Drawer open={drawerOpen} variant='temporary'>
-					<div
-						className='drawer-spacer'
-						style={{
-							height: '95px',
-						}}
-					/>
-					<div className={`user-drawer-content${drawerOpen ? ' open' : ''}`}>
-						<Box sx={listStyles}>
-							<div className='profile'>
-								<div className='user-info'>
-									<Avatar src={activeUser?.profilePhoto || Helmet} />
-									<h2>Nutz</h2>
-								</div>
-								<div className='profile-options'>
-									<ArrowDropDownIcon className='icon' />
-									<div className='options'>
-										<span onClick={handleTheme}>Settings</span>
-										<Divider />
-										<span onClick={handleLogout}>Logout</span>
-									</div>
-								</div>
+			<nav className={`sideNav${drawerOpen ? ' open' : ''}`}>
+				<Box sx={listStyles}>
+					<div className='profile'>
+						<div className='user-info'>
+							<Avatar src={activeUser?.profilePhoto || Helmet} />
+							<h2>Nutz</h2>
+						</div>
+						<div className='profile-options'>
+							<ArrowDropDownIcon className='icon' />
+							<div className='options'>
+								<span onClick={handleTheme}>Settings</span>
+								<Divider />
+								<span onClick={handleLogout}>Logout</span>
 							</div>
-						</Box>
-						<Divider />
-						<Box sx={listStyles}>
-							<div className='search'>
-								<SearchIcon className='icon' />
-								<span>KID</span>
-							</div>
-						</Box>
-						<Stack component='nav' spacing={0.5} sx={{ px: 2 }}>
-							<NavItem page='Home' />
-							<NavItem page='Series' />
-							<NavItem page='Movies' />
-							<NavItem page='My List' />
-							{roles.includes(activeUser?.role) && (
-								<NavItem
-									page='Admin'
-									link='/home-admin'
-									onClick={handleViewMode}
-								/>
-							)}
-						</Stack>
+						</div>
 					</div>
-				</Drawer>
-			</Box>
+				</Box>
+				<Divider />
+				<Box sx={listStyles}>
+					<div className='search'>
+						<SearchIcon className='icon' />
+						<span>KID</span>
+					</div>
+				</Box>
+				<Stack component='nav' spacing={0.5} sx={{ px: 2 }}>
+					<NavItem page='Home' />
+					<NavItem page='Series' />
+					<NavItem page='Movies' />
+					<NavItem page='My List' />
+					{roles.includes(activeUser?.role) && (
+						<NavItem page='Admin' link='/home-admin' onClick={handleViewMode} />
+					)}
+				</Stack>
+			</nav>
 		);
 	}
 };
