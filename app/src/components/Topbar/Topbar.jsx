@@ -8,13 +8,13 @@ import {
 	setDrawerOpen,
 } from '../../redux/slices/appSlice';
 import { logout } from '../../redux/slices/userSlice';
-import './topbar.scss';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import MenuUnfoldOutlinedIcon from '@ant-design/icons/MenuFoldOutlined';
 import SearchIcon from '@mui/icons-material/Search';
 import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import TextInput from '../TextInput';
 import Helmet from '../../assets/Helmet.jpg';
+import './topbar.scss';
 
 const Topbar = () => {
 	const { theme, viewMode, roles, drawerOpen } = useSelector(
@@ -24,7 +24,7 @@ const Topbar = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const dispatch = useDispatch();
 
-	const toggleMode = (e) => {
+	const toggleTheme = (e) => {
 		e.preventDefault();
 		const newTheme = theme === 'light' ? 'dark' : 'light';
 		dispatch(setTheme(newTheme));
@@ -52,7 +52,7 @@ const Topbar = () => {
 
 	if (roles.includes(activeUser?.role) && viewMode === 'admin') {
 		return (
-			<div className='admin-topbar'>
+			<header className='topbar admin'>
 				<IconButton
 					sx={{ mr: 2, ml: 2 }}
 					className='admin-menu-btn'
@@ -64,26 +64,35 @@ const Topbar = () => {
 					<div className='brand-wrapper'>
 						<span className='brand'>NUTZFLIX</span>
 					</div>
-					<div className='admin-search'>
-						<TextInput
-							placeholder='Search...'
-							rightIcon={<SearchIcon className='icon' />}
-						/>
-					</div>
-					<div className='admin-items'>
-						<div className='admin-item'>
-							<DarkModeOutlinedIcon className='icon' onClick={toggleMode} />
-						</div>
-						<div className='admin-item'>
-							<Avatar
-								src={activeUser?.profilePhoto}
-								alt=''
-								className='avatar'
+					<Box
+						sx={{
+							display: 'flex',
+							flexGrow: 1,
+							justifyContent: 'space-evenly',
+							alignItems: 'center',
+						}}
+					>
+						<div className='admin-search'>
+							<TextInput
+								placeholder='Search...'
+								rightIcon={<SearchIcon className='icon' />}
 							/>
 						</div>
-					</div>
+						<div className='admin-items'>
+							<div className='admin-item'>
+								<DarkModeOutlinedIcon className='icon' onClick={toggleTheme} />
+							</div>
+							<div className='admin-item'>
+								<Avatar
+									src={activeUser?.profilePhoto}
+									alt=''
+									className='avatar'
+								/>
+							</div>
+						</div>
+					</Box>
 				</div>
-			</div>
+			</header>
 		);
 	} else {
 		return (

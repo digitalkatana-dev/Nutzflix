@@ -1,18 +1,14 @@
-import { useState } from 'react';
-// import Topbar from '../../components/Topbar';
-import Navbar from '../../components/Navbar';
-import LeftNav from '../../components/LeftNav';
-// import SideNav from '../../components/SideNav';
+import React from 'react';
+import Topbar from '../../components/Topbar';
+import SideNav from '../../components/SideNav';
 import './mainLayout.scss';
 
 const MainLayout = ({ children }) => {
-	const [open, setOpen] = useState(false);
-
 	return (
 		<div className='main-layout'>
-			<Navbar setOpen={setOpen} open={open} />
+			<Topbar />
 			<div className='flex-wrapper'>
-				<LeftNav open={open} />
+				<SideNav />
 				<main>{children}</main>
 			</div>
 		</div>
