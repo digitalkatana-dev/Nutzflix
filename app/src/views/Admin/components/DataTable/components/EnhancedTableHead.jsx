@@ -10,7 +10,6 @@ import {
 import { visuallyHidden } from '@mui/utils';
 
 const EnhancedTableHead = ({
-	dataType,
 	headCells,
 	onSelectAllClick,
 	order,
@@ -34,7 +33,7 @@ const EnhancedTableHead = ({
 						checked={rowCount > 0 && numSelected === rowCount}
 						onChange={onSelectAllClick}
 						inputProps={{
-							'aria-label': `select all ${dataType}`,
+							'aria-label': `select all subs`,
 						}}
 					/>
 				</TableCell>

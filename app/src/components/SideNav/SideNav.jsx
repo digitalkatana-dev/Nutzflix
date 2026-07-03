@@ -78,7 +78,6 @@ const SideNav = () => {
 						<NavItem
 							admin
 							link='/subs'
-							linkState={{ dataType: 'subs' }}
 							className='router-link'
 							icon={<PersonOutlineIcon className='icon' />}
 							label='Subscribers'
@@ -86,18 +85,9 @@ const SideNav = () => {
 						<NavItem
 							admin
 							link='/videos'
-							linkState={{ dataType: 'videos' }}
 							className='router-link'
 							icon={<PlayIcon className='icon' />}
 							label='Videos'
-						/>
-						<NavItem
-							admin
-							link='/lists'
-							linkState={{ dataType: 'lists' }}
-							className='router-link'
-							icon={<ListIcon className='icon' />}
-							label='Lists'
 						/>
 						<p className='label'>USEFUL</p>
 						<NavItem
