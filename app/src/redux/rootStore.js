@@ -25,7 +25,7 @@ const appPersistConfig = {
 const userPersistConfig = {
 	key: 'user',
 	storage: resolvedStorage,
-	whitelist: ['activeUser'],
+	whitelist: ['activeUser', 'allUsers'],
 };
 
 const videoPersistConfig = {

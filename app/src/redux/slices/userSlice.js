@@ -40,6 +40,7 @@ const initialState = userAdapter.getInitialState({
 	activeUser: null,
 	username: '',
 	email: '',
+	allUsers: [],
 	userSuccess: null,
 	userErrors: null,
 });

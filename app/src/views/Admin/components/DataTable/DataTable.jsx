@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import {
 	Box,
 	Checkbox,
@@ -17,105 +17,44 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import EnhancedTableHead from './components/EnhancedTableHead';
 import './dataTable.scss';
 
-const DataTable = ({ title, subs, videos, lists }) => {
+const DataTable = () => {
+	const { allUsers } = useSelector((state) => state.user);
 	const [order, setOrder] = useState('asc');
 	const [orderBy, setOrderBy] = useState('id');
 	const [selected, setSelected] = useState([]);
 	const [page, setPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(5);
-	const [dataSet, setDataSet] = useState([]);
-	const location = useLocation();
 	const dispatch = useDispatch();
-	const dataType = location.state.dataType;
 
-	const getVideo = () => {};
-	const deleteVideo = () => {};
 	const getSub = () => {};
 	const deleteSub = () => {};
 
-	let headCells;
-	if (dataType === 'subs') {
-		headCells = [
-			{
-				id: 'id',
-				label: 'ID',
-			},
-			{
-				id: 'username',
-				label: 'Username',
-			},
-			{
-				id: 'email',
-				label: 'Email',
-			},
-			{
-				id: 'isAdmin',
-				label: 'is Admin',
-			},
-			{
-				id: 'joined',
-				label: 'Joined',
-			},
-			{
-				id: 'action',
-				label: 'Action',
-			},
-		];
-	} else if (dataType === 'videos') {
-		headCells = [
-			{
-				id: 'id',
-				label: 'ID',
-			},
-			{
-				id: 'title',
-				label: 'Title',
-			},
-			{
-				id: 'genre',
-				label: 'Genre',
-			},
-			{
-				id: 'year',
-				label: 'Year',
-			},
-			{
-				id: 'rating',
-				label: 'Rating',
-			},
-			{
-				id: 'series',
-				label: 'Series',
-			},
-			{
-				id: 'action',
-				label: 'Action',
-			},
-		];
-	} else if (dataType === 'lists') {
-		headCells = [
-			{
-				id: 'id',
-				label: 'ID',
-			},
-			{
-				id: 'title',
-				label: 'Title',
-			},
-			{
-				id: 'type',
-				label: 'Type',
-			},
-			{
-				id: 'genre',
-				label: 'Genre',
-			},
-			{
-				id: 'action',
-				label: 'Action',
-			},
-		];
-	}
+	const headCells = [
+		{
+			id: 'id',
+			label: 'ID',
+		},
+		{
+			id: 'username',
+			label: 'Username',
+		},
+		{
+			id: 'email',
+			label: 'Email',
+		},
+		{
+			id: 'isAdmin',
+			label: 'is Admin',
+		},
+		{
+			id: 'joined',
+			label: 'Joined',
+		},
+		{
+			id: 'action',
+			label: 'Action',
+		},
+	];
 
 	function descendingComparator(a, b, orderBy) {
 		if (b[orderBy] < a[orderBy]) {
@@ -152,7 +91,7 @@ const DataTable = ({ title, subs, videos, lists }) => {
 
 	const handleSelectAllClick = (event) => {
 		if (event.target.checked) {
-			const newSelecteds = dataSet?.map((n) => n._id);
+			const newSelecteds = allUsers?.map((n) => n._id);
 			setSelected(newSelecteds);
 			return;
 		}
@@ -191,65 +130,31 @@ const DataTable = ({ title, subs, videos, lists }) => {
 	const isSelected = (id) => selected.indexOf(id) !== -1;
 
 	const emptyRows =
-		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - dataSet?.length) : 0;
+		page > 0 ? Math.max(0, (1 + page) * rowsPerPage - allUsers?.length) : 0;
 
 	const handleDelete = (id) => {
-		if (dataType === 'subs') {
-			dispatch(deleteSub(id));
-		} else if (dataType === 'videos') {
-			dispatch(deleteVideo(id));
-		}
+		dispatch(deleteSub(id));
 	};
-
-	useEffect(() => {
-		if (dataType === 'subs') {
-			setDataSet(subs);
-		} else if (dataType === 'videos') {
-			setDataSet(videos);
-		} else if (dataType === 'lists') {
-			setDataSet(lists);
-		}
-	}, [dataType, subs, videos, lists]);
-
-	console.log(lists);
 
 	return (
 		<div className='data-table'>
-			<div className='top'>
-				<h2 className='title'>{title}</h2>
-				<Link
-					to={
-						dataType === 'subs'
-							? '/subs/new'
-							: dataType === 'videos'
-								? '/videos/new'
-								: dataType === 'lists'
-									? '/lists/new'
-									: null
-					}
-					className='link'
-				>
-					Add New
-				</Link>
-			</div>
 			<div className='bottom'>
-				{dataSet && (
+				{allUsers && (
 					<Box sx={{ width: '100%' }}>
 						<Paper sx={{ width: '100%', mb: 2 }}>
 							<TableContainer className='table'>
 								<Table sx={{ minWidth: 750 }}>
 									<EnhancedTableHead
-										dataType={dataType}
 										headCells={headCells}
 										numSelected={selected.length}
 										order={order}
 										orderBy={orderBy}
 										onSelectAllClick={handleSelectAllClick}
 										onRequestSort={handleRequestSort}
-										rowCount={dataSet?.length}
+										rowCount={allUsers?.length}
 									/>
 									<TableBody>
-										{stableSort(dataSet, getComparator(order, orderBy))
+										{stableSort(allUsers, getComparator(order, orderBy))
 											.slice(
 												page * rowsPerPage,
 												page * rowsPerPage + rowsPerPage,
@@ -286,85 +191,33 @@ const DataTable = ({ title, subs, videos, lists }) => {
 															{data?._id}
 														</TableCell>
 														<TableCell className='table-cell'>
-															{dataType === 'lists' ? (
-																data?.title
-															) : (
-																<div className='cell-wrapper'>
-																	<img
-																		src={
-																			dataType === 'subs'
-																				? data?.profilePhoto ||
-																					'/profile_avatar.jpg'
-																				: dataType === 'videos'
-																					? data?.img
-																					: '/no-image-alt.jpg'
-																		}
-																		alt=''
-																		className='image'
-																	/>
-																	{dataType === 'subs'
-																		? data?.username
-																		: dataType === 'videos'
-																			? data?.title
-																			: null}
-																</div>
-															)}
+															<div className='cell-wrapper'>
+																<img
+																	src={
+																		data?.profilePhoto || '/profile_avatar.jpg'
+																	}
+																	alt=''
+																	className='image'
+																/>
+																{data?.username}
+															</div>
 														</TableCell>
 														<TableCell className='table-cell'>
-															{dataType === 'subs'
-																? data?.email
-																: dataType === 'videos'
-																	? data?.genre
-																	: dataType === 'lists'
-																		? data?.type
-																		: null}
+															{data?.email}
 														</TableCell>
 														<TableCell className='table-cell'>
-															{dataType === 'subs'
-																? data?.isAdmin?.toString()
-																: dataType === 'videos'
-																	? data?.year
-																	: dataType === 'lists'
-																		? data?.genre
-																		: null}
+															{data?.isAdmin?.toString()}
 														</TableCell>
-														{dataType === 'lists' ? null : (
-															<TableCell className='table-cell'>
-																{dataType === 'subs' ? (
-																	data?.createdAt
-																) : dataType === 'videos' ? (
-																	<span className={`rating ${data?.rating}`}>
-																		{data?.rating}
-																	</span>
-																) : null}
-															</TableCell>
-														)}
-														{dataType === 'videos' ? (
-															<TableCell className='table-cell'>
-																{data?.isSeries?.toString()}
-															</TableCell>
-														) : null}
+														<TableCell className='table-cell'>
+															{data?.createdAt}
+														</TableCell>
 														<TableCell className='table-cell'>
 															<div className='cell-action'>
 																<Link
-																	to={
-																		dataType === 'subs'
-																			? `/subs/${data?._id}`
-																			: dataType === 'videos'
-																				? `/videos/${data?._id}`
-																				: dataType === 'lists'
-																					? `/lists/${data?._id}`
-																					: null
-																	}
+																	to={`/subs/${data?._id}`}
 																	state={{ data }}
 																	style={{ textDecoration: 'none' }}
-																	onClick={
-																		dataType === 'videos'
-																			? () => dispatch(getVideo(data?._id))
-																			: dataType === 'subs'
-																				? () => dispatch(getSub(data?._id))
-																				: null
-																	}
+																	onClick={() => dispatch(getSub(data?._id))}
 																>
 																	<EditIcon className='edit-btn' />
 																</Link>
@@ -388,7 +241,7 @@ const DataTable = ({ title, subs, videos, lists }) => {
 							<TablePagination
 								rowsPerPageOptions={[5, 10, 25]}
 								component='div'
-								count={dataSet?.length}
+								count={allUsers?.length}
 								rowsPerPage={rowsPerPage}
 								page={page}
 								onPageChange={handleChangePage}
