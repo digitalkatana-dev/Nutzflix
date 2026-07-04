@@ -4,22 +4,21 @@ import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutl
 import ListItem from '../ListItem/ListItem';
 import './list.scss';
 
+const SLIDE_WIDTH = 230;
+const MAX_SLIDE = 5;
+
 const List = ({ list }) => {
 	const [isMoved, setIsMoved] = useState(false);
 	const [slideNumber, setSlideNumber] = useState(0);
-	const listRef = useRef();
 	const videos = list?.movies;
 
 	const handleClick = (direction) => {
 		setIsMoved(true);
-		let distance = listRef.current.getBoundingClientRect().x - 50;
 		if (direction === 'left' && slideNumber > 0) {
 			setSlideNumber(slideNumber - 1);
-			listRef.current.style.transform = `translateX(${230 + distance}px)`;
 		}
-		if (direction === 'right' && slideNumber < 5) {
+		if (direction === 'right' && slideNumber < MAX_SLIDE) {
 			setSlideNumber(slideNumber + 1);
-			listRef.current.style.transform = `translateX(${-230 + distance}px)`;
 		}
 	};
 
@@ -32,7 +31,13 @@ const List = ({ list }) => {
 					onClick={() => handleClick('left')}
 					style={{ display: !isMoved && 'none' }}
 				/>
-				<div className='container' ref={listRef}>
+				<div
+					className='container'
+					style={{
+						transform: `translateX(${-SLIDE_WIDTH * slideNumber}px)`,
+						transition: 'transform 0.5s ease',
+					}}
+				>
 					{videos.slice(0, 10).map((item, i) => (
 						<ListItem key={item + i} index={i} item={item} />
 					))}

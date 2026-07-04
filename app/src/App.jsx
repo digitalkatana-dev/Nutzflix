@@ -101,12 +101,14 @@ const App = () => {
 							}
 						/>
 					</Route>
-					<Route path='videos'>
+					<Route path='inventory'>
 						<Route
 							index
 							element={
 								<ProtectedRoute
-									element={<AdminLayout children={<List title='Videos' />} />}
+									element={
+										<AdminLayout children={<List title='Inventory' />} />
+									}
 								/>
 							}
 						/>

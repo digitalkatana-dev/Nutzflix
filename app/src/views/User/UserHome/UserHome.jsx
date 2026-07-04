@@ -1,5 +1,4 @@
 import React from 'react';
-import { Container } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { buildGenreLists } from '../../../util/helpers';
 import Featured from './components/Featured';
@@ -13,9 +12,11 @@ const UserHome = () => {
 	return (
 		<div className='home'>
 			<Featured />
-			{lists?.map((list) => (
-				<List key={list.name} list={list} />
-			))}
+			{lists
+				.filter((list) => list.movies.length > 0)
+				.map((list) => (
+					<List key={list.name} list={list} />
+				))}
 		</div>
 	);
 };

@@ -9,7 +9,7 @@ const AdminLayout = ({ children }) => {
 			<Topbar />
 			<div className='flex-wrapper'>
 				<SideNav />
-				<main>{children}</main>
+				<main className='admin-main'>{children}</main>
 			</div>
 		</div>
 	);

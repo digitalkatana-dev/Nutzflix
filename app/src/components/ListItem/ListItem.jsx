@@ -28,7 +28,7 @@ const ListItem = ({ index, item }) => {
 				{isHovered ? (
 					<>
 						<div className='video-wrapper'>
-							<iframe src={getEmbedUrl(item?.trailer)} frameborder='0' />
+							<iframe src={getEmbedUrl(item?.trailer)} frameBorder='0' />
 						</div>
 						<div className='item-info'>
 							<div className='icons'>
