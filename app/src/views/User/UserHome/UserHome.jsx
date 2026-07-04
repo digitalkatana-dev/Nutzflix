@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { buildGenreLists } from '../../../util/helpers';
 import Featured from './components/Featured';
-import List from '../../../components/List';
+import Carousel from '../../../components/Carousel';
 import './userhome.scss';
 
 const UserHome = () => {
@@ -12,11 +12,13 @@ const UserHome = () => {
 	return (
 		<div className='home'>
 			<Featured />
-			{lists
-				.filter((list) => list.movies.length > 0)
-				.map((list) => (
-					<List key={list.name} list={list} />
-				))}
+			<div className='carousel-wrapper'>
+				{lists
+					.filter((list) => list.movies.length > 0)
+					.map((list) => (
+						<Carousel key={list.name} list={list} />
+					))}
+			</div>
 		</div>
 	);
 };

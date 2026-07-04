@@ -1,4 +1,4 @@
-.list {
+.carousel {
 	width: 100%;
 	margin-top: 10px;
 
@@ -34,6 +34,7 @@
 		.container {
 			margin-left: 50px;
 			display: flex;
+			gap: 15px;
 			margin-top: 10px;
 			width: max-content;
 			transform: translateX(0px);
