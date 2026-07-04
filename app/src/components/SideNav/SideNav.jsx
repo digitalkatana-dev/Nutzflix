@@ -1,13 +1,16 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Box, Divider, Stack } from '@mui/material';
-import { setTheme, setViewMode } from '../../redux/slices/appSlice';
+import {
+	setDrawerOpen,
+	setTheme,
+	setViewMode,
+} from '../../redux/slices/appSlice';
 import { logout } from '../../redux/slices/userSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
-import ListIcon from '@mui/icons-material/List';
 import PlayIcon from '@mui/icons-material/PlayCircleOutlined';
 import InsertChartIcon from '@mui/icons-material/InsertChart';
 import SettingsApplicationsIcon from '@mui/icons-material/SettingsApplications';
@@ -27,15 +30,21 @@ const SideNav = () => {
 	const { activeUser } = useSelector((state) => state.user);
 	const dispatch = useDispatch();
 
+	const handleDrawer = () => {
+		dispatch(setDrawerOpen(false));
+	};
+
 	const handleTheme = () => {
 		const newTheme = theme === 'dark' ? 'light' : 'dark';
 		dispatch(setTheme(newTheme));
+		dispatch(setDrawerOpen(false));
 	};
 
 	const handleViewMode = () => {
 		const newMode = viewMode === 'admin' ? 'user' : 'admin';
 
 		dispatch(setViewMode(newMode));
+		dispatch(setDrawerOpen(false));
 	};
 
 	const handleLogout = () => {
@@ -65,6 +74,7 @@ const SideNav = () => {
 							className='router-link'
 							icon={<DashboardIcon className='icon' />}
 							label='Dashboard'
+							onClick={handleDrawer}
 						/>
 						<p className='label'>QUICK MENU</p>
 						<NavItem
@@ -81,6 +91,7 @@ const SideNav = () => {
 							className='router-link'
 							icon={<PersonOutlineIcon className='icon' />}
 							label='Subscribers'
+							onClick={handleDrawer}
 						/>
 						<NavItem
 							admin
@@ -88,28 +99,33 @@ const SideNav = () => {
 							className='router-link'
 							icon={<PlayIcon className='icon' />}
 							label='Inventory'
+							onClick={handleDrawer}
 						/>
 						<p className='label'>USEFUL</p>
 						<NavItem
 							admin
 							icon={<InsertChartIcon className='icon' />}
 							label='Stats'
+							onClick={handleDrawer}
 						/>
 						<NavItem
 							admin
 							icon={<NotificationsNoneIcon className='icon' />}
 							label='Notificaitons'
+							onClick={handleDrawer}
 						/>
 						<p className='label'>SERVICE</p>
 						<NavItem
 							admin
 							icon={<SettingsSystemDaydreamOutlinedIcon className='icon' />}
 							label='System Health'
+							onClick={handleDrawer}
 						/>
 						<NavItem
 							admin
 							icon={<PsychologyOutlinedIcon className='icon' />}
 							label='Logs'
+							onClick={handleDrawer}
 						/>
 						<NavItem
 							admin
@@ -122,6 +138,7 @@ const SideNav = () => {
 							admin
 							icon={<AccountCircleOutlinedIcon className='icon' />}
 							label='Profile'
+							onClick={handleDrawer}
 						/>
 						<NavItem
 							admin
@@ -160,10 +177,10 @@ const SideNav = () => {
 					</div>
 				</Box>
 				<Stack component='nav' spacing={0.5} sx={{ px: 2 }}>
-					<NavItem page='Home' />
-					<NavItem page='Series' />
-					<NavItem page='Movies' />
-					<NavItem page='My List' />
+					<NavItem page='Home' onClick={handleDrawer} />
+					<NavItem page='Series' onClick={handleDrawer} />
+					<NavItem page='Movies' onClick={handleDrawer} />
+					<NavItem page='My List' onClick={handleDrawer} />
 					{roles.includes(activeUser?.role) && (
 						<NavItem page='Admin' link='/home-admin' onClick={handleViewMode} />
 					)}

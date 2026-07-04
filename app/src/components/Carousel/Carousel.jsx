@@ -2,12 +2,12 @@ import { useRef, useState } from 'react';
 import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
 import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
 import ListItem from '../ListItem/ListItem';
-import './list.scss';
+import './carousel.scss';
 
 const SLIDE_WIDTH = 230;
 const MAX_SLIDE = 5;
 
-const List = ({ list }) => {
+const Carousel = ({ list }) => {
 	const [isMoved, setIsMoved] = useState(false);
 	const [slideNumber, setSlideNumber] = useState(0);
 	const videos = list?.movies;
@@ -23,7 +23,7 @@ const List = ({ list }) => {
 	};
 
 	return (
-		<div className='list'>
+		<div className='carousel'>
 			<span className='list-title'>{list?.name}</span>
 			<div className='wrapper'>
 				<ArrowBackIosOutlinedIcon
@@ -51,4 +51,4 @@ const List = ({ list }) => {
 	);
 };
 
-export default List;
+export default Carousel;
