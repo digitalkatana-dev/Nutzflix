@@ -84,10 +84,10 @@ const SideNav = () => {
 						/>
 						<NavItem
 							admin
-							link='/videos'
+							link='/inventory'
 							className='router-link'
 							icon={<PlayIcon className='icon' />}
-							label='Videos'
+							label='Inventory'
 						/>
 						<p className='label'>USEFUL</p>
 						<NavItem

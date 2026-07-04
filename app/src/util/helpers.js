@@ -13,7 +13,7 @@ const GENRE_NAMES = [
 	'Sci-Fi',
 ];
 
-const shuffleArray = (arr) => {
+export const shuffleArray = (arr) => {
 	const shuffled = [...arr];
 	for (let i = shuffled.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
@@ -63,7 +63,7 @@ export const objectMatch = (obj1, obj2) => {
 };
 
 export const getEmbedUrl = (youtubeUrl) => {
-	const match = youtubeUrl.match(/(?:v=|youtu\.be\/)([^&]+)/);
+	const match = youtubeUrl?.match(/(?:v=|youtu\.be\/)([^&]+)/);
 	const videoId = match ? match[1] : null;
 
 	if (!videoId) return null;

@@ -1,20 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DataTable from '../components/DataTable';
-import VideoList from '../components/Video List';
+import Inventory from '../components/Inventory';
 import './list.scss';
 
 const List = ({ title }) => {
 	return (
-		<div>
-			<div className='top'>
-				<h2 className='title'>{title}</h2>
-				<Link to='/subs/new' className='link'>
-					Add New
-				</Link>
-			</div>
-			{title === 'Subscribers' && <DataTable />}
-			{title === 'Videos' && <VideoList />}
+		<div className='list'>
+			<header className='top'>
+				<h3 className='title'>{title}</h3>
+				{title === 'Subscribers' && (
+					<Link to='/subs/new' className='link'>
+						Add New
+					</Link>
+				)}
+			</header>
+			<main className='list-main'>
+				{title === 'Subscribers' ? (
+					<DataTable />
+				) : (
+					title === 'Inventory' && <Inventory />
+				)}
+			</main>
 		</div>
 	);
 };
