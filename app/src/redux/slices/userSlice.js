@@ -26,7 +26,7 @@ export const addSubscriber = createAsyncThunk(
 	'user/add_sub',
 	async (data, { rejectWithValue }) => {
 		try {
-			const res = await nutzflixApi.post('/users/add_sub', data);
+			const res = await nutzflixApi.post('/api/users/register', data);
 			return res.data;
 		} catch (err) {
 			return rejectWithValue(err.response.data);
@@ -38,8 +38,10 @@ export const userAdapter = createEntityAdapter();
 const initialState = userAdapter.getInitialState({
 	loading: false,
 	activeUser: null,
-	username: '',
+	firstName: '',
 	email: '',
+	password: '',
+	apiKey: '',
 	allUsers: [],
 	userSuccess: null,
 	userErrors: null,
@@ -49,18 +51,21 @@ export const userSlice = createSlice({
 	name: 'user',
 	initialState,
 	reducers: {
-		setUsername: (state, action) => {
-			state.username = action.payload;
+		setFirstName: (state, action) => {
+			state.firstName = action.payload;
 		},
 		setEmail: (state, action) => {
 			state.email = action.payload;
 		},
-		logout: (state) => {
+		setPassword: (state, action) => {
+			state.password = action.payload;
+		},
+		setApiKey: (state, action) => {
+			state.apiKey = action.payload;
+		},
+		logout: () => {
 			localStorage.removeItem('token');
-			state.loading = false;
-			state.activeUser = null;
-			state.userSuccess = null;
-			state.userErrors = null;
+			return initialState;
 		},
 		clearUserSuccess: (state) => {
 			state.userSuccess = null;
@@ -91,9 +96,12 @@ export const userSlice = createSlice({
 			})
 			.addCase(addSubscriber.fulfilled, (state, action) => {
 				state.loading = false;
-				state.userSuccess = action.payload;
-				state.username = '';
+				state.userSuccess = action.payload.success;
+				state.allUsers = [...state.allUsers, action.payload];
+				state.firstName = '';
 				state.email = '';
+				state.password = '';
+				state.apiKey = '';
 				state.userErrors = null;
 			})
 			.addCase(addSubscriber.rejected, (state, action) => {
@@ -108,8 +116,10 @@ export const userSlice = createSlice({
 });
 
 export const {
-	setUsername,
+	setFirstName,
 	setEmail,
+	setPassword,
+	setApiKey,
 	logout,
 	clearUserErrors,
 	clearUserSuccess,
