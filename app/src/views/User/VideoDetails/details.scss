@@ -1,0 +1,113 @@
+#video-details {
+	width: inherit;
+	height: inherit;
+	overflow-x: hidden;
+	overflow-y: auto;
+	color: var(--text-primary);
+
+	.trailer-wrapper {
+		width: 100%;
+		height: 15px;
+		position: relative;
+		padding-top: 56.25%;
+
+		iframe {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+
+		.logo {
+			width: 30%;
+			height: 10%;
+			position: absolute;
+			bottom: 10px;
+			left: 10px;
+		}
+	}
+
+	.video-info {
+		padding: 20px;
+
+		.flex-wrapper {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			.poster-wrapper {
+				// min-width: 240px;
+				width: 240px;
+				height: fit-content;
+				aspect-ratio: 2 / 3; // standard poster ratio — adjust if yours differs
+				overflow: hidden; // safety net in case the image ever overflows the box
+				border-radius: 7px;
+				position: relative;
+
+				.poster {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					border-radius: inherit;
+				}
+			}
+
+			.common-info-wrapper {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				gap: 15px;
+				padding: 10px;
+
+				.rating,
+				.year,
+				.genre {
+					color: darkgrey;
+				}
+
+				.rating {
+					width: fit-content;
+					border: 1px solid grey;
+					padding: 1px 3px;
+				}
+
+				.genre {
+					font-size: 14px;
+				}
+
+				.play-btn {
+					width: 150px !important;
+				}
+			}
+		}
+
+		.details-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			padding: 10px;
+
+			.people {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+
+				.people-flex {
+					display: flex;
+					justify-content: center;
+					flex-wrap: wrap;
+					gap: 15px;
+					margin-top: 15px;
+
+					.crew {
+						display: flex;
+						flex-direction: column;
+						align-items: center;
+						gap: 1.5px;
+					}
+				}
+			}
+		}
+	}
+}
