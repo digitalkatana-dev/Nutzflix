@@ -1,6 +1,13 @@
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, IconButton } from '@mui/material';
+import {
+	setFirstName,
+	setEmail,
+	setPassword,
+	setApiKey,
+	addSubscriber,
+} from '../../../redux/slices/userSlice';
 import DriveFolderUploadOutlinedIcon from '@mui/icons-material/DriveFolderUploadOutlined';
 import NoImageAlt from '../../../assets/no-image-alt.jpg';
 import TextInput from '../../../components/TextInput';
@@ -8,16 +15,17 @@ import Button from '../../../components/Button';
 import './new.scss';
 
 const New = () => {
-	const [email, setEmail] = useState('');
-	const [password, setPassword] = useState('');
-	const [apiKey, setApiKey] = useState('');
 	const [avatar, setAvatar] = useState('');
+	const { firstName, email, password, apiKey } = useSelector(
+		(state) => state.user,
+	);
 	const dispatch = useDispatch();
 
 	const handleFocus = () => {};
 
 	const handleChange = (input, value) => {
 		const actionMap = {
+			first: setFirstName,
 			email: setEmail,
 			pass: setPassword,
 			api: setApiKey,
@@ -32,16 +40,29 @@ const New = () => {
 		setAvatar(e.target.src === avatar ? '' : e.target.src);
 	};
 
+	const handleSubmit = (e) => {
+		e.preventDefault();
+		const userData = {
+			firstName,
+			email,
+			password,
+			apiKey,
+			profilePhoto: avatar,
+		};
+
+		dispatch(addSubscriber(userData));
+	};
+
 	return (
 		<div className='new'>
 			<header>
 				<h2>Add New Subscriber</h2>
 			</header>
 			<section className='content'>
-				<div className={`media-area sub`}>
+				<div className='media-area'>
 					<img src={avatar || NoImageAlt} alt='' />
 				</div>
-				<form>
+				<form onSubmit={handleSubmit}>
 					<div className='form-input'>
 						<label>
 							Profile Photo:
@@ -69,6 +90,13 @@ const New = () => {
 						</div>
 					</div>
 					<TextInput
+						variant='standard'
+						label='First Name'
+						value={firstName}
+						onFocus={handleFocus}
+						onChange={(e) => handleChange('first', e.target.value)}
+					/>
+					<TextInput
 						type='email'
 						variant='standard'
 						label='Email'
@@ -77,6 +105,7 @@ const New = () => {
 						onChange={(e) => handleChange('email', e.target.value)}
 					/>
 					<TextInput
+						type='password'
 						variant='standard'
 						label='Password'
 						value={password}
@@ -90,7 +119,9 @@ const New = () => {
 						onFocus={handleFocus}
 						onChange={(e) => handleChange('api', e.target.value)}
 					/>
-					<Button btnClass='form-btn'>Create</Button>
+					<Button type='submit' btnClass='form-btn'>
+						Create
+					</Button>
 				</form>
 			</section>
 		</div>
