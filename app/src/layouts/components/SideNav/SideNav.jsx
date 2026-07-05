@@ -5,8 +5,8 @@ import {
 	setDrawerOpen,
 	setTheme,
 	setViewMode,
-} from '../../redux/slices/appSlice';
-import { logout } from '../../redux/slices/userSlice';
+} from '../../../redux/slices/appSlice';
+import { logout } from '../../../redux/slices/userSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
 import DashboardIcon from '@mui/icons-material/Dashboard';
@@ -19,8 +19,7 @@ import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
 import SettingsSystemDaydreamOutlinedIcon from '@mui/icons-material/SettingsSystemDaydreamOutlined';
 import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import NavItem from '../NavItem';
-import Helmet from '../../assets/Helmet.jpg';
+import NavItem from '../../../components/NavItem';
 import './sideNav.scss';
 
 const SideNav = () => {
@@ -54,109 +53,107 @@ const SideNav = () => {
 	const listStyles = {
 		my: 3,
 		mx: 2.5,
-		py: 2,
-		px: 2.5,
+		// py: 2,
+		// px: 2.5,
 		display: 'flex',
 		borderRadius: 1.5,
 		alignItems: 'center',
 		bgcolor: 'rgba(171, 171, 171, .12)',
 	};
 
+	let navContent;
+
 	if (roles.includes(activeUser?.role) && viewMode === 'admin') {
-		return (
-			<nav className={`sideNav admin${drawerOpen ? ' open' : ''}`}>
-				<div className='admin-content'>
-					<Box sx={{ pt: '15px', pl: '15px' }}>
-						<p className='label'>Main</p>
-						<NavItem
-							admin
-							link='/home-admin'
-							className='router-link'
-							icon={<DashboardIcon className='icon' />}
-							label='Dashboard'
-							onClick={handleDrawer}
-						/>
-						<p className='label'>QUICK MENU</p>
-						<NavItem
-							admin
-							link='/home-user'
-							className='router-link'
-							icon={<PersonOutlineIcon className='icon' />}
-							label='User Home'
-							onClick={handleViewMode}
-						/>
-						<NavItem
-							admin
-							link='/subs'
-							className='router-link'
-							icon={<PersonOutlineIcon className='icon' />}
-							label='Subscribers'
-							onClick={handleDrawer}
-						/>
-						<NavItem
-							admin
-							link='/inventory'
-							className='router-link'
-							icon={<PlayIcon className='icon' />}
-							label='Inventory'
-							onClick={handleDrawer}
-						/>
-						<p className='label'>USEFUL</p>
-						<NavItem
-							admin
-							icon={<InsertChartIcon className='icon' />}
-							label='Stats'
-							onClick={handleDrawer}
-						/>
-						<NavItem
-							admin
-							icon={<NotificationsNoneIcon className='icon' />}
-							label='Notificaitons'
-							onClick={handleDrawer}
-						/>
-						<p className='label'>SERVICE</p>
-						<NavItem
-							admin
-							icon={<SettingsSystemDaydreamOutlinedIcon className='icon' />}
-							label='System Health'
-							onClick={handleDrawer}
-						/>
-						<NavItem
-							admin
-							icon={<PsychologyOutlinedIcon className='icon' />}
-							label='Logs'
-							onClick={handleDrawer}
-						/>
-						<NavItem
-							admin
-							icon={<SettingsApplicationsIcon className='icon' />}
-							label='Settings'
-							onClick={handleTheme}
-						/>
-						<p className='label'>USER</p>
-						<NavItem
-							admin
-							icon={<AccountCircleOutlinedIcon className='icon' />}
-							label='Profile'
-							onClick={handleDrawer}
-						/>
-						<NavItem
-							admin
-							icon={<ExitToAppIcon className='icon' />}
-							label='Logout'
-							onClick={handleLogout}
-						/>
-					</Box>
-				</div>
-			</nav>
+		navContent = (
+			<Box sx={{ pt: '15px', pl: '15px' }}>
+				<p className='label'>Main</p>
+				<NavItem
+					admin
+					link='/home-admin'
+					className='router-link'
+					icon={<DashboardIcon className='icon' />}
+					label='Dashboard'
+					onClick={handleDrawer}
+				/>
+				<p className='label'>QUICK MENU</p>
+				<NavItem
+					admin
+					link='/home-user'
+					className='router-link'
+					icon={<PersonOutlineIcon className='icon' />}
+					label='User Home'
+					onClick={handleViewMode}
+				/>
+				<NavItem
+					admin
+					link='/subs'
+					className='router-link'
+					icon={<PersonOutlineIcon className='icon' />}
+					label='Subscribers'
+					onClick={handleDrawer}
+				/>
+				<NavItem
+					admin
+					link='/inventory'
+					className='router-link'
+					icon={<PlayIcon className='icon' />}
+					label='Inventory'
+					onClick={handleDrawer}
+				/>
+				<p className='label'>USEFUL</p>
+				<NavItem
+					admin
+					icon={<InsertChartIcon className='icon' />}
+					label='Stats'
+					onClick={handleDrawer}
+				/>
+				<NavItem
+					admin
+					icon={<NotificationsNoneIcon className='icon' />}
+					label='Notificaitons'
+					onClick={handleDrawer}
+				/>
+				<p className='label'>SERVICE</p>
+				<NavItem
+					admin
+					icon={<SettingsSystemDaydreamOutlinedIcon className='icon' />}
+					label='System Health'
+					onClick={handleDrawer}
+				/>
+				<NavItem
+					admin
+					icon={<PsychologyOutlinedIcon className='icon' />}
+					label='Logs'
+					onClick={handleDrawer}
+				/>
+				<NavItem
+					admin
+					icon={<SettingsApplicationsIcon className='icon' />}
+					label='Settings'
+					onClick={handleTheme}
+				/>
+				<p className='label'>USER</p>
+				<NavItem
+					admin
+					icon={<AccountCircleOutlinedIcon className='icon' />}
+					label='Profile'
+					onClick={handleDrawer}
+				/>
+				<NavItem
+					admin
+					icon={<ExitToAppIcon className='icon' />}
+					label='Logout'
+					onClick={handleLogout}
+				/>
+			</Box>
 		);
 	} else {
-		return (
-			<nav className={`sideNav${drawerOpen ? ' open' : ''}`}>
+		navContent = (
+			<>
 				<Box sx={listStyles}>
 					<div className='profile'>
 						<div className='user-info'>
-							<Avatar src={activeUser?.profilePhoto || Helmet} />
+							<Avatar src={activeUser?.profilePhoto} />
 							<h2>Nutz</h2>
 						</div>
 						<div className='profile-options'>
@@ -170,12 +167,12 @@ const SideNav = () => {
 					</div>
 				</Box>
 				<Divider />
-				<Box sx={listStyles}>
+				{/* <Box sx={listStyles}>
 					<div className='search'>
 						<SearchIcon className='icon' />
 						<span>KID</span>
 					</div>
-				</Box>
+				</Box> */}
 				<Stack component='nav' spacing={0.5} sx={{ px: 2 }}>
 					<NavItem page='Home' onClick={handleDrawer} />
 					<NavItem page='Series' onClick={handleDrawer} />
@@ -185,9 +182,18 @@ const SideNav = () => {
 						<NavItem page='Admin' link='/home-admin' onClick={handleViewMode} />
 					)}
 				</Stack>
-			</nav>
+			</>
 		);
 	}
+
+	return (
+		<nav
+			id='sideNav'
+			className={`${roles.includes(activeUser?.role) && viewMode === 'admin' ? 'admin ' : ''}${drawerOpen ? 'open' : ''}`}
+		>
+			{navContent}
+		</nav>
+	);
 };
 
 export default SideNav;

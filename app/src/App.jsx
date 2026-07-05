@@ -9,7 +9,6 @@ import {
 import { subInputs, videoInputs, listInputs } from './util/data';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
-import AdminLayout from './layouts/AdminLayout';
 import Auth from './views/Auth';
 import UserHome from './views/User/UserHome';
 import Watch from './views/User/Watch';
@@ -73,7 +72,7 @@ const App = () => {
 						path='/home-admin'
 						element={
 							<ProtectedRoute
-								element={<AdminLayout children={<AdminHome />} />}
+								element={<MainLayout children={<AdminHome />} />}
 							/>
 						}
 					/>
@@ -83,7 +82,7 @@ const App = () => {
 							element={
 								<ProtectedRoute
 									element={
-										<AdminLayout children={<List title='Subscribers' />} />
+										<MainLayout children={<List title='Subscribers' />} />
 									}
 								/>
 							}
@@ -93,7 +92,7 @@ const App = () => {
 							element={
 								<ProtectedRoute
 									element={
-										<AdminLayout
+										<MainLayout
 											children={<New type='sub' title='Add New Subscriber' />}
 										/>
 									}
@@ -106,9 +105,7 @@ const App = () => {
 							index
 							element={
 								<ProtectedRoute
-									element={
-										<AdminLayout children={<List title='Inventory' />} />
-									}
+									element={<MainLayout children={<List title='Inventory' />} />}
 								/>
 							}
 						/>
@@ -117,7 +114,7 @@ const App = () => {
 							element={
 								<ProtectedRoute
 									element={
-										<AdminLayout
+										<MainLayout
 											children={<New title='Add New Video' type='video' />}
 										/>
 									}
@@ -130,7 +127,7 @@ const App = () => {
 							index
 							element={
 								<ProtectedRoute
-									element={<AdminLayout children={<List title='Lists' />} />}
+									element={<MainLayout children={<List title='Lists' />} />}
 								/>
 							}
 						/>
@@ -139,7 +136,7 @@ const App = () => {
 							element={
 								<ProtectedRoute
 									element={
-										<AdminLayout
+										<MainLayout
 											children={
 												<New inputs={listInputs} title='Add New List' />
 											}
