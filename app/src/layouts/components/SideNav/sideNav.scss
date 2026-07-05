@@ -65,9 +65,10 @@
 	}
 
 	.search-results {
-		max-height: 300px;
+		max-height: 250px;
 		display: flex;
 		justify-content: center;
+		padding: 5px 0;
 		flex-wrap: wrap;
 		gap: 10px;
 		overflow-y: auto;
@@ -129,7 +130,7 @@
 		}
 	}
 
-	@media only screen and (min-width: 750px) {
+	@media only screen and (min-width: 820px) {
 		display: none;
 
 		&.admin {

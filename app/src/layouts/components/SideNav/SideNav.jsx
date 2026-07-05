@@ -8,6 +8,7 @@ import {
 } from '../../../redux/slices/appSlice';
 import {
 	clearSearchResults,
+	setSearchTerm,
 	videoSearch,
 } from '../../../redux/slices/videoSlice';
 import { logout } from '../../../redux/slices/userSlice';
@@ -33,7 +34,7 @@ const SideNav = () => {
 		(state) => state.app,
 	);
 	const { activeUser } = useSelector((state) => state.user);
-	const { searchResults } = useSelector((state) => state.video);
+	const { searchTerm, searchResults } = useSelector((state) => state.video);
 	let navContent;
 	const timerRef = useRef(null); // changed from `let timer;`
 
@@ -66,6 +67,8 @@ const SideNav = () => {
 				dispatch(videoSearch(inputValue.trim()));
 			}
 		}, 1000);
+
+		dispatch(setSearchTerm(inputValue));
 	};
 
 	const handleLogout = () => {
@@ -198,12 +201,13 @@ const SideNav = () => {
 							style={{ margin: 'auto' }}
 							variant='outlined'
 							placeholder='Search'
+							value={searchTerm}
 							leftIcon={<SearchIcon className='icon' />}
 							onChange={handleChange}
 						/>
 					</div>
 				</Box>
-				{searchResults.length > 0 && (
+				{drawerOpen && searchResults.length > 0 && (
 					<div className='search-results'>
 						{searchResults.map((r) => (
 							<Paper key={r._id} className='poster-wrapper' elevation={5}>
