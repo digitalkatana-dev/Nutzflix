@@ -1,12 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	BrowserRouter as Router,
 	Routes,
 	Route,
 	Navigate,
 } from 'react-router-dom';
-import { subInputs, videoInputs, listInputs } from './util/data';
+import { setDrawerOpen } from './redux/slices/appSlice';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
 import Auth from './views/Auth';
@@ -17,8 +17,10 @@ import List from './views/Admin/List';
 import New from './views/Admin/New';
 
 const App = () => {
-	const { theme, roles } = useSelector((state) => state.app);
+	const { theme, roles, drawerOpen } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
+	const dispatch = useDispatch();
+
 	let element;
 
 	if (activeUser) {
@@ -30,6 +32,19 @@ const App = () => {
 	} else {
 		element = <Auth />;
 	}
+
+	useEffect(() => {
+		const checkWidth = () => {
+			if (drawerOpen && window.innerWidth >= 820) {
+				dispatch(setDrawerOpen(false));
+			}
+		};
+
+		checkWidth();
+		window.addEventListener('resize', checkWidth);
+
+		return () => window.removeEventListener('resize', checkWidth);
+	}, [drawerOpen, dispatch]);
 
 	return (
 		<div className='app' data-theme={theme}>
@@ -121,7 +136,7 @@ const App = () => {
 						/>
 					</Route>
 					<Route
-						path='/search'
+						path='/video-details'
 						element={<ProtectedRoute element={<MainLayout />} />}
 					/>
 					{/* <Route

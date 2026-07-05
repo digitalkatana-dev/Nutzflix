@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Avatar, Box, IconButton } from '@mui/material';
@@ -7,6 +7,11 @@ import {
 	setViewMode,
 	setDrawerOpen,
 } from '../../../redux/slices/appSlice';
+import {
+	setSearchTerm,
+	videoSearch,
+	clearSearchResults,
+} from '../../../redux/slices/videoSlice';
 import { logout } from '../../../redux/slices/userSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -20,7 +25,9 @@ const Topbar = () => {
 		(state) => state.app,
 	);
 	const { activeUser } = useSelector((state) => state.user);
+	const { searchTerm } = useSelector((state) => state.video);
 	const [isScrolled, setIsScrolled] = useState(false);
+	const timerRef = useRef(null); // changed from `let timer;`
 	const dispatch = useDispatch();
 
 	const toggleTheme = (e) => {
@@ -42,6 +49,19 @@ const Topbar = () => {
 		dispatch(setDrawerOpen(!drawerOpen));
 	};
 
+	const handleChange = (e) => {
+		const inputValue = e.target.value;
+		clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => {
+			if (inputValue.trim() === '') {
+				dispatch(clearSearchResults());
+			} else {
+				dispatch(videoSearch(inputValue.trim()));
+			}
+		}, 1000);
+
+		dispatch(setSearchTerm(inputValue));
+	};
 	useEffect(() => {
 		window.onscroll = () => {
 			setIsScrolled(window.pageYOffset > 0 ? true : false);
@@ -146,8 +166,14 @@ const Topbar = () => {
 							{activeUser && (
 								<>
 									<div className='search'>
-										<SearchIcon className='icon' />
-										<span>KID</span>
+										<TextInput
+											style={{ margin: 'auto' }}
+											variant='outlined'
+											placeholder='Search'
+											value={searchTerm}
+											leftIcon={<SearchIcon className='icon' />}
+											onChange={handleChange}
+										/>
 									</div>
 									<Avatar src={activeUser?.profilePhoto} alt='' />
 									<div className='profile'>

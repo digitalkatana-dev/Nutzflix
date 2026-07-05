@@ -13,6 +13,7 @@ const initialState = videoAdapter.getInitialState({
 	movies: null,
 	series: null,
 	selectedVideo: null,
+	searchTerm: '',
 	searchResults: [],
 	videoSuccess: null,
 	videoErrors: null,
@@ -29,6 +30,9 @@ export const videoSlice = createSlice({
 		},
 		setSelectedVideo: (state, action) => {
 			state.selectedVideo = action.payload;
+		},
+		setSearchTerm: (state, action) => {
+			state.searchTerm = action.payload;
 		},
 		videoSearch: (state, action) => {
 			const queryWords = action.payload
@@ -51,7 +55,12 @@ export const videoSlice = createSlice({
 	},
 });
 
-export const { setVideos, videoSearch, setSelectedVideo, clearSearchResults } =
-	videoSlice.actions;
+export const {
+	setVideos,
+	setSearchTerm,
+	videoSearch,
+	setSelectedVideo,
+	clearSearchResults,
+} = videoSlice.actions;
 
 export default videoSlice.reducer;
