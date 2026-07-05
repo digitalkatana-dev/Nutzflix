@@ -1,5 +1,6 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Avatar, Box, Divider, Stack } from '@mui/material';
 import {
 	setDrawerOpen,
@@ -10,6 +11,7 @@ import {
 	clearSearchResults,
 	setSearchTerm,
 	videoSearch,
+	setSelectedVideo,
 } from '../../../redux/slices/videoSlice';
 import { logout } from '../../../redux/slices/userSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
@@ -69,6 +71,13 @@ const SideNav = () => {
 		}, 1000);
 
 		dispatch(setSearchTerm(inputValue));
+	};
+
+	const handleSelectedVideo = (video) => {
+		dispatch(setSelectedVideo(video));
+		dispatch(setDrawerOpen(false));
+		dispatch(setSearchTerm(''));
+		dispatch(clearSearchResults());
 	};
 
 	const handleLogout = () => {
@@ -210,14 +219,16 @@ const SideNav = () => {
 				{drawerOpen && searchResults.length > 0 && (
 					<div className='search-results'>
 						{searchResults.map((r) => (
-							<Paper key={r._id} className='poster-wrapper' elevation={5}>
-								<img src={r.poster} alt='' />
-							</Paper>
+							<Link to='/video-details' onClick={() => handleSelectedVideo(r)}>
+								<Paper key={r._id} className='poster-wrapper' elevation={5}>
+									<img src={r.poster} alt='' />
+								</Paper>
+							</Link>
 						))}
 					</div>
 				)}
 				<Stack component='nav' spacing={0.5} sx={{ px: 2 }}>
-					<NavItem page='Home' onClick={handleDrawer} />
+					<NavItem page='Home' link='/home-user' onClick={handleDrawer} />
 					<NavItem page='Series' onClick={handleDrawer} />
 					<NavItem page='Movies' onClick={handleDrawer} />
 					<NavItem page='My List' onClick={handleDrawer} />

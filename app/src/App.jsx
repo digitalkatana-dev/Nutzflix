@@ -15,6 +15,7 @@ import Watch from './views/User/Watch';
 import AdminHome from './views/Admin/AdminHome';
 import List from './views/Admin/List';
 import New from './views/Admin/New';
+import VideoDetails from './views/User/VideoDetails';
 
 const App = () => {
 	const { theme, roles, drawerOpen } = useSelector((state) => state.app);
@@ -137,7 +138,11 @@ const App = () => {
 					</Route>
 					<Route
 						path='/video-details'
-						element={<ProtectedRoute element={<MainLayout />} />}
+						element={
+							<ProtectedRoute
+								element={<MainLayout children={<VideoDetails />} />}
+							/>
+						}
 					/>
 					{/* <Route
 						path='/test'
