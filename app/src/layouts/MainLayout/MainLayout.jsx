@@ -1,7 +1,8 @@
 import React from 'react';
-import Topbar from '../../components/Topbar';
-import SideNav from '../../components/SideNav';
-import './mainLayout.scss';
+import Topbar from '../components/Topbar';
+import SideNav from '../components/SideNav';
+import Content from '../components/Content';
+import './main.scss';
 
 const MainLayout = ({ children }) => {
 	return (
@@ -9,7 +10,7 @@ const MainLayout = ({ children }) => {
 			<Topbar />
 			<div className='flex-wrapper'>
 				<SideNav />
-				<main>{children}</main>
+				<Content>{children}</Content>
 			</div>
 		</div>
 	);
