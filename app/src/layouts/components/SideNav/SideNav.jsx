@@ -75,11 +75,16 @@ const SideNav = () => {
 	const listStyles = {
 		my: 3,
 		mx: 2.5,
-		// py: 2,
-		// px: 2.5,
 		display: 'flex',
 		borderRadius: 1.5,
 		alignItems: 'center',
+		bgcolor: 'rgba(171, 171, 171, .12)',
+	};
+
+	const searchStyles = {
+		my: 3,
+		mx: 2.5,
+		borderRadius: 1.5,
 		bgcolor: 'rgba(171, 171, 171, .12)',
 	};
 
@@ -187,9 +192,10 @@ const SideNav = () => {
 					</div>
 				</Box>
 				<Divider />
-				<Box sx={listStyles}>
+				<Box sx={searchStyles}>
 					<div className='search'>
 						<TextInput
+							style={{ margin: 'auto' }}
 							variant='outlined'
 							placeholder='Search'
 							leftIcon={<SearchIcon className='icon' />}
@@ -200,7 +206,7 @@ const SideNav = () => {
 				{searchResults.length > 0 && (
 					<div className='search-results'>
 						{searchResults.map((r) => (
-							<Paper key={r._id} className='poster-wrapper'>
+							<Paper key={r._id} className='poster-wrapper' elevation={5}>
 								<img src={r.poster} alt='' />
 							</Paper>
 						))}

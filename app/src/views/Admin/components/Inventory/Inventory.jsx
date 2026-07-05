@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import Paper from '../../../../components/Paper';
 import './inventory.scss';
 
 const Inventory = () => {
@@ -9,9 +10,9 @@ const Inventory = () => {
 		<>
 			{movies.map((m) => (
 				<div className='inventory-wrapper' key={m._id}>
-					<div className='poster-wrapper'>
+					<Paper className='poster-wrapper' elevation={5}>
 						<img src={m.poster} alt='' />
-					</div>
+					</Paper>
 					<h6>{m.title}</h6>
 				</div>
 			))}
