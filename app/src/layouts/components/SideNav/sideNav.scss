@@ -64,6 +64,29 @@
 		gap: 10px;
 	}
 
+	.search-results {
+		max-height: 380px;
+		display: flex;
+		justify-content: center;
+		flex-wrap: wrap;
+		gap: 10px;
+		overflow-y: auto;
+
+		.poster-wrapper {
+			width: 75px;
+			aspect-ratio: 2 / 3; // standard poster ratio — adjust if yours differs
+			overflow: hidden; // safety net in case the image ever overflows the box
+			padding: 0; // override .paper's 30px padding
+
+			img {
+				width: 100%;
+				height: 100%;
+				object-fit: cover;
+				border-radius: inherit;
+			}
+		}
+	}
+
 	&.admin {
 		.router-link {
 			text-decoration: none;

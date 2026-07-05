@@ -109,18 +109,6 @@ const App = () => {
 								/>
 							}
 						/>
-						<Route
-							path='new'
-							element={
-								<ProtectedRoute
-									element={
-										<MainLayout
-											children={<New title='Add New Video' type='video' />}
-										/>
-									}
-								/>
-							}
-						/>
 					</Route>
 					<Route path='lists'>
 						<Route
@@ -131,21 +119,11 @@ const App = () => {
 								/>
 							}
 						/>
-						<Route
-							path='new'
-							element={
-								<ProtectedRoute
-									element={
-										<MainLayout
-											children={
-												<New inputs={listInputs} title='Add New List' />
-											}
-										/>
-									}
-								/>
-							}
-						/>
 					</Route>
+					<Route
+						path='/search'
+						element={<ProtectedRoute element={<MainLayout />} />}
+					/>
 					{/* <Route
 						path='/test'
 						element={<ProtectedRoute element={<Drawer />} />}

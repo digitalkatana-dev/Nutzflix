@@ -13,6 +13,7 @@ const initialState = videoAdapter.getInitialState({
 	movies: null,
 	series: null,
 	selectedVideo: null,
+	searchResults: [],
 	videoSuccess: null,
 	videoErrors: null,
 });
@@ -29,6 +30,19 @@ export const videoSlice = createSlice({
 		setSelectedVideo: (state, action) => {
 			state.selectedVideo = action.payload;
 		},
+		videoSearch: (state, action) => {
+			const queryWords = action.payload
+				.toLowerCase()
+				.split(' ')
+				.filter(Boolean);
+			state.searchResults = state.movies.filter((movie) => {
+				const title = movie.title.toLowerCase() ?? '';
+				return queryWords.every((word) => title.includes(word));
+			});
+		},
+		clearSearchResults: (state) => {
+			state.searchResults = [];
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(logout, () => {
@@ -37,18 +51,7 @@ export const videoSlice = createSlice({
 	},
 });
 
-export const {
-	setSynopsis,
-	setRunTime,
-	setVidTitle,
-	setYear,
-	setIsSeries,
-	setSeriesType,
-	setSeriesTitle,
-	setSeason,
-	setEpisode,
-	setVideos,
-	setSelectedVideo,
-} = videoSlice.actions;
+export const { setVideos, videoSearch, setSelectedVideo, clearSearchResults } =
+	videoSlice.actions;
 
 export default videoSlice.reducer;

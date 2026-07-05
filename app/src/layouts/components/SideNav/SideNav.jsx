@@ -1,4 +1,4 @@
-import React from 'react';
+import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Box, Divider, Stack } from '@mui/material';
 import {
@@ -6,6 +6,10 @@ import {
 	setTheme,
 	setViewMode,
 } from '../../../redux/slices/appSlice';
+import {
+	clearSearchResults,
+	videoSearch,
+} from '../../../redux/slices/videoSlice';
 import { logout } from '../../../redux/slices/userSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
@@ -20,6 +24,8 @@ import SettingsSystemDaydreamOutlinedIcon from '@mui/icons-material/SettingsSyst
 import PsychologyOutlinedIcon from '@mui/icons-material/PsychologyOutlined';
 import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
 import NavItem from '../../../components/NavItem';
+import TextInput from '../../../components/TextInput';
+import Paper from '../../../components/Paper';
 import './sideNav.scss';
 
 const SideNav = () => {
@@ -27,6 +33,10 @@ const SideNav = () => {
 		(state) => state.app,
 	);
 	const { activeUser } = useSelector((state) => state.user);
+	const { searchResults } = useSelector((state) => state.video);
+	let navContent;
+	const timerRef = useRef(null); // changed from `let timer;`
+
 	const dispatch = useDispatch();
 
 	const handleDrawer = () => {
@@ -46,6 +56,18 @@ const SideNav = () => {
 		dispatch(setDrawerOpen(false));
 	};
 
+	const handleChange = (e) => {
+		const inputValue = e.target.value;
+		clearTimeout(timerRef.current);
+		timerRef.current = setTimeout(() => {
+			if (inputValue.trim() === '') {
+				dispatch(clearSearchResults());
+			} else {
+				dispatch(videoSearch(inputValue.trim()));
+			}
+		}, 1000);
+	};
+
 	const handleLogout = () => {
 		dispatch(logout());
 	};
@@ -60,8 +82,6 @@ const SideNav = () => {
 		alignItems: 'center',
 		bgcolor: 'rgba(171, 171, 171, .12)',
 	};
-
-	let navContent;
 
 	if (roles.includes(activeUser?.role) && viewMode === 'admin') {
 		navContent = (
@@ -167,12 +187,25 @@ const SideNav = () => {
 					</div>
 				</Box>
 				<Divider />
-				{/* <Box sx={listStyles}>
+				<Box sx={listStyles}>
 					<div className='search'>
-						<SearchIcon className='icon' />
-						<span>KID</span>
+						<TextInput
+							variant='outlined'
+							placeholder='Search'
+							leftIcon={<SearchIcon className='icon' />}
+							onChange={handleChange}
+						/>
 					</div>
-				</Box> */}
+				</Box>
+				{searchResults.length > 0 && (
+					<div className='search-results'>
+						{searchResults.map((r) => (
+							<Paper key={r._id} className='poster-wrapper'>
+								<img src={r.poster} alt='' />
+							</Paper>
+						))}
+					</div>
+				)}
 				<Stack component='nav' spacing={0.5} sx={{ px: 2 }}>
 					<NavItem page='Home' onClick={handleDrawer} />
 					<NavItem page='Series' onClick={handleDrawer} />
