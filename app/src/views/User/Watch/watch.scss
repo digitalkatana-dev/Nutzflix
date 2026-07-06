@@ -8,7 +8,11 @@
 		position: absolute;
 		top: 10px;
 		left: 10px;
-		color: whitesmoke;
+		color: var(--text-on-accent);
+		text-shadow:
+			0 0 8px var(--bg),
+			0 0 20px var(--bg),
+			0 0 40px var(--bg);
 		cursor: pointer;
 		z-index: 2;
 	}

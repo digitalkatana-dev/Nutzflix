@@ -1,6 +1,7 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container, Stack } from '@mui/material';
+import { setSelectedVideo } from '../../../redux/slices/videoSlice';
 import { getEmbedUrl } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
 import Button from '../../../components/Button';
@@ -8,6 +9,11 @@ import './details.scss';
 
 const VideoDetails = () => {
 	const { selectedVideo } = useSelector((state) => state.video);
+	const dispatch = useDispatch();
+
+	const handleClick = () => {
+		dispatch(setSelectedVideo(selectedVideo));
+	};
 
 	return (
 		<div id='video-details'>
@@ -37,7 +43,7 @@ const VideoDetails = () => {
 							{selectedVideo?.genre?.map((g) => `${g} `)}
 						</span>
 						<div className='actions'>
-							<Button linkTo='/watch' btnClass='play-btn'>
+							<Button linkTo='/watch' btnClass='play-btn' onClick={handleClick}>
 								Play
 							</Button>
 						</div>
