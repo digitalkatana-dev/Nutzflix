@@ -1,5 +1,11 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import {
+	setSelectedVideo,
+	setSearchTerm,
+	clearSearchResults,
+} from '../../../redux/slices/videoSlice';
 import { buildGenreLists } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
 import Featured from './components/Featured';
@@ -9,16 +15,29 @@ import './userhome.scss';
 const UserHome = () => {
 	const { drawerOpen } = useSelector((state) => state.app);
 	const { movies, searchResults } = useSelector((state) => state.video);
+	const dispatch = useDispatch();
 	const lists = buildGenreLists(movies);
+
+	const handleSelectedVideo = (video) => {
+		dispatch(setSelectedVideo(video));
+		dispatch(setSearchTerm(''));
+		dispatch(clearSearchResults());
+	};
 
 	return (
 		<div className='home'>
 			{!drawerOpen && searchResults.length > 0 ? (
 				<div className='search-wrapper'>
 					{searchResults.map((r) => (
-						<Paper key={r._id} className='poster-wrapper' elevation={5}>
-							<img src={r.poster} alt='' />
-						</Paper>
+						<Link
+							to='/video-details'
+							key={r._id}
+							onClick={() => handleSelectedVideo(r)}
+						>
+							<Paper className='poster-wrapper' elevation={5}>
+								<img src={r.poster} alt='' />
+							</Paper>
+						</Link>
 					))}
 				</div>
 			) : (
