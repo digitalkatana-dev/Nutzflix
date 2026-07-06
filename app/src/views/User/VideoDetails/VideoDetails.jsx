@@ -2,10 +2,10 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Stack } from '@mui/material';
+import { setViewMode } from '../../../redux/slices/appSlice';
 import { setSelectedVideo } from '../../../redux/slices/videoSlice';
 import { getEmbedUrl } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
-import Button from '../../../components/Button';
 import './details.scss';
 
 const VideoDetails = () => {
@@ -13,6 +13,7 @@ const VideoDetails = () => {
 	const dispatch = useDispatch();
 
 	const handleClick = () => {
+		dispatch(setViewMode('user'));
 		dispatch(setSelectedVideo(selectedVideo));
 	};
 
@@ -53,15 +54,17 @@ const VideoDetails = () => {
 					</div>
 				</div>
 				<div className='details-wrapper'>
-					<span className='responsive-h2'>{selectedVideo?.synopsis}</span>
+					<div className='synopsis'>
+						<h2 className='responsive-h2'>Synopsis</h2>
+						<p className='responsive-h5'>{selectedVideo?.synopsis}</p>
+					</div>
 					<div className='people'>
-						<h2>Cast & Crew</h2>
+						<h2 className='responsive-h2'>Cast & Crew</h2>
 						<div className='people-flex'>
 							{selectedVideo?.people?.map((p) => (
 								<div className='crew' key={p.Id}>
-									<span>{p.Name}</span>
 									<span>{p.Role}</span>
-									<span>{p.Type}</span>
+									<span>{p.Name}</span>
 								</div>
 							))}
 						</div>

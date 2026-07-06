@@ -64,6 +64,7 @@ const Auth = () => {
 						<Button type='submit' loading={loading}>
 							Sign In
 						</Button>
+						{userErrors?.login && <p className='error'>{userErrors?.login}</p>}
 					</form>
 					<span>
 						New to Nutzflix? <b>Sign up now.</b>
