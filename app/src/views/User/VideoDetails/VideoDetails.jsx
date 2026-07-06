@@ -1,5 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { Container, Stack } from '@mui/material';
 import { setSelectedVideo } from '../../../redux/slices/videoSlice';
 import { getEmbedUrl } from '../../../util/helpers';
@@ -43,9 +44,11 @@ const VideoDetails = () => {
 							{selectedVideo?.genre?.map((g) => `${g} `)}
 						</span>
 						<div className='actions'>
-							<Button linkTo='/watch' btnClass='play-btn' onClick={handleClick}>
-								Play
-							</Button>
+							<Link to='/watch' onClick={handleClick}>
+								<Paper className='play-btn' elevation={5}>
+									<h5>PLAY</h5>
+								</Paper>
+							</Link>
 						</div>
 					</div>
 				</div>
