@@ -221,7 +221,7 @@ const SideNav = () => {
 						{searchResults.map((r) => (
 							<Link to='/video-details' onClick={() => handleSelectedVideo(r)}>
 								<Paper key={r._id} className='poster-wrapper' elevation={5}>
-									<img src={r.poster} alt='' />
+									<img src={r.poster} alt={r.title} />
 								</Paper>
 							</Link>
 						))}

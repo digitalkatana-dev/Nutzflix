@@ -116,16 +116,14 @@ const App = () => {
 							}
 						/>
 					</Route>
-					<Route path='inventory'>
-						<Route
-							index
-							element={
-								<ProtectedRoute
-									element={<MainLayout children={<List title='Inventory' />} />}
-								/>
-							}
-						/>
-					</Route>
+					<Route
+						path='/inventory'
+						element={
+							<ProtectedRoute
+								element={<MainLayout children={<List title='Inventory' />} />}
+							/>
+						}
+					/>
 					<Route path='lists'>
 						<Route
 							index

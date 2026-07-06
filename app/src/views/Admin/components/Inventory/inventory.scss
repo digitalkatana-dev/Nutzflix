@@ -11,6 +11,7 @@
 
 	.poster-wrapper {
 		width: 75px;
+		height: 112.5px;
 		border-radius: 4px;
 
 		img {
@@ -22,11 +23,13 @@
 
 		@media only screen and (min-width: 600px) {
 			width: 150px;
+			height: 225px;
 		}
 	}
 
 	@media only screen and (min-width: 600px) {
 		width: 300px;
 		height: 300px;
+		gap: 20px;
 	}
 }

@@ -16,8 +16,8 @@
 		overflow-y: auto;
 
 		.poster-wrapper {
-			width: 150px;
-			height: 225px;
+			width: 75px;
+			height: 112.5px;
 			overflow: hidden; // safety net in case the image ever overflows the box
 			border-radius: 4px;
 
@@ -26,6 +26,11 @@
 				height: 100%;
 				object-fit: cover;
 				border-radius: inherit;
+			}
+
+			@media only screen and (min-width: 600px) {
+				width: 150px;
+				height: 225px;
 			}
 		}
 	}
