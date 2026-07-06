@@ -47,7 +47,7 @@ const ListItem = ({ index, item }) => {
 						</div>
 					</>
 				) : (
-					<img src={item?.backdrop} alt='' />
+					<img src={item?.backdrop} alt={item?.title} />
 				)}
 			</div>
 		</Link>

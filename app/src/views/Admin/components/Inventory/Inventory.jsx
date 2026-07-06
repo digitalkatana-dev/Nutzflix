@@ -23,7 +23,7 @@ const Inventory = () => {
 				>
 					<div className='inventory-wrapper'>
 						<Paper className='poster-wrapper' elevation={5}>
-							<img src={m.poster} alt='' />
+							<img src={m.poster} alt={m.title} />
 						</Paper>
 						<h6>{m.title}</h6>
 					</div>

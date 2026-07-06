@@ -35,7 +35,7 @@ const UserHome = () => {
 							onClick={() => handleSelectedVideo(r)}
 						>
 							<Paper className='poster-wrapper' elevation={5}>
-								<img src={r.poster} alt='' />
+								<img src={r.poster} alt={r.title} />
 							</Paper>
 						</Link>
 					))}
