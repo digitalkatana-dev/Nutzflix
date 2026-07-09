@@ -1,0 +1,151 @@
+#user-top {
+	width: 100vw;
+	height: 70px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	background: linear-gradient(to top, transparent 0%, rgba(0, 0, 0, 0.3) 50%);
+	color: var(--text-primary);
+	z-index: 1201;
+
+	&.scrolled {
+		background: var(--surface);
+	}
+
+	.brand {
+		font-family: 'Bebas Neue', cursive;
+		color: var(--accent);
+		font-size: 40px;
+		text-shadow:
+			0 0 8px black,
+			0 0 20px black,
+			0 0 40px black;
+	}
+
+	.mobile {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 10px 20px;
+		position: relative;
+
+		.menu-btn {
+			display: none;
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+			background-color: var(--accent);
+			color: var(--text-on-accent);
+			border-radius: 7px;
+
+			&:hover {
+				box-shadow: var(--btn-elevation);
+			}
+		}
+	}
+
+	.ut-wrapper {
+		display: none;
+	}
+
+	&.active {
+		.mobile {
+			.menu-btn {
+				display: flex;
+			}
+		}
+	}
+
+	@media only screen and (min-width: 820px) {
+		.mobile {
+			display: none;
+		}
+
+		.ut-wrapper {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		&.active {
+			.brand-wrapper {
+				display: none;
+			}
+
+			.ut-wrapper {
+				padding: 10px 35px 10px 20px;
+				width: 100%;
+
+				.left,
+				.right {
+					display: flex;
+					align-items: center;
+				}
+
+				.left {
+					.brand {
+						margin-right: 20px;
+					}
+
+					span {
+						font-size: small;
+						margin-right: 10px;
+						cursor: pointer;
+
+						@media only screen and (min-width: 910px) {
+							font-size: initial;
+							margin-right: 20px;
+						}
+					}
+				}
+
+				.right {
+					img {
+						width: 30px;
+						height: 30px;
+						border-radius: 100%;
+						object-fit: cover;
+						cursor: pointer;
+					}
+
+					.search {
+						display: flex;
+						align-items: center;
+						margin-right: 15px;
+					}
+
+					.icon {
+						margin: 0 15px;
+						cursor: pointer;
+					}
+
+					.profile {
+						span {
+							padding: 10px;
+							cursor: pointer;
+						}
+
+						.options {
+							display: none;
+							background-color: var(--surface);
+							border-radius: 5px;
+						}
+
+						&:hover {
+							.options {
+								display: flex;
+								flex-direction: column;
+								position: absolute;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

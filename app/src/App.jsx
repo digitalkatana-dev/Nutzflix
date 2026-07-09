@@ -9,6 +9,8 @@ import {
 import { setDrawerOpen } from './redux/slices/appSlice';
 import ProtectedRoute from './components/ProtectedRoute';
 import MainLayout from './layouts/MainLayout';
+import UserLayout from './layouts/UserLayout';
+import AdminLayout from './layouts/AdminLayout';
 import Auth from './views/Auth';
 import UserHome from './views/User/UserHome';
 import Watch from './views/User/Watch';
@@ -60,7 +62,7 @@ const App = () => {
 						path='/home-user'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<UserHome />} />}
+								element={<UserLayout children={<UserHome />} />}
 							/>
 						}
 					/>
@@ -68,7 +70,7 @@ const App = () => {
 						path='/movies'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<UserHome type='movies' />} />}
+								element={<UserLayout children={<UserHome type='movies' />} />}
 							/>
 						}
 					/>
@@ -76,7 +78,7 @@ const App = () => {
 						path='/series'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<UserHome type='series' />} />}
+								element={<UserLayout children={<UserHome type='series' />} />}
 							/>
 						}
 					/>
@@ -88,7 +90,7 @@ const App = () => {
 						path='/home-admin'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<AdminHome />} />}
+								element={<AdminLayout children={<AdminHome />} />}
 							/>
 						}
 					/>
@@ -98,7 +100,7 @@ const App = () => {
 							element={
 								<ProtectedRoute
 									element={
-										<MainLayout children={<List title='Subscribers' />} />
+										<AdminLayout children={<List title='Subscribers' />} />
 									}
 								/>
 							}
@@ -108,7 +110,7 @@ const App = () => {
 							element={
 								<ProtectedRoute
 									element={
-										<MainLayout
+										<AdminLayout
 											children={<New type='sub' title='Add New Subscriber' />}
 										/>
 									}
@@ -120,7 +122,7 @@ const App = () => {
 						path='/inventory'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<List title='Inventory' />} />}
+								element={<AdminLayout children={<List title='Inventory' />} />}
 							/>
 						}
 					/>
@@ -129,7 +131,7 @@ const App = () => {
 							index
 							element={
 								<ProtectedRoute
-									element={<MainLayout children={<List title='Lists' />} />}
+									element={<UserLayout children={<List title='Lists' />} />}
 								/>
 							}
 						/>
@@ -138,7 +140,7 @@ const App = () => {
 						path='/video-details'
 						element={
 							<ProtectedRoute
-								element={<MainLayout children={<VideoDetails />} />}
+								element={<UserLayout children={<VideoDetails />} />}
 							/>
 						}
 					/>

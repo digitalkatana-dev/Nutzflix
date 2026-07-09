@@ -1,0 +1,10 @@
+#user-content {
+	width: 100%;
+	height: calc(100vh - 70px);
+	position: absolute;
+	top: 70px;
+	left: 0;
+	background: linear-gradient(to top, var(--accent) 0%, var(--bg) 40%);
+	overflow-x: hidden;
+	overflow-y: auto;
+}
