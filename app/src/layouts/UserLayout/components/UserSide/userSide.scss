@@ -1,4 +1,4 @@
-#sideNav {
+#user-side {
 	width: 280px;
 	height: calc(100vh - 70px);
 	position: fixed;
@@ -88,56 +88,7 @@
 		}
 	}
 
-	&.admin {
-		.router-link {
-			text-decoration: none;
-			color: var(--text-primary);
-		}
-
-		.label {
-			font-size: 10px;
-			font-weight: bold;
-			margin-top: 15px;
-			margin-bottom: 5px;
-		}
-
-		li {
-			display: flex;
-			align-items: center;
-			padding: 5px;
-			cursor: pointer;
-
-			.icon {
-				font-size: 18px;
-				color: var(--text-primary);
-			}
-
-			span {
-				font-size: 13px;
-				font-weight: bold;
-				margin-left: 10px;
-				color: var(--text-primary);
-			}
-
-			&:hover {
-				background: rgba(64, 35, 82, 0.692) !important;
-
-				span,
-				.icon {
-					color: var(--text-on-accent);
-				}
-			}
-		}
-	}
-
 	@media only screen and (min-width: 820px) {
 		display: none;
-
-		&.admin {
-			display: block;
-			transform: translateX(0); /* always visible/permanent */
-			transition: none;
-			border-right: 1px ridge rgb(230, 227, 227);
-		}
 	}
 }

@@ -1,4 +1,4 @@
-#content {
+#user-content {
 	width: 100%;
 	height: calc(100vh - 70px);
 	position: absolute;
@@ -7,11 +7,4 @@
 	background: linear-gradient(to top, var(--accent) 0%, var(--bg) 40%);
 	overflow-x: hidden;
 	overflow-y: auto;
-
-	@media only screen and (min-width: 820px) {
-		&.admin {
-			width: calc(100% - 280px);
-			left: 280px;
-		}
-	}
 }
