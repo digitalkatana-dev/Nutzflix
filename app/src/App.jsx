@@ -8,7 +8,6 @@ import {
 } from 'react-router-dom';
 import { setDrawerOpen } from './redux/slices/appSlice';
 import ProtectedRoute from './components/ProtectedRoute';
-import MainLayout from './layouts/MainLayout';
 import UserLayout from './layouts/UserLayout';
 import AdminLayout from './layouts/AdminLayout';
 import Auth from './views/Auth';

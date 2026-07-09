@@ -91,7 +91,9 @@ const UserTop = () => {
 							<Link to='/movies' className='link'>
 								<span>Movies</span>
 							</Link>
-							<span>My List</span>
+							<Link to='/list' className='link'>
+								<span>My List</span>
+							</Link>
 							{roles.includes(activeUser?.role) && (
 								<Link to='/home-admin' className='link'>
 									<span>Admin</span>

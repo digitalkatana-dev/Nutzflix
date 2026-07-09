@@ -13,9 +13,30 @@
 	color: var(--text-primary);
 	z-index: 1201;
 
+	.brand {
+		font-family: 'Bebas Neue', cursive;
+		color: var(--accent);
+		font-size: 40px;
+		text-shadow:
+			0 0 8px black,
+			0 0 20px black,
+			0 0 40px black;
+	}
+
 	.mobile {
 		.menu-btn {
 			display: flex;
+			position: absolute;
+			top: 50%;
+			left: 0;
+			transform: translateY(-50%);
+			background-color: var(--accent);
+			color: var(--text-on-accent);
+			border-radius: 7px;
+
+			&:hover {
+				box-shadow: var(--btn-elevation);
+			}
 		}
 
 		.admin-items {
@@ -106,6 +127,12 @@
 		}
 
 		.at-wrapper {
+			width: 100%;
+			height: 100%;
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+
 			.brand-wrapper {
 				display: flex;
 				justify-content: center;
