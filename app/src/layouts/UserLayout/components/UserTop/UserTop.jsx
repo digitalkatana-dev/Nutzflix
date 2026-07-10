@@ -109,7 +109,7 @@ const UserTop = () => {
 								<TextInput
 									style={{ margin: 'auto' }}
 									variant='outlined'
-									placeholder='Search'
+									placeholder='Search...'
 									value={searchTerm}
 									leftIcon={<SearchIcon className='icon' />}
 									onChange={handleChange}
