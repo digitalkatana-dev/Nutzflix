@@ -1,52 +1,31 @@
-import { useRef, useState } from 'react';
-import ArrowBackIosOutlinedIcon from '@mui/icons-material/ArrowBackIosNewOutlined';
-import ArrowForwardIosOutlinedIcon from '@mui/icons-material/ArrowForwardIosOutlined';
-import ListItem from '../ListItem/ListItem';
+import React from 'react';
+import SliderModule from 'react-slick';
+import ListItem from '../ListItem';
 import './carousel.scss';
 
-const SLIDE_WIDTH = 230;
-const MAX_SLIDE = 5;
+const Slider = SliderModule.default || SliderModule;
 
-const Carousel = ({ list }) => {
-	const [isMoved, setIsMoved] = useState(false);
-	const [slideNumber, setSlideNumber] = useState(0);
-	const videos = list?.movies;
+const Carousel = ({ list, autoplay }) => {
+	const videos = list?.movies || list;
 
-	const handleClick = (direction) => {
-		setIsMoved(true);
-		if (direction === 'left' && slideNumber > 0) {
-			setSlideNumber(slideNumber - 1);
-		}
-		if (direction === 'right' && slideNumber < MAX_SLIDE) {
-			setSlideNumber(slideNumber + 1);
-		}
+	const settings = {
+		infinite: true,
+		speed: 500,
+		variableWidth: true,
+		slidesToScroll: 5, // mirrors old MAX_SLIDE-style paging
+		arrows: true,
+		swipeToSlide: true,
+		autoplay: !!autoplay,
 	};
 
 	return (
-		<div className='carousel'>
-			<span className='list-title'>{list?.name}</span>
-			<div className='wrapper'>
-				<ArrowBackIosOutlinedIcon
-					className='slider-arrow left'
-					onClick={() => handleClick('left')}
-					style={{ display: !isMoved && 'none' }}
-				/>
-				<div
-					className='container'
-					style={{
-						transform: `translateX(${-SLIDE_WIDTH * slideNumber}px)`,
-						transition: 'transform 0.5s ease',
-					}}
-				>
-					{videos.slice(0, 10).map((item, i) => (
-						<ListItem key={item + i} index={i} item={item} />
-					))}
-				</div>
-				<ArrowForwardIosOutlinedIcon
-					className='slider-arrow right'
-					onClick={() => handleClick('right')}
-				/>
-			</div>
+		<div className='slider-wrapper'>
+			<span className='carousel-title'>{list?.name || 'Series'}</span>
+			<Slider className='carousel' {...settings}>
+				{videos?.slice(0, 10).map((item, i) => (
+					<ListItem key={item + i} item={item} />
+				))}
+			</Slider>
 		</div>
 	);
 };

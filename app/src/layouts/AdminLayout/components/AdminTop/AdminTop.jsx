@@ -95,7 +95,7 @@ const AdminTop = () => {
 						<div className='admin-item'>
 							<Avatar
 								src={activeUser?.profilePhoto}
-								alt=''
+								alt={activeUser?.firstName}
 								className='avatar'
 							/>
 						</div>

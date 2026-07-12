@@ -14,7 +14,7 @@ import './userhome.scss';
 
 const UserHome = () => {
 	const { drawerOpen } = useSelector((state) => state.app);
-	const { movies, searchResults } = useSelector((state) => state.video);
+	const { movies, series, searchResults } = useSelector((state) => state.video);
 	const dispatch = useDispatch();
 	const lists = buildGenreLists(movies);
 
@@ -44,10 +44,11 @@ const UserHome = () => {
 				<>
 					<Featured />
 					<div className='carousel-wrapper'>
+						<Carousel list={series} arrows />
 						{lists
 							.filter((list) => list.movies.length > 0)
 							.map((list) => (
-								<Carousel key={list.name} list={list} />
+								<Carousel key={list.name} list={list} arrows />
 							))}
 					</div>
 				</>

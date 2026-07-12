@@ -1,44 +1,41 @@
-.carousel {
+.slider-wrapper {
+	position: relative;
 	width: 100%;
 	margin-top: 10px;
+	padding: 0 30px;
 
-	.list-title {
+	.carousel-title {
 		color: var(--text-primary);
 		font-size: 20px;
 		font-weight: bold;
-		margin-left: 50px;
+		margin-left: 20px;
+		display: block;
+		margin-bottom: 5px;
 	}
 
-	.wrapper {
-		position: relative;
-		.slider-arrow {
-			width: 50px;
-			height: 100px;
-			background: rgba(22, 22, 22, 0.5);
-			color: var(--text-primary);
-			position: absolute;
-			z-index: 99;
-			top: 0;
-			bottom: 0;
-			margin: auto;
-			cursor: pointer;
+	.carousel {
+		width: 100%;
 
-			&.left {
-				left: 0;
-			}
-
-			&.right {
-				right: 0;
-			}
+		.slick-list {
+			overflow-x: hidden;
+			overflow-y: hidden; // reverting to explicit hidden — 'auto' was clipping anyway, so let's be intentional about it
+			padding-top: 15px;
+			padding-bottom: 15px;
 		}
-		.container {
-			margin-left: 50px;
+
+		.slick-track {
 			display: flex;
-			gap: 15px;
-			margin-top: 10px;
-			width: max-content;
-			transform: translateX(0px);
-			transition: all 1s ease;
+			// align-items: center;
+		}
+
+		.slick-slide {
+			position: relative;
+			padding: 0 10px; // splits the old 5px gutter evenly per side
+			box-sizing: content-box;
+
+			&.is-hovering {
+				z-index: 40;
+			}
 		}
 	}
 }
