@@ -22,8 +22,10 @@
     "react-dom": "^19.2.5",
     "react-redux": "^9.2.0",
     "react-router-dom": "^7.14.2",
+    "react-slick": "^0.31.0",
     "redux-persist": "^6.0.0",
-    "sass": "^1.99.0"
+    "sass": "^1.99.0",
+    "slick-carousel": "^1.8.1"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",

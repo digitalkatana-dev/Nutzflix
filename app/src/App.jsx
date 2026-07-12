@@ -17,6 +17,8 @@ import AdminHome from './views/Admin/AdminHome';
 import List from './views/Admin/List';
 import New from './views/Admin/New';
 import VideoDetails from './views/User/VideoDetails';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
 
 const App = () => {
 	const { theme, roles, drawerOpen } = useSelector((state) => state.app);
