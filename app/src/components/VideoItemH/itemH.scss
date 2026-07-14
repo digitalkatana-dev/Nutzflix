@@ -1,0 +1,23 @@
+.h-link {
+	display: flex;
+	flex-direction: column;
+	gap: 10px;
+	margin: 0 10px 20px 10px;
+	text-align: center;
+	color: var(--text-primary);
+
+	.h-item {
+		width: 225px;
+		height: 150px;
+		// height: 120px;
+		border-radius: 4px;
+		cursor: pointer;
+
+		img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: inherit;
+		}
+	}
+}

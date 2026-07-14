@@ -7,6 +7,7 @@ import {
 	setSearchTerm,
 	videoSearch,
 	clearSearchResults,
+	clearAllSelected,
 } from '../../../../redux/slices/videoSlice';
 import { logout } from '../../../../redux/slices/userSlice';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -22,6 +23,10 @@ const UserTop = () => {
 	const [isScrolled, setIsScrolled] = useState(false);
 	const timerRef = useRef(null); // changed from `let timer;`
 	const dispatch = useDispatch();
+
+	const handleClick = () => {
+		dispatch(clearAllSelected());
+	};
 
 	const handleDrawer = () => {
 		dispatch(setDrawerOpen(!drawerOpen));
@@ -82,20 +87,20 @@ const UserTop = () => {
 					<h2 className='brand'>NUTZFLIX</h2>
 					{activeUser && (
 						<>
-							<Link to='/home-user' className='link'>
+							<Link to='/home-user' className='link' onClick={handleClick}>
 								<span>Home</span>
 							</Link>
-							<Link to='/series' className='link'>
+							<Link to='/series' className='link' onClick={handleClick}>
 								<span>Series</span>
 							</Link>
-							<Link to='/movies' className='link'>
+							<Link to='/movies' className='link' onClick={handleClick}>
 								<span>Movies</span>
 							</Link>
-							<Link to='/list' className='link'>
+							<Link to='/list' className='link' onClick={handleClick}>
 								<span>My List</span>
 							</Link>
 							{roles.includes(activeUser?.role) && (
-								<Link to='/home-admin' className='link'>
+								<Link to='/home-admin' className='link' onClick={handleClick}>
 									<span>Admin</span>
 								</Link>
 							)}
