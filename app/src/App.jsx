@@ -17,6 +17,8 @@ import AdminHome from './views/Admin/AdminHome';
 import List from './views/Admin/List';
 import New from './views/Admin/New';
 import VideoDetails from './views/User/VideoDetails';
+import SeriesDetails from './views/User/SeriesDetails';
+import SeasonDetails from './views/User/SeasonDetails';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -142,6 +144,22 @@ const App = () => {
 						element={
 							<ProtectedRoute
 								element={<UserLayout children={<VideoDetails />} />}
+							/>
+						}
+					/>
+					<Route
+						path='/series-details'
+						element={
+							<ProtectedRoute
+								element={<UserLayout children={<SeriesDetails />} />}
+							/>
+						}
+					/>
+					<Route
+						path='/season-details'
+						element={
+							<ProtectedRoute
+								element={<UserLayout children={<SeasonDetails />} />}
 							/>
 						}
 					/>

@@ -2,7 +2,6 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Container, Stack } from '@mui/material';
-import { setViewMode } from '../../../redux/slices/appSlice';
 import { setSelectedVideo } from '../../../redux/slices/videoSlice';
 import { getEmbedUrl } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
@@ -13,7 +12,6 @@ const VideoDetails = () => {
 	const dispatch = useDispatch();
 
 	const handleClick = () => {
-		dispatch(setViewMode('user'));
 		dispatch(setSelectedVideo(selectedVideo));
 	};
 
@@ -40,7 +38,7 @@ const VideoDetails = () => {
 							</span>
 							<span className='responsive-p year'>{selectedVideo?.year}</span>
 						</Stack>
-						<span className='responsive-56'>{selectedVideo?.tagline}</span>
+						<span className='responsive-h6'>{selectedVideo?.tagline}</span>
 						<span className='responsive-p genre'>
 							{selectedVideo?.genre?.map((g) => `${g} `)}
 						</span>

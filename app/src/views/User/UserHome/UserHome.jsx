@@ -44,7 +44,7 @@ const UserHome = () => {
 				<>
 					<Featured />
 					<div className='carousel-wrapper'>
-						<Carousel list={series} arrows />
+						<Carousel series list={series} arrows />
 						{lists
 							.filter((list) => list.movies.length > 0)
 							.map((list) => (
