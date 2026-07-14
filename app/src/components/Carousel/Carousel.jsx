@@ -14,7 +14,7 @@ const Carousel = ({ list, series, autoplay }) => {
 		infinite: true,
 		speed: 500,
 		variableWidth: true,
-		slidesToScroll: 5, // mirrors old MAX_SLIDE-style paging
+		slidesToScroll: 1, // mirrors old MAX_SLIDE-style paging
 		arrows: true,
 		swipeToSlide: true,
 		autoplay: !!autoplay,
