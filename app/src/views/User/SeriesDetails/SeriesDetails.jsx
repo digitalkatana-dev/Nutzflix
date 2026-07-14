@@ -61,6 +61,7 @@ const SeriesDetails = () => {
 								<Link
 									key={season._id}
 									to='/season-details'
+									className='season-link'
 									onClick={() => handleSeasonClick(season)}
 								>
 									<Paper className='poster-wrapper' elevation={5}>
@@ -70,6 +71,7 @@ const SeriesDetails = () => {
 											className='poster'
 										/>
 									</Paper>
+									<h5>{season.season}</h5>
 								</Link>
 							))}
 						</div>
