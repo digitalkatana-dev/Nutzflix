@@ -55,6 +55,11 @@ export const videoSlice = createSlice({
 		clearSearchResults: (state) => {
 			state.searchResults = [];
 		},
+		clearAllSelected: (state) => {
+			state.selectedVideo = null;
+			state.selectedSeries = null;
+			state.selectedSeason = null;
+		},
 	},
 	extraReducers: (builder) => {
 		builder.addCase(logout, () => {
@@ -71,6 +76,7 @@ export const {
 	setSelectedSeries,
 	setSelectedSeason,
 	clearSearchResults,
+	clearAllSelected,
 } = videoSlice.actions;
 
 export default videoSlice.reducer;

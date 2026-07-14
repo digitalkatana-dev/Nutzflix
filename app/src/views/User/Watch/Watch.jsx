@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setSelectedVideo } from '../../../redux/slices/videoSlice';
+import { clearAllSelected } from '../../../redux/slices/videoSlice';
 import ArrowBackIosOutlined from '@mui/icons-material/ArrowBackIosOutlined';
 import './watch.scss';
 
@@ -10,7 +10,7 @@ const Watch = () => {
 	const dispatch = useDispatch();
 
 	const handleClick = () => {
-		dispatch(setSelectedVideo(null));
+		dispatch(clearAllSelected());
 	};
 
 	return (
