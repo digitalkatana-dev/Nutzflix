@@ -61,41 +61,39 @@ const ListItem = ({ item }) => {
 				>
 					<img src={item?.backdrop} alt={item?.title} />
 				</div>
-				{isHovered &&
-					rect &&
-					createPortal(
-						<div
-							className='list-item list-item--preview'
-							style={previewStyle}
-							onMouseEnter={handleMouseEnter}
-							onMouseLeave={handleMouseLeave}
-						>
-							<Link to='/watch' onClick={handleClick}>
-								<div className='video-wrapper'>
-									<iframe src={getEmbedUrl(item?.trailer)} frameBorder='0' />
-								</div>
-								<div className='item-info'>
-									<div className='icons'>
-										<PlayArrowIcon className='icon' />
-										<AddIcon className='icon' />
-										<ThumbUpAltOutlinedIcon className='icon' />
-										<ThumbDownAltOutlinedIcon className='icon' />
-									</div>
-									<div className='item-info-top'>
-										<span>{item?.title}</span>
-										<span className='rating'>{item?.rating}</span>
-										<span>{item?.year}</span>
-									</div>
-									<div className='desc'>{item?.synopsis}</div>
-									<div className='genre'>
-										{item?.genre?.map((g) => `${g} `)}
-									</div>
-								</div>
-							</Link>
-						</div>,
-						document.body,
-					)}
 			</Link>
+			{isHovered &&
+				rect &&
+				createPortal(
+					<div
+						className='list-item list-item--preview'
+						style={previewStyle}
+						onMouseEnter={handleMouseEnter}
+						onMouseLeave={handleMouseLeave}
+					>
+						<Link to='/watch' onClick={handleClick}>
+							<div className='video-wrapper'>
+								<iframe src={getEmbedUrl(item?.trailer)} frameBorder='0' />
+							</div>
+							<div className='item-info'>
+								<div className='icons'>
+									<PlayArrowIcon className='icon' />
+									<AddIcon className='icon' />
+									<ThumbUpAltOutlinedIcon className='icon' />
+									<ThumbDownAltOutlinedIcon className='icon' />
+								</div>
+								<div className='item-info-top'>
+									<span>{item?.title}</span>
+									<span className='rating'>{item?.rating}</span>
+									<span>{item?.year}</span>
+								</div>
+								<div className='desc'>{item?.synopsis}</div>
+								<div className='genre'>{item?.genre?.map((g) => `${g} `)}</div>
+							</div>
+						</Link>
+					</div>,
+					document.body,
+				)}
 		</>
 	);
 };

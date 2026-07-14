@@ -13,6 +13,8 @@ const initialState = videoAdapter.getInitialState({
 	movies: null,
 	series: null,
 	selectedVideo: null,
+	selectedSeries: null,
+	selectedSeason: null,
 	searchTerm: '',
 	searchResults: [],
 	videoSuccess: null,
@@ -30,6 +32,12 @@ export const videoSlice = createSlice({
 		},
 		setSelectedVideo: (state, action) => {
 			state.selectedVideo = action.payload;
+		},
+		setSelectedSeries: (state, action) => {
+			state.selectedSeries = action.payload;
+		},
+		setSelectedSeason: (state, action) => {
+			state.selectedSeason = action.payload;
 		},
 		setSearchTerm: (state, action) => {
 			state.searchTerm = action.payload;
@@ -60,6 +68,8 @@ export const {
 	setSearchTerm,
 	videoSearch,
 	setSelectedVideo,
+	setSelectedSeries,
+	setSelectedSeason,
 	clearSearchResults,
 } = videoSlice.actions;
 

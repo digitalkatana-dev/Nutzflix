@@ -1,11 +1,13 @@
 import React from 'react';
 import SliderModule from 'react-slick';
 import ListItem from '../ListItem';
+import SeriesCarouselItem from '../SeriesCarouselItem';
 import './carousel.scss';
 
 const Slider = SliderModule.default || SliderModule;
 
-const Carousel = ({ list, autoplay }) => {
+const Carousel = ({ list, series, autoplay }) => {
+	const title = series ? 'Series' : list?.name;
 	const videos = list?.movies || list;
 
 	const settings = {
@@ -20,11 +22,15 @@ const Carousel = ({ list, autoplay }) => {
 
 	return (
 		<div className='slider-wrapper'>
-			<span className='carousel-title'>{list?.name || 'Series'}</span>
+			<span className='carousel-title'>{title}</span>
 			<Slider className='carousel' {...settings}>
-				{videos?.slice(0, 10).map((item, i) => (
-					<ListItem key={item + i} item={item} />
-				))}
+				{videos?.slice(0, 10).map((item, i) => {
+					if (series) {
+						return <SeriesCarouselItem key={item + i} item={item} />;
+					} else {
+						return <ListItem key={item + i} item={item} />;
+					}
+				})}
 			</Slider>
 		</div>
 	);

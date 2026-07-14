@@ -1,4 +1,4 @@
-#video-details {
+#series-details {
 	width: 100%;
 	height: inherit;
 	overflow-x: hidden;
@@ -28,7 +28,7 @@
 		}
 	}
 
-	.video-info {
+	.series-info {
 		padding: 20px;
 
 		.flex-wrapper {
@@ -74,18 +74,6 @@
 				.genre {
 					font-size: 14px;
 				}
-
-				.actions {
-					margin-top: 15px;
-
-					.play-btn {
-						max-width: 150px !important;
-						max-height: 40px;
-						aspect-ratio: 2.5 / 1;
-						background: var(--accent);
-						cursor: pointer;
-					}
-				}
 			}
 		}
 
@@ -96,11 +84,33 @@
 			padding: 10px;
 
 			.synopsis,
+			.seasons,
 			.people {
 				width: 100%;
 				display: flex;
 				flex-direction: column;
 				gap: 10px;
+			}
+
+			.seasons-wrapper {
+				width: 100%;
+				display: flex;
+				justify-content: space-evenly;
+				align-items: center;
+				flex-wrap: wrap;
+
+				.poster-wrapper {
+					width: 150px;
+					height: 225px;
+					border-radius: 4px;
+
+					img {
+						width: 100%;
+						height: 100%;
+						object-fit: cover;
+						border-radius: inherit;
+					}
+				}
 			}
 
 			.people {

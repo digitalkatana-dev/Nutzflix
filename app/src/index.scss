@@ -60,6 +60,7 @@
 	padding: 0;
 	box-sizing: border-box;
 	scrollbar-width: none;
+	text-decoration: none !important;
 
 	&::-webkit-scrollbar {
 		display: none;
