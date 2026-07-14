@@ -9,6 +9,7 @@ import {
 	setSearchTerm,
 	videoSearch,
 	clearSearchResults,
+	clearAllSelected,
 } from '../../../../redux/slices/videoSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
@@ -56,6 +57,7 @@ const UserSide = () => {
 	};
 
 	const handleDrawer = () => {
+		dispatch(clearAllSelected());
 		dispatch(setDrawerOpen(false));
 	};
 

@@ -1,0 +1,88 @@
+#season-details {
+	width: 100%;
+	height: inherit;
+	overflow-x: hidden;
+	overflow-y: auto;
+	color: var(--text-primary);
+
+	.backdrop {
+		width: 100%;
+		height: 15px;
+		position: relative;
+		padding-top: 56.25%;
+
+		img {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
+		}
+	}
+
+	.season-info {
+		display: flex;
+		flex-direction: column;
+		gap: 20px;
+		padding: 20px;
+
+		.flex-wrapper {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+
+			.poster-wrapper {
+				width: 300px;
+				height: fit-content;
+				aspect-ratio: 2 / 3; // standard poster ratio — adjust if yours differs
+				overflow: hidden; // safety net in case the image ever overflows the box
+				border-radius: 7px;
+				position: relative;
+
+				.poster {
+					width: 100%;
+					height: 100%;
+					object-fit: cover;
+					border-radius: inherit;
+				}
+			}
+
+			.common-info-wrapper {
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				gap: 20px;
+				padding: 10px;
+
+				.year {
+					color: darkgrey;
+				}
+			}
+		}
+
+		.details-wrapper {
+			display: flex;
+			flex-direction: column;
+			gap: 30px;
+			padding: 10px;
+
+			.episodes {
+				width: 100%;
+				display: flex;
+				flex-direction: column;
+				gap: 30px;
+
+				.episodes-wrapper {
+					width: 100%;
+					display: grid;
+					grid-template-columns: repeat(
+						auto-fit,
+						225px
+					); // swap 225px for your actual card width
+					justify-content: center; // centers the grid's tracks as a block, without stretching them
+					gap: 20px;
+				}
+			}
+		}
+	}
+}
