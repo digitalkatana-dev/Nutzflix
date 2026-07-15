@@ -19,6 +19,7 @@ import New from './views/Admin/New';
 import VideoDetails from './views/User/VideoDetails';
 import SeriesDetails from './views/User/SeriesDetails';
 import SeasonDetails from './views/User/SeasonDetails';
+import Category from './views/User/Category';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
@@ -73,7 +74,7 @@ const App = () => {
 						path='/movies'
 						element={
 							<ProtectedRoute
-								element={<UserLayout children={<UserHome type='movies' />} />}
+								element={<UserLayout children={<Category type='movies' />} />}
 							/>
 						}
 					/>
@@ -81,7 +82,7 @@ const App = () => {
 						path='/series'
 						element={
 							<ProtectedRoute
-								element={<UserLayout children={<UserHome type='series' />} />}
+								element={<UserLayout children={<Category type='series' />} />}
 							/>
 						}
 					/>
