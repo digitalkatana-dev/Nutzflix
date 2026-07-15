@@ -1,0 +1,24 @@
+#category {
+	height: 100%;
+	padding: 20px;
+	color: var(--text-primary);
+
+	.content-wrapper {
+		width: 100%;
+		display: grid;
+		grid-template-columns: repeat(
+			auto-fit,
+			112.5px
+		); // swap 225px for your actual card width
+		justify-content: center; // centers the grid's tracks as a block, without stretching them
+		gap: 20px;
+		padding: 20px 0;
+
+		@media only screen and (min-width: 600px) {
+			grid-template-columns: repeat(
+				auto-fit,
+				225px
+			); // swap 225px for your actual card width
+		}
+	}
+}

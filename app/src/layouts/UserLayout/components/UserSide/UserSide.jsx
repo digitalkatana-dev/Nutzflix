@@ -121,8 +121,8 @@ const UserSide = () => {
 			)}
 			<Stack component='nav' spacing={0.5} sx={{ px: 2 }}>
 				<NavItem page='Home' link='/home-user' onClick={handleDrawer} />
-				<NavItem page='Series' onClick={handleDrawer} />
-				<NavItem page='Movies' onClick={handleDrawer} />
+				<NavItem page='Series' link='/series' onClick={handleDrawer} />
+				<NavItem page='Movies' link='/movies' onClick={handleDrawer} />
 				<NavItem page='My List' onClick={handleDrawer} />
 				{roles.includes(activeUser?.role) && (
 					<NavItem page='Admin' link='/home-admin' onClick={handleDrawer} />

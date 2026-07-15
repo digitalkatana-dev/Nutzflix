@@ -40,7 +40,6 @@ const SeasonDetails = () => {
 						</Stack>
 					</div>
 				</div>
-
 				<div className='details-wrapper'>
 					<div className='episodes'>
 						<h2 className='responsive-h2'>Episodes</h2>
