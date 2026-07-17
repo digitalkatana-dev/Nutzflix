@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Avatar, Box, Divider, Stack } from '@mui/material';
 import { setTheme, setDrawerOpen } from '../../../../redux/slices/appSlice';
 import { logout } from '../../../../redux/slices/userSlice';
@@ -8,6 +8,7 @@ import {
 	setSelectedVideo,
 	setSearchTerm,
 	videoSearch,
+	seriesSearch,
 	clearSearchResults,
 	clearAllSelected,
 } from '../../../../redux/slices/videoSlice';
@@ -23,6 +24,7 @@ const UserSide = () => {
 	const { activeUser } = useSelector((state) => state.user);
 	const { searchTerm, searchResults } = useSelector((state) => state.video);
 	const timerRef = useRef(null);
+	const location = useLocation();
 	const dispatch = useDispatch();
 
 	const handleTheme = () => {
@@ -42,7 +44,11 @@ const UserSide = () => {
 			if (inputValue.trim() === '') {
 				dispatch(clearSearchResults());
 			} else {
-				dispatch(videoSearch(inputValue.trim()));
+				if (location.pathname === '/series') {
+					dispatch(seriesSearch(inputValue.trim()));
+				} else {
+					dispatch(videoSearch(inputValue.trim()));
+				}
 			}
 		}, 1000);
 
