@@ -52,6 +52,16 @@ export const videoSlice = createSlice({
 				return queryWords.every((word) => title.includes(word));
 			});
 		},
+		seriesSearch: (state, action) => {
+			const queryWords = action.payload
+				.toLowerCase()
+				.split(' ')
+				.filter(Boolean);
+			state.searchResults = state.series.filter((series) => {
+				const title = series.title.toLowerCase() ?? '';
+				return queryWords.every((word) => title.includes(word));
+			});
+		},
 		clearSearchResults: (state) => {
 			state.searchResults = [];
 		},
@@ -59,6 +69,8 @@ export const videoSlice = createSlice({
 			state.selectedVideo = null;
 			state.selectedSeries = null;
 			state.selectedSeason = null;
+			state.searchTerm = '';
+			state.searchResults = [];
 		},
 	},
 	extraReducers: (builder) => {
@@ -72,6 +84,7 @@ export const {
 	setVideos,
 	setSearchTerm,
 	videoSearch,
+	seriesSearch,
 	setSelectedVideo,
 	setSelectedSeries,
 	setSelectedSeason,
