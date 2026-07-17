@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import Paper from '../Paper';
 import './itemV.scss';
 
-const VideoItemV = ({ linkTo, onClick, elevation, image, alt, caption }) => {
+const VideoItemV = ({ link, onClick, elevation, image, alt, caption }) => {
 	return (
-		<Link to={linkTo} className='v-link' onClick={onClick}>
+		<Link to={link} className='v-link' onClick={onClick}>
 			<Paper className='v-item' elevation={elevation}>
 				<img src={image} alt={alt} />
 			</Paper>

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Avatar, Box, IconButton } from '@mui/material';
 import { setTheme, setDrawerOpen } from '../../../../redux/slices/appSlice';
 import {
 	setSearchTerm,
 	videoSearch,
+	seriesSearch,
 	clearSearchResults,
 	clearAllSelected,
 } from '../../../../redux/slices/videoSlice';
@@ -22,6 +23,7 @@ const UserTop = () => {
 	const { searchTerm } = useSelector((state) => state.video);
 	const [isScrolled, setIsScrolled] = useState(false);
 	const timerRef = useRef(null); // changed from `let timer;`
+	const location = useLocation();
 	const dispatch = useDispatch();
 
 	const handleClick = () => {
@@ -39,7 +41,11 @@ const UserTop = () => {
 			if (inputValue.trim() === '') {
 				dispatch(clearSearchResults());
 			} else {
-				dispatch(videoSearch(inputValue.trim()));
+				if (location.pathname === '/series') {
+					dispatch(seriesSearch(inputValue.trim()));
+				} else {
+					dispatch(videoSearch(inputValue.trim()));
+				}
 			}
 		}, 1000);
 
