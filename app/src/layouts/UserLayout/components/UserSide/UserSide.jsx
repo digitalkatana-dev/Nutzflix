@@ -11,6 +11,7 @@ import {
 	seriesSearch,
 	clearSearchResults,
 	clearAllSelected,
+	setSelectedSeries,
 } from '../../../../redux/slices/videoSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
@@ -55,8 +56,12 @@ const UserSide = () => {
 		dispatch(setSearchTerm(inputValue));
 	};
 
-	const handleSelectedVideo = (video) => {
-		dispatch(setSelectedVideo(video));
+	const handleSelected = (selected) => {
+		if (location.pathname === '/series') {
+			dispatch(setSelectedSeries(selected));
+		} else {
+			dispatch(setSelectedVideo(selected));
+		}
 		dispatch(setDrawerOpen(false));
 		dispatch(setSearchTerm(''));
 		dispatch(clearSearchResults());
@@ -117,7 +122,7 @@ const UserSide = () => {
 			{drawerOpen && searchResults.length > 0 && (
 				<div className='search-results'>
 					{searchResults.map((r) => (
-						<Link to='/video-details' onClick={() => handleSelectedVideo(r)}>
+						<Link to='/video-details' onClick={() => handleSelected(r)}>
 							<Paper key={r._id} className='poster-wrapper' elevation={5}>
 								<img src={r.poster} alt={r.title} />
 							</Paper>
