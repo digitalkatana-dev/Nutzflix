@@ -1,24 +1,37 @@
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { setSelectedVideo } from '../../redux/slices/videoSlice';
 import { getEmbedUrl } from '../../util/helpers';
-import AddIcon from '@mui/icons-material/Add';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
-import ThumbDownAltOutlinedIcon from '@mui/icons-material/ThumbDownAltOutlined';
-import ThumbUpAltOutlinedIcon from '@mui/icons-material/ThumbUpAltOutlined';
+import NotFavoriteIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import './listItem.scss';
 
+const HOVER_DELAY = 800; // ms before the preview opens
+const CLOSE_DELAY = 150; // ms grace window to bridge the gap between card and portal
+
 const ListItem = ({ item }) => {
+	const { activeUser } = useSelector((state) => state.user);
 	const [isHovered, setIsHovered] = useState(false);
 	const [rect, setRect] = useState(null);
 	const anchorRef = useRef(null);
+	const openTimer = useRef(null);
 	const closeTimer = useRef(null);
 	const dispatch = useDispatch();
 
+	const watchList = activeUser?.favorites;
+
 	const handleClick = () => {
 		dispatch(setSelectedVideo(item));
+	};
+
+	const clearOpenTimer = () => {
+		if (openTimer.current) {
+			clearTimeout(openTimer.current);
+			openTimer.current = null;
+		}
 	};
 
 	const clearCloseTimer = () => {
@@ -30,16 +43,24 @@ const ListItem = ({ item }) => {
 
 	const handleMouseEnter = () => {
 		clearCloseTimer();
-		const bounds = anchorRef.current?.getBoundingClientRect();
-		if (bounds) setRect(bounds);
-		setIsHovered(true);
+
+		// already open (e.g. re-entering from the portal) — no need to re-delay
+		if (isHovered) return;
+
+		clearOpenTimer();
+		openTimer.current = setTimeout(() => {
+			const bounds = anchorRef.current?.getBoundingClientRect();
+			if (bounds) setRect(bounds);
+			setIsHovered(true);
+		}, HOVER_DELAY);
 	};
 
 	const handleMouseLeave = () => {
+		clearOpenTimer(); // cancel the open if the mouse leaves before it fires
 		clearCloseTimer();
 		closeTimer.current = setTimeout(() => {
 			setIsHovered(false);
-		}, 150); // grace window to bridge the gap between card and portal
+		}, CLOSE_DELAY);
 	};
 
 	const previewStyle = rect
@@ -66,31 +87,33 @@ const ListItem = ({ item }) => {
 				rect &&
 				createPortal(
 					<div
-						className='list-item list-item--preview'
+						className='list-item preview'
 						style={previewStyle}
 						onMouseEnter={handleMouseEnter}
 						onMouseLeave={handleMouseLeave}
 					>
-						<Link to='/watch' onClick={handleClick}>
-							<div className='video-wrapper'>
-								<iframe src={getEmbedUrl(item?.trailer)} frameBorder='0' />
-							</div>
-							<div className='item-info'>
-								<div className='icons'>
+						<div className='video-wrapper'>
+							<iframe src={getEmbedUrl(item?.trailer)} frameBorder='0' />
+						</div>
+						<div className='item-info'>
+							<div className='icons'>
+								<Link to='/watch' onClick={handleClick}>
 									<PlayArrowIcon className='icon' />
-									<AddIcon className='icon' />
-									<ThumbUpAltOutlinedIcon className='icon' />
-									<ThumbDownAltOutlinedIcon className='icon' />
-								</div>
-								<div className='item-info-top'>
-									<span>{item?.title}</span>
-									<span className='rating'>{item?.rating}</span>
-									<span>{item?.year}</span>
-								</div>
-								<div className='desc'>{item?.synopsis}</div>
-								<div className='genre'>{item?.genre?.map((g) => `${g} `)}</div>
+								</Link>
+								{watchList?.includes(item._id) ? (
+									<FavoriteIcon className='icon full' />
+								) : (
+									<NotFavoriteIcon className='icon' />
+								)}
 							</div>
-						</Link>
+							<div className='item-info-top'>
+								<span>{item?.title}</span>
+								<span className='rating'>{item?.rating}</span>
+								<span>{item?.year}</span>
+							</div>
+							<div className='desc'>{item?.synopsis}</div>
+							<div className='genre'>{item?.genre?.map((g) => `${g} `)}</div>
+						</div>
 					</div>,
 					document.body,
 				)}

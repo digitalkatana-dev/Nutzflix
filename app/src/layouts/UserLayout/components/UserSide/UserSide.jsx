@@ -16,8 +16,8 @@ import {
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
 import TextInput from '../../../../components/TextInput';
-import Paper from '../../../../components/Paper';
 import NavItem from '../../../../components/NavItem';
+import VideoItemV from '../../../../components/VideoItemV';
 import './userSide.scss';
 
 const UserSide = () => {
@@ -27,6 +27,8 @@ const UserSide = () => {
 	const timerRef = useRef(null);
 	const location = useLocation();
 	const dispatch = useDispatch();
+
+	const path = location.pathname;
 
 	const handleTheme = () => {
 		const newTheme = theme === 'dark' ? 'light' : 'dark';
@@ -57,7 +59,7 @@ const UserSide = () => {
 	};
 
 	const handleSelected = (selected) => {
-		if (location.pathname === '/series') {
+		if (path === '/series') {
 			dispatch(setSelectedSeries(selected));
 		} else {
 			dispatch(setSelectedVideo(selected));
@@ -122,11 +124,15 @@ const UserSide = () => {
 			{drawerOpen && searchResults.length > 0 && (
 				<div className='search-results'>
 					{searchResults.map((r) => (
-						<Link to='/video-details' onClick={() => handleSelected(r)}>
-							<Paper key={r._id} className='poster-wrapper' elevation={5}>
-								<img src={r.poster} alt={r.title} />
-							</Paper>
-						</Link>
+						<VideoItemV
+							key={r._id}
+							link={path === 'series' ? '/series-details' : '/video-details'}
+							image={r.poster}
+							alt={r.title}
+							itmClass='side-item'
+							onClick={() => handleSelected(r)}
+							elevation={5}
+						/>
 					))}
 				</div>
 			)}
