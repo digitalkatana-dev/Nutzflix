@@ -7,6 +7,7 @@ import {
 	Navigate,
 } from 'react-router-dom';
 import { setDrawerOpen } from './redux/slices/appSlice';
+import { getVideos } from './redux/slices/videoSlice';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserLayout from './layouts/UserLayout';
 import AdminLayout from './layouts/AdminLayout';
@@ -26,6 +27,7 @@ import 'slick-carousel/slick/slick-theme.css';
 const App = () => {
 	const { theme, roles, drawerOpen } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
+	const { allVideos, movies, series } = useSelector((state) => state.video);
 	const dispatch = useDispatch();
 
 	let element;
@@ -38,6 +40,12 @@ const App = () => {
 		}
 	} else {
 		element = <Auth />;
+	}
+
+	if (activeUser) {
+		if (!allVideos?.length || !movies?.length || !series?.length) {
+			dispatch(getVideos());
+		}
 	}
 
 	useEffect(() => {

@@ -6,6 +6,7 @@ import { setTheme, setDrawerOpen } from '../../../../redux/slices/appSlice';
 import {
 	setSearchTerm,
 	videoSearch,
+	movieSearch,
 	seriesSearch,
 	clearSearchResults,
 	clearAllSelected,
@@ -43,6 +44,8 @@ const UserTop = () => {
 			} else {
 				if (location.pathname === '/series') {
 					dispatch(seriesSearch(inputValue.trim()));
+				} else if (location.pathname === '/movies') {
+					dispatch(movieSearch(inputValue.trim()));
 				} else {
 					dispatch(videoSearch(inputValue.trim()));
 				}
