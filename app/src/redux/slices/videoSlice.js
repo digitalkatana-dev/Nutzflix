@@ -5,13 +5,26 @@ import {
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 import { logout } from './userSlice';
+import nutzflixApi from '../../api/nutflixApi';
+
+export const getVideos = createAsyncThunk(
+	'video/get_videos',
+	async (_, { rejectWithValue }) => {
+		try {
+			const res = await nutzflixApi.get('/api/videos');
+			return res.data;
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	},
+);
 
 export const videoAdapter = createEntityAdapter();
 const initialState = videoAdapter.getInitialState({
 	loading: false,
-	allVideos: null,
-	movies: null,
-	series: null,
+	allVideos: [],
+	movies: [],
+	series: [],
 	selectedVideo: null,
 	selectedSeries: null,
 	selectedSeason: null,
@@ -47,6 +60,16 @@ export const videoSlice = createSlice({
 				.toLowerCase()
 				.split(' ')
 				.filter(Boolean);
+			state.searchResults = state.allVideos.filter((video) => {
+				const title = video.title.toLowerCase() ?? '';
+				return queryWords.every((word) => title.includes(word));
+			});
+		},
+		movieSearch: (state, action) => {
+			const queryWords = action.payload
+				.toLowerCase()
+				.split(' ')
+				.filter(Boolean);
 			state.searchResults = state.movies.filter((movie) => {
 				const title = movie.title.toLowerCase() ?? '';
 				return queryWords.every((word) => title.includes(word));
@@ -74,9 +97,25 @@ export const videoSlice = createSlice({
 		},
 	},
 	extraReducers: (builder) => {
-		builder.addCase(logout, () => {
-			return initialState;
-		});
+		builder
+			.addCase(getVideos.pending, (state) => {
+				state.loading = true;
+				state.videoErrors = null;
+			})
+			.addCase(getVideos.fulfilled, (state, action) => {
+				state.loading = false;
+				state.allVideos = action.payload.allVideos ?? [];
+				state.movies = action.payload.movies ?? [];
+				state.series = action.payload.series ?? [];
+				state.videoErrors = null;
+			})
+			.addCase(getVideos.rejected, (state, action) => {
+				state.loading = false;
+				state.videoErrors = action.payload;
+			})
+			.addCase(logout, () => {
+				return initialState;
+			});
 	},
 });
 
@@ -84,6 +123,7 @@ export const {
 	setVideos,
 	setSearchTerm,
 	videoSearch,
+	movieSearch,
 	seriesSearch,
 	setSelectedVideo,
 	setSelectedSeries,

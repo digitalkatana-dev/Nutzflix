@@ -14,7 +14,8 @@ const GENRE_NAMES = [
 ];
 
 export const shuffleArray = (arr) => {
-	const shuffled = [...arr];
+	const safeArr = arr ?? [];
+	const shuffled = [...safeArr];
 	for (let i = shuffled.length - 1; i > 0; i--) {
 		const j = Math.floor(Math.random() * (i + 1));
 		[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
@@ -83,12 +84,13 @@ export const getEmbedUrl = (youtubeUrl) => {
 };
 
 export const buildGenreLists = (movies) => {
+	const safeMovies = movies ?? [];
 	const lists = [];
 	GENRE_NAMES.forEach((genre) => {
 		lists.push({
 			name: genre,
 			movies: shuffleArray(
-				movies?.filter((movie) => movie.genre?.includes(genre)),
+				safeMovies.filter((movie) => movie.genre?.includes(genre)),
 			),
 		});
 	});
