@@ -5,7 +5,6 @@ dns.setDefaultResultOrder('ipv4first');
 dns.setServers(['8.8.8.8', '8.8.4.4']);
 require('./src/models/User');
 require('./src/models/Profile');
-require('./src/models/Video');
 const { set, connect, connection } = require('mongoose');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const {
