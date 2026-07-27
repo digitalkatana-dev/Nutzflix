@@ -4,9 +4,21 @@ const fs = require('fs');
 const router = Router();
 
 // Get assets - avatars
-router.get('/assets/avatars/:path', async (req, res) => {
+router.get('/api/assets/avatars/:path', async (req, res) => {
 	try {
-		res.sendFile(path.join(__dirname, `assets/avatars/${req?.params?.path}`));
+		res.sendFile(
+			path.join(__dirname, `../../assets/avatars/${req?.params?.path}`),
+		);
+	} catch (err) {
+		console.log(err);
+	}
+});
+
+// Get assets - photos
+router.get('/api/assets/photos/*path', async (req, res) => {
+	try {
+		const filePath = req?.params?.path.join('/');
+		res.sendFile(path.join(__dirname, `../../assets/photos/${filePath}`));
 	} catch (err) {
 		console.log(err);
 	}
