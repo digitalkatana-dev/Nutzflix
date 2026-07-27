@@ -6,7 +6,6 @@ dns.setServers(['8.8.8.8', '8.8.4.4']);
 require('./src/models/User');
 require('./src/models/Profile');
 require('./src/models/Video');
-require('./src/models/List');
 const { set, connect, connection } = require('mongoose');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const {
@@ -21,7 +20,6 @@ const assetRoutes = require('./src/routes/assetRoutes');
 const userRoutes = require('./src/routes/userRoutes');
 const profileRoutes = require('./src/routes/profileRoutes');
 const videoRoutes = require('./src/routes/videoRoutes');
-const listRoutes = require('./src/routes/listRoutes');
 
 const app = express();
 
@@ -46,7 +44,6 @@ app.use(cors(), express.json(), assetRoutes);
 app.use(cors(), express.json(), userRoutes);
 app.use(cors(), express.json(), profileRoutes);
 app.use(cors(), express.json(), videoRoutes);
-app.use(cors(), express.json(), listRoutes);
 
 // Proxy to JellyFin
 const wsProxy = createProxyMiddleware({
