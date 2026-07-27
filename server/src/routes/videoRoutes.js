@@ -4,7 +4,6 @@ const axios = require('axios');
 const requireAuth = require('../middleware/requireAuth');
 const { decryptApiKey } = require('../util/helpers');
 const { getCachedVideos, withStreamUrls } = require('../util/videoCache');
-const Video = model('Video');
 const Profile = model('Profile');
 
 const router = Router();

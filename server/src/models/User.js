@@ -44,13 +44,26 @@ userSchema.pre('save', async function () {
 	if (!user.isModified('password')) return;
 
 	const salt = await genSalt(10);
-	user.password = await hash(user.password, salt);
+	const _hash = await hash(user.password, salt);
+	user.password = _hash;
 });
 
-userSchema.methods.comparePassword = async function (candidatePassword) {
+userSchema.methods.comparePassword = function (candidatePassword) {
 	const user = this;
 
-	return await compare(candidatePassword, user.password);
+	return new Promise((resolve, reject) => {
+		compare(candidatePassword, user.password, (err, isMatch) => {
+			if (err) {
+				return reject(err);
+			}
+
+			if (!isMatch) {
+				return reject(false);
+			}
+
+			resolve(true);
+		});
+	});
 };
 
 userSchema.methods.createPasswordResetToken = function () {
