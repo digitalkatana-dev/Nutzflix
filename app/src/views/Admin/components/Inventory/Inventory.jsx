@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
 	setSearchTerm,
+	setSelectedSeries,
 	setSelectedVideo,
 	clearSearchResults,
 } from '../../../../redux/slices/videoSlice';
@@ -10,11 +11,15 @@ import Paper from '../../../../components/Paper';
 import './inventory.scss';
 
 const Inventory = () => {
-	const { movies, searchResults } = useSelector((state) => state.video);
+	const { allVideos, searchResults } = useSelector((state) => state.video);
 	const dispatch = useDispatch();
 
 	const handleSelectedVideo = (video) => {
-		dispatch(setSelectedVideo(video));
+		if (video.videoType?.toLowerCase() === 'series') {
+			dispatch(setSelectedSeries(video));
+		} else if (video.videoType?.toLowerCase() === 'movie') {
+			dispatch(setSelectedVideo(video));
+		}
 		dispatch(setSearchTerm(''));
 		dispatch(clearSearchResults());
 	};
@@ -40,17 +45,21 @@ const Inventory = () => {
 				</>
 			) : (
 				<>
-					{movies.map((m) => (
+					{allVideos?.map((v) => (
 						<Link
-							key={m._id}
-							to='/video-details'
-							onClick={() => handleSelectedVideo(m)}
+							key={v._id}
+							to={
+								v.videoType.toLowerCase() === 'series'
+									? '/series-details'
+									: v.videoType.toLowerCase() === 'movie' && '/video-details'
+							}
+							onClick={() => handleSelectedVideo(v)}
 						>
 							<div className='inventory-wrapper'>
 								<Paper className='poster-wrapper' elevation={5}>
-									<img src={m.poster} alt={m.title} />
+									<img src={v.poster} alt={v.title} />
 								</Paper>
-								<h6>{m.title}</h6>
+								<h6>{v.title}</h6>
 							</div>
 						</Link>
 					))}
