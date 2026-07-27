@@ -1,9 +1,18 @@
+const { config } = require('dotenv');
+config({ path: 'C:\\Users\\bnutt\\OneDrive\\Desktop\\proxy\\.env' });
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
+dns.setServers(['8.8.8.8', '8.8.4.4']);
 require('./src/models/User');
 require('./src/models/Profile');
 require('./src/models/Video');
 require('./src/models/List');
-const { config } = require('dotenv');
 const { set, connect, connection } = require('mongoose');
+const { createProxyMiddleware } = require('http-proxy-middleware');
+const {
+	refreshVideoCache,
+	scheduleVideoCache,
+} = require('./src/util/videoCache');
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -13,35 +22,53 @@ const userRoutes = require('./src/routes/userRoutes');
 const profileRoutes = require('./src/routes/profileRoutes');
 const videoRoutes = require('./src/routes/videoRoutes');
 const listRoutes = require('./src/routes/listRoutes');
-config();
 
 const app = express();
 
-app.use(cors());
-app.use(express.json());
-app.use('/assets', express.static(path.join(__dirname, 'assets')));
-
 set('strictQuery', false);
-
 connect(process.env.MONGODB_URL);
-
-connection.on('connected', () => {
+connection.on('connected', async () => {
 	console.log('Connected to DB.');
+
+	try {
+		await refreshVideoCache(); // warm cache immediately on boot
+		scheduleVideoCache(); // then schedule daily 2am refreshes
+	} catch (err) {
+		console.log('Failed to initialize video cache:', err.message);
+	}
 });
 connection.on('error', (err) => {
 	console.log('Error connecting to DB.', err);
 });
 
-app.use(assetRoutes);
-app.use(userRoutes);
-app.use(profileRoutes);
-app.use(videoRoutes);
-app.use(listRoutes);
+// Api Routes go here
+app.use(cors(), express.json(), assetRoutes);
+app.use(cors(), express.json(), userRoutes);
+app.use(cors(), express.json(), profileRoutes);
+app.use(cors(), express.json(), videoRoutes);
+app.use(cors(), express.json(), listRoutes);
+
+// Proxy to JellyFin
+const wsProxy = createProxyMiddleware({
+	target: 'http://localhost:8096',
+	changeOrigin: true,
+	ws: true,
+	on: {
+		proxyReq: (proxyReq, req) => {
+			proxyReq.setHeader('X-Forwarded-Proto', 'https');
+			proxyReq.setHeader('X-Forwarded-Host', 'server.nutzflix.net');
+			proxyReq.setHeader('X-Real-IP', req.socket.remoteAddress || '');
+		},
+	},
+});
+
+app.use('/', wsProxy);
 
 const server = http.createServer(app);
+server.on('upgrade', wsProxy.upgrade);
 
-const port = process.env.PORT || 3005;
+const port = 3005;
 
-server.listen(port, () => {
+server.listen(port, '0.0.0.0', () => {
 	console.log(`Listening on port ${port}`);
 });
