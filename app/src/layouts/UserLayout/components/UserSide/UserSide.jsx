@@ -59,9 +59,9 @@ const UserSide = () => {
 	};
 
 	const handleSelected = (selected) => {
-		if (path === '/series') {
+		if (selected.videoType.toLowerCase() === 'series') {
 			dispatch(setSelectedSeries(selected));
-		} else {
+		} else if (selected.videoType.toLowerCase() === 'movie') {
 			dispatch(setSelectedVideo(selected));
 		}
 		dispatch(setDrawerOpen(false));
@@ -126,7 +126,11 @@ const UserSide = () => {
 					{searchResults.map((r) => (
 						<VideoItemV
 							key={r._id}
-							link={path === 'series' ? '/series-details' : '/video-details'}
+							link={
+								r.videoType.toLowerCase() === 'series'
+									? '/series-details'
+									: r.videoType.toLowerCase() === 'movie' && '/video-details'
+							}
 							image={r.poster}
 							alt={r.title}
 							itmClass='side-item'
