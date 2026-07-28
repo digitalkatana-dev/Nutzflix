@@ -2,6 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
+	setSelectedSeries,
 	setSelectedVideo,
 	setSearchTerm,
 	clearSearchResults,
@@ -19,7 +20,11 @@ const UserHome = () => {
 	const lists = buildGenreLists(movies);
 
 	const handleSelectedVideo = (video) => {
-		dispatch(setSelectedVideo(video));
+		if (video.videoType.toLowerCase() === 'series') {
+			dispatch(setSelectedSeries(video));
+		} else if (video.videoType.toLowerCase() === 'movie') {
+			dispatch(setSelectedVideo(video));
+		}
 		dispatch(setSearchTerm(''));
 		dispatch(clearSearchResults());
 	};
@@ -30,13 +35,20 @@ const UserHome = () => {
 				<div className='search-wrapper'>
 					{searchResults.map((r) => (
 						<Link
-							to='/video-details'
+							to={
+								r.videoType.toLowerCase() === 'series'
+									? '/series-details'
+									: r.videoType.toLowerCase() === 'movie' && '/video-details'
+							}
 							key={r._id}
 							onClick={() => handleSelectedVideo(r)}
 						>
-							<Paper className='poster-wrapper' elevation={5}>
-								<img src={r.poster} alt={r.title} />
-							</Paper>
+							<div className='result-item-wrapper'>
+								<Paper className='poster-wrapper' elevation={5}>
+									<img src={r.poster} alt={r.title} />
+								</Paper>
+								<h6>{r.title}</h6>
+							</div>
 						</Link>
 					))}
 				</div>
