@@ -25,6 +25,7 @@ const initialState = videoAdapter.getInitialState({
 	allVideos: [],
 	movies: [],
 	series: [],
+	lastFetched: null,
 	selectedVideo: null,
 	selectedSeries: null,
 	selectedSeason: null,
@@ -42,6 +43,7 @@ export const videoSlice = createSlice({
 			state.allVideos = action.payload.allVideos;
 			state.movies = action.payload.movies;
 			state.series = action.payload.series;
+			state.lastFetched = Date.now();
 		},
 		setSelectedVideo: (state, action) => {
 			state.selectedVideo = action.payload;
@@ -107,7 +109,7 @@ export const videoSlice = createSlice({
 				state.allVideos = action.payload.allVideos ?? [];
 				state.movies = action.payload.movies ?? [];
 				state.series = action.payload.series ?? [];
-				state.videoErrors = null;
+				state.lastFetched = Date.now();
 			})
 			.addCase(getVideos.rejected, (state, action) => {
 				state.loading = false;
