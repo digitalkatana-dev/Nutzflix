@@ -22,7 +22,7 @@ const SeriesDetails = () => {
 					<div className='video-wrapper'>
 						<iframe
 							src={getEmbedUrl(selectedSeries?.trailer)}
-							frameborder='0'
+							frameBorder='0'
 						/>
 						<img className='logo' src={selectedSeries?.logo} alt='' />
 					</div>
