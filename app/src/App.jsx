@@ -24,10 +24,15 @@ import Category from './views/User/Category';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const CHECK_INTERVAL_MS = 2 * 60 * 60 * 1000; // check every 2 hours, refetch when stale
+
 const App = () => {
 	const { theme, roles, drawerOpen } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
-	const { allVideos, movies, series } = useSelector((state) => state.video);
+	const { allVideos, movies, series, lastFetched } = useSelector(
+		(state) => state.video,
+	);
 	const dispatch = useDispatch();
 
 	let element;
@@ -47,6 +52,20 @@ const App = () => {
 			dispatch(getVideos());
 		}
 	}
+
+	useEffect(() => {
+		if (!activeUser) return;
+
+		const checkStaleness = () => {
+			const isStale = !lastFetched || Date.now() - lastFetched > ONE_DAY_MS;
+			if (isStale) {
+				dispatch(getVideos());
+			}
+		};
+
+		const interval = setInterval(checkStaleness, CHECK_INTERVAL_MS);
+		return () => clearInterval(interval);
+	}, [activeUser, lastFetched, dispatch]);
 
 	useEffect(() => {
 		const checkWidth = () => {
