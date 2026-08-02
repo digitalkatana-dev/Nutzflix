@@ -50,7 +50,11 @@ const Category = ({ type }) => {
 							<VideoItemV
 								key={item._id}
 								link={link}
-								image={item.poster}
+								image={
+									item.videoType.toLowerCase() === 'series'
+										? item.folder
+										: item.poster
+								}
 								caption={item.title}
 								onClick={() => handleClick(item)}
 							/>

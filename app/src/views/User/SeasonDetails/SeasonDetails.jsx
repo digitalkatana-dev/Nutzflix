@@ -29,7 +29,7 @@ const SeasonDetails = () => {
 					<Paper className='poster-wrapper' elevation={5}>
 						<img
 							className='poster'
-							src={selectedSeason?.poster}
+							src={selectedSeason?.folder}
 							alt={`${selectedSeason?.seriesName} ${selectedSeason?.season}`}
 						/>
 					</Paper>
