@@ -57,7 +57,14 @@ const Inventory = () => {
 						>
 							<div className='inventory-wrapper'>
 								<Paper className='poster-wrapper' elevation={5}>
-									<img src={v.poster} alt={v.title} />
+									<img
+										src={
+											v.videoType.toLowerCase() === 'series'
+												? v.folder
+												: v.poster
+										}
+										alt={v.title}
+									/>
 								</Paper>
 								<h6>{v.title}</h6>
 							</div>

@@ -45,7 +45,14 @@ const UserHome = () => {
 						>
 							<div className='result-item-wrapper'>
 								<Paper className='poster-wrapper' elevation={5}>
-									<img src={r.poster} alt={r.title} />
+									<img
+										src={
+											r.videoType.toLowerCase() === 'series'
+												? r.folder
+												: r.poster
+										}
+										alt={r.title}
+									/>
 								</Paper>
 								<h6>{r.title}</h6>
 							</div>

@@ -31,7 +31,7 @@ const SeriesDetails = () => {
 			<div className='series-info'>
 				<div className='flex-wrapper'>
 					<Paper className='poster-wrapper' elevation={5}>
-						<img src={selectedSeries?.poster} alt='' className='poster' />
+						<img src={selectedSeries?.folder} alt='' className='poster' />
 					</Paper>
 					<div className='common-info-wrapper'>
 						<Stack direction='column' spacing={1}>
