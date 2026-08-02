@@ -66,7 +66,7 @@ const SeriesDetails = () => {
 								>
 									<Paper className='poster-wrapper' elevation={5}>
 										<img
-											src={season.poster}
+											src={season.folder}
 											alt={`Season ${i + 1}`}
 											className='poster'
 										/>
