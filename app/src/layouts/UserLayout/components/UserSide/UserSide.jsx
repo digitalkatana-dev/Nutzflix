@@ -131,7 +131,9 @@ const UserSide = () => {
 									? '/series-details'
 									: r.videoType.toLowerCase() === 'movie' && '/video-details'
 							}
-							image={r.poster}
+							image={
+								r.videoType.toLowerCase() === 'series' ? r.folder : r.poster
+							}
 							alt={r.title}
 							itmClass='side-item'
 							onClick={() => handleSelected(r)}
