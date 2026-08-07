@@ -1,8 +1,8 @@
 import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useLocation } from 'react-router-dom';
-import { Avatar, Box, Divider, Stack } from '@mui/material';
-import { setTheme, setDrawerOpen } from '../../../../redux/slices/appSlice';
+import { useLocation } from 'react-router-dom';
+import { Avatar, Box, Divider, IconButton, Stack } from '@mui/material';
+import { setDrawerOpen } from '../../../../redux/slices/appSlice';
 import { logout } from '../../../../redux/slices/userSlice';
 import {
 	setSelectedVideo,
@@ -15,26 +15,19 @@ import {
 } from '../../../../redux/slices/videoSlice';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import SearchIcon from '@mui/icons-material/Search';
+import LogoutIcon from '@mui/icons-material/Logout';
 import TextInput from '../../../../components/TextInput';
 import NavItem from '../../../../components/NavItem';
 import VideoItemV from '../../../../components/VideoItemV';
 import './userSide.scss';
 
 const UserSide = () => {
-	const { theme, drawerOpen, roles } = useSelector((state) => state.app);
+	const { drawerOpen, roles } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
 	const { searchTerm, searchResults } = useSelector((state) => state.video);
 	const timerRef = useRef(null);
 	const location = useLocation();
 	const dispatch = useDispatch();
-
-	const path = location.pathname;
-
-	const handleTheme = () => {
-		const newTheme = theme === 'dark' ? 'light' : 'dark';
-		dispatch(setTheme(newTheme));
-		dispatch(setDrawerOpen(false));
-	};
 
 	const handleLogout = () => {
 		dispatch(logout());
@@ -96,16 +89,11 @@ const UserSide = () => {
 				<div className='profile'>
 					<div className='user-info'>
 						<Avatar src={activeUser?.profilePhoto} />
-						<h2>{activeUser?.firstName || 'Nutz'}</h2>
+						<h2>{activeUser?.firstName}</h2>
 					</div>
-					<div className='profile-options'>
-						<ArrowDropDownIcon className='icon' />
-						<div className='options'>
-							<span onClick={handleTheme}>Settings</span>
-							<Divider />
-							<span onClick={handleLogout}>Logout</span>
-						</div>
-					</div>
+					<IconButton onClick={handleLogout}>
+						<LogoutIcon className='logout-icon' />
+					</IconButton>
 				</div>
 			</Box>
 			<Divider />

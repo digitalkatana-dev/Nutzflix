@@ -19,7 +19,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		padding: 10px 35px 10px 10px;
+		padding: 10px;
 
 		.user-info {
 			display: flex;
@@ -31,30 +31,8 @@
 			}
 		}
 
-		.profile-options {
-			.options {
-				display: none;
-			}
-
-			&:hover {
-				.options {
-					display: flex;
-					flex-direction: column;
-					position: absolute;
-					background: var(--bg);
-					border-radius: 5px;
-
-					span {
-						padding: 5px;
-						color: var(--text-on-accent);
-						cursor: pointer;
-					}
-
-					hr {
-						border-color: var(--text-secondary);
-					}
-				}
-			}
+		.logout-icon {
+			color: var(--accent);
 		}
 	}
 
