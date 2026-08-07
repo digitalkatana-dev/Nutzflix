@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Avatar, Box, IconButton } from '@mui/material';
-import { setTheme, setDrawerOpen } from '../../../../redux/slices/appSlice';
+import { setDrawerOpen } from '../../../../redux/slices/appSlice';
 import {
 	setSearchTerm,
 	videoSearch,
@@ -10,12 +10,11 @@ import {
 } from '../../../../redux/slices/videoSlice';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import DarkModeOutlinedIcon from '@mui/icons-material/DarkModeOutlined';
 import TextInput from '../../../../components/TextInput';
 import './adminTop.scss';
 
 const AdminTop = () => {
-	const { theme, drawerOpen } = useSelector((state) => state.app);
+	const { drawerOpen } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
 	const { searchTerm } = useSelector((state) => state.video);
 	const timerRef = useRef(null); // changed from `let timer;`
@@ -24,12 +23,6 @@ const AdminTop = () => {
 
 	const handleDrawer = () => {
 		dispatch(setDrawerOpen(!drawerOpen));
-	};
-
-	const toggleTheme = (e) => {
-		e.preventDefault();
-		const newTheme = theme === 'light' ? 'dark' : 'light';
-		dispatch(setTheme(newTheme));
 	};
 
 	const handleChange = (e) => {
@@ -89,9 +82,6 @@ const AdminTop = () => {
 						</div>
 					)}
 					<div className='admin-items'>
-						<div className='admin-item'>
-							<DarkModeOutlinedIcon className='icon' onClick={toggleTheme} />
-						</div>
 						<div className='admin-item'>
 							<Avatar
 								src={activeUser?.profilePhoto}

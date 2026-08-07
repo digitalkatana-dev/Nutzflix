@@ -78,7 +78,7 @@
 			}
 
 			.ut-wrapper {
-				padding: 10px 35px 10px 20px;
+				padding: 10px 20px;
 				width: 100%;
 
 				.left,
@@ -114,6 +114,7 @@
 					}
 
 					.search {
+						width: 250px;
 						display: flex;
 						align-items: center;
 						margin-right: 15px;
@@ -125,23 +126,13 @@
 					}
 
 					.profile {
-						span {
-							padding: 10px;
-							cursor: pointer;
-						}
+						display: flex;
+						justify-content: space-between;
+						align-items: center;
+						gap: 15px;
 
-						.options {
-							display: none;
-							background-color: var(--surface);
-							border-radius: 5px;
-						}
-
-						&:hover {
-							.options {
-								display: flex;
-								flex-direction: column;
-								position: absolute;
-							}
+						.logout-icon {
+							color: var(--accent);
 						}
 					}
 				}

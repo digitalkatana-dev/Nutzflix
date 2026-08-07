@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import { Avatar, Box, IconButton } from '@mui/material';
-import { setTheme, setDrawerOpen } from '../../../../redux/slices/appSlice';
+import { setDrawerOpen } from '../../../../redux/slices/appSlice';
 import {
 	setSearchTerm,
 	videoSearch,
@@ -15,11 +15,12 @@ import { logout } from '../../../../redux/slices/userSlice';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+import LogoutIcon from '@mui/icons-material/Logout';
 import TextInput from '../../../../components/TextInput';
 import './userTop.scss';
 
 const UserTop = () => {
-	const { theme, drawerOpen, roles } = useSelector((state) => state.app);
+	const { drawerOpen, roles } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
 	const { searchTerm } = useSelector((state) => state.video);
 	const [isScrolled, setIsScrolled] = useState(false);
@@ -53,12 +54,6 @@ const UserTop = () => {
 		}, 1000);
 
 		dispatch(setSearchTerm(inputValue));
-	};
-
-	const toggleTheme = (e) => {
-		e.preventDefault();
-		const newTheme = theme === 'light' ? 'dark' : 'light';
-		dispatch(setTheme(newTheme));
 	};
 
 	const handleLogout = () => {
@@ -129,13 +124,11 @@ const UserTop = () => {
 									onChange={handleChange}
 								/>
 							</div>
-							<Avatar src={activeUser?.profilePhoto} alt='' />
 							<div className='profile'>
-								<ArrowDropDownIcon className='icon' />
-								<div className='options'>
-									<span onClick={toggleTheme}>Settings</span>
-									<span onClick={handleLogout}>Logout</span>
-								</div>
+								<Avatar src={activeUser?.profilePhoto} alt='' />
+								<IconButton onClick={handleLogout}>
+									<LogoutIcon className='logout-icon' />
+								</IconButton>
 							</div>
 						</>
 					)}
