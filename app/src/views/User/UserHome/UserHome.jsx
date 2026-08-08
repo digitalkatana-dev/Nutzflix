@@ -63,7 +63,7 @@ const UserHome = () => {
 				<>
 					<Featured />
 					<div className='carousel-wrapper'>
-						<Carousel series list={series} arrows />
+						<Carousel series list={series} arrows count={20} />
 						{lists
 							.filter((list) => list.movies.length > 0)
 							.map((list) => (

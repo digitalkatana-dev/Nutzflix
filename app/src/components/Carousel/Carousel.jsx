@@ -6,7 +6,7 @@ import './carousel.scss';
 
 const Slider = SliderModule.default || SliderModule;
 
-const Carousel = ({ list, series, autoplay }) => {
+const Carousel = ({ list, count = 10, series, autoplay }) => {
 	const title = series ? 'Series' : list?.name;
 	const videos = list?.movies || list;
 
@@ -24,7 +24,7 @@ const Carousel = ({ list, series, autoplay }) => {
 		<div className='slider-wrapper'>
 			<span className='carousel-title'>{title}</span>
 			<Slider className='carousel' {...settings}>
-				{videos?.slice(0, 10).map((item, i) => {
+				{videos?.slice(0, count).map((item, i) => {
 					if (series) {
 						return <SeriesCarouselItem key={item + i} item={item} />;
 					} else {
