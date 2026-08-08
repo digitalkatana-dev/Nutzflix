@@ -3,6 +3,7 @@
 	height: 100%;
 	display: flex;
 	flex-direction: column;
+	align-items: center;
 
 	.search-wrapper {
 		width: inherit;
@@ -54,6 +55,7 @@
 	}
 
 	.carousel-wrapper {
+		width: inherit;
 		display: flex;
 		flex-direction: column;
 		gap: 20px;

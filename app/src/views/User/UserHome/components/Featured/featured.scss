@@ -1,89 +1,81 @@
-.featured {
+.featured-container {
 	width: 100%;
-	height: 15px;
-	position: relative;
-	padding-top: 56.25%;
+	max-width: 2440px;
 
-	iframe {
+	.video-wrapper {
 		width: 100%;
-		height: 100%;
-		position: absolute;
-		top: 0;
-		left: 0;
-	}
+		height: 15px;
+		position: relative;
+		padding-top: 56.25%; /* 16:9 Aspect Ratio */
 
-	.category {
-		position: absolute;
-		top: 30px;
-		left: 20px;
-		font-size: 30px;
-		font-weight: bold;
-		color: var(--text-primary);
-		display: flex;
-		gap: 20px;
-		z-index: 2; // sit above the video
-	}
-
-	.info {
-		width: 35%;
-		height: inherit;
-		position: absolute;
-		bottom: 0;
-		left: 20px;
-		color: var(--text-primary);
-		display: flex;
-		flex-direction: column;
-		z-index: 2;
-
-		img {
-			display: none;
+		iframe {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 0;
 		}
 
-		.desc {
-			display: none;
-		}
-
-		.buttons {
+		.info {
+			width: 35%;
+			position: absolute;
+			bottom: 0;
+			left: 20px;
+			color: var(--text-primary);
 			display: flex;
-			margin-bottom: 10px;
+			flex-direction: column;
+			z-index: 2;
 
-			.featured-link {
-				padding: 10px 20px;
-				border: none;
-				border-radius: 5px;
-				display: flex;
-				justify-content: center;
-				align-items: center;
-				font-size: 18px;
-				font-weight: bold;
-				margin-right: 10px;
-				cursor: pointer;
-
-				&.play {
-					background: var(--accent);
-					color: var(--text-on-accent);
-				}
-
-				&.more {
-					background: grey;
-					color: whitesmoke;
-				}
-
-				span {
-					margin-left: 5px;
-				}
-			}
-		}
-
-		@media only screen and (min-width: 900px) {
 			img {
-				width: 150px;
-				display: block;
+				display: none;
 			}
 
 			.desc {
-				display: block;
-				margin: 20px 0;
+				display: none;
+			}
+
+			.buttons {
+				display: flex;
+				margin-bottom: 10px;
+
+				.featured-link {
+					padding: 10px 20px;
+					border: none;
+					border-radius: 5px;
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					font-size: 18px;
+					font-weight: bold;
+					margin-right: 10px;
+					cursor: pointer;
+
+					&.play {
+						background: var(--accent);
+						color: var(--text-on-accent);
+					}
+
+					&.more {
+						background: grey;
+						color: whitesmoke;
+					}
+
+					span {
+						margin-left: 5px;
+					}
+				}
+			}
+
+			@media only screen and (min-width: 900px) {
+				img {
+					width: 150px;
+					display: block;
+				}
+
+				.desc {
+					display: block;
+					margin: 20px 0;
+				}
 			}
 		}
 	}
