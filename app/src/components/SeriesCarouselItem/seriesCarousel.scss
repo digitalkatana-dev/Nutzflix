@@ -1,6 +1,6 @@
 .series-item {
-	width: 225px;
-	height: 120px;
+	width: clamp(178px, calc(127.16px + 12.71vw), 437.3px);
+	aspect-ratio: 178 / 99.93;
 	padding: 0;
 	background: var(--bg);
 	color: var(--text-primary);
@@ -11,6 +11,11 @@
 		rgba(255, 255, 255, 0.12) 0px 1px 14px 0px;
 	overflow: hidden;
 	cursor: pointer;
+
+	transition:
+		width 0.3s ease,
+		height 0.3s ease,
+		box-shadow 0.3s ease;
 
 	img {
 		width: 100%;
