@@ -28,7 +28,7 @@ const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const CHECK_INTERVAL_MS = 2 * 60 * 60 * 1000; // check every 2 hours, refetch when stale
 
 const App = () => {
-	const { theme, roles, drawerOpen } = useSelector((state) => state.app);
+	const { theme, drawerOpen } = useSelector((state) => state.app);
 	const { activeUser } = useSelector((state) => state.user);
 	const { allVideos, movies, series, lastFetched } = useSelector(
 		(state) => state.video,
@@ -38,11 +38,7 @@ const App = () => {
 	let element;
 
 	if (activeUser) {
-		if (roles?.includes(activeUser?.role)) {
-			element = <Navigate to='/home-admin' />;
-		} else if (!roles.includes(activeUser?.role)) {
-			element = <Navigate to='/home-user' />;
-		}
+		element = <Navigate to='/home-user' />;
 	} else {
 		element = <Auth />;
 	}
@@ -84,10 +80,6 @@ const App = () => {
 		<div className='app' data-theme={theme}>
 			<Router>
 				<Routes>
-					{/* <Route
-						path='/'
-						element={activeUser ? <Navigate to='/home-user' /> : <Auth />}
-					/> */}
 					<Route path='/' element={element} />
 					<Route
 						path='/home-user'
