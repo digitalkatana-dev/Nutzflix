@@ -16,7 +16,9 @@ const Watch = () => {
 	const [error, setError] = useState(null);
 
 	const handleClick = () => {
-		dispatch(clearAllSelected());
+		setTimeout(() => {
+			dispatch(clearAllSelected());
+		}, 1000);
 	};
 
 	// Only treat streamInfo as valid if it belongs to the currently selected video —
