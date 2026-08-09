@@ -3,6 +3,19 @@
 	max-width: 2440px;
 	padding: 0 36px;
 
+	h5 {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		-webkit-line-clamp: 3;
+		line-clamp: 3; // standard property, supported in modern browsers now too
+		overflow: hidden;
+		text-overflow: ellipsis;
+		text-shadow:
+			0 0 8px var(--bg),
+			0 0 20px var(--bg),
+			0 0 40px var(--bg);
+	}
+
 	.mobile {
 		width: clamp(152px, calc(-41.73px + 96.86vw), 887.2px);
 		height: clamp(226.86px, calc(4.98px + 110.94vw), 1068.91px);
@@ -38,13 +51,6 @@
 			img {
 				max-width: 200px;
 				margin-bottom: 10px;
-			}
-
-			h {
-				text-shadow:
-					0 0 8px var(--bg),
-					0 0 20px var(--bg),
-					0 0 40px var(--bg);
 			}
 
 			.featured-btn-container {
@@ -127,13 +133,6 @@
 				img {
 					max-width: 200px;
 					margin-bottom: 5px;
-				}
-
-				h5 {
-					text-shadow:
-						0 0 8px var(--bg),
-						0 0 20px var(--bg),
-						0 0 40px var(--bg);
 				}
 
 				.featured-btn-container {
