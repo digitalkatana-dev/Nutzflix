@@ -66,7 +66,7 @@ const UserSide = () => {
 		dispatch(setDrawerOpen(false));
 		setTimeout(() => {
 			dispatch(clearAllSelected());
-		}, 1000);
+		}, 3000);
 	};
 
 	const listStyles = {
