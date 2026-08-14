@@ -14,7 +14,6 @@ import {
 import { logout } from '../../../../redux/slices/userSlice';
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 import LogoutIcon from '@mui/icons-material/Logout';
 import TextInput from '../../../../components/TextInput';
 import './userTop.scss';
@@ -61,10 +60,13 @@ const UserTop = () => {
 	};
 
 	useEffect(() => {
-		window.onscroll = () => {
-			setIsScrolled(window.pageYOffset > 0 ? true : false);
-			return () => (window.onscroll = null);
+		const scrollContainer = document.querySelector('#user-content');
+		if (!scrollContainer) return;
+		const handleScroll = () => {
+			setIsScrolled(scrollContainer.scrollTop > 0 ? true : false);
 		};
+		scrollContainer.addEventListener('scroll', handleScroll);
+		return () => scrollContainer.removeEventListener('scroll', handleScroll);
 	}, []);
 
 	return (

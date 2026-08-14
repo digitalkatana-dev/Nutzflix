@@ -20,7 +20,7 @@ const Featured = () => {
 		<div className='featured-container'>
 			{featured && (
 				<>
-					<Paper className='mobile' elevation={5}>
+					<Paper className='mobile' elevation={10}>
 						<img src={featured?.poster} alt='' />
 						<div className='featured-footer'>
 							{featured?.logo && <img src={featured?.logo} alt='Logo' />}
@@ -46,7 +46,7 @@ const Featured = () => {
 							</div>
 						</div>
 					</Paper>
-					<Paper className='video-wrapper' elevation={7}>
+					<Paper className='video-wrapper' elevation={10}>
 						<iframe src={getEmbedUrl(featured?.trailer)} frameBorder='0' />
 						<div className='featured-trailer-footer'>
 							{featured?.logo && <img src={featured?.logo} alt='Logo' />}

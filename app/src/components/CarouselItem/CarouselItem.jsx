@@ -2,17 +2,21 @@ import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setSelectedVideo } from '../../redux/slices/videoSlice';
+import {
+	setSelectedVideo,
+	setSelectedSeries,
+} from '../../redux/slices/videoSlice';
 import { getEmbedUrl } from '../../util/helpers';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import NotFavoriteIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import './listItem.scss';
+import Paper from '../Paper';
+import './carouselItem.scss';
 
 const HOVER_DELAY = 800; // ms before the preview opens
 const CLOSE_DELAY = 150; // ms grace window to bridge the gap between card and portal
 
-const ListItem = ({ item }) => {
+const CarouselItem = ({ type, item }) => {
 	const { activeUser } = useSelector((state) => state.user);
 	const [isHovered, setIsHovered] = useState(false);
 	const [rect, setRect] = useState(null);
@@ -24,7 +28,11 @@ const ListItem = ({ item }) => {
 	const watchList = activeUser?.favorites;
 
 	const handleClick = () => {
-		dispatch(setSelectedVideo(item));
+		if (type === 'series') {
+			dispatch(setSelectedSeries(item));
+		} else {
+			dispatch(setSelectedVideo(item));
+		}
 	};
 
 	const clearOpenTimer = () => {
@@ -73,24 +81,30 @@ const ListItem = ({ item }) => {
 
 	return (
 		<>
-			<Link to='/watch' onClick={handleClick}>
-				<div
+			<Link
+				to={type === 'series' ? '/series-details' : '/watch'}
+				onClick={handleClick}
+			>
+				<Paper
 					ref={anchorRef}
-					className='list-item'
+					className='carousel-item'
 					onMouseEnter={handleMouseEnter}
 					onMouseLeave={handleMouseLeave}
+					elevation={5}
 				>
 					<img src={item?.backdrop} alt={item?.title} />
-				</div>
+				</Paper>
 			</Link>
-			{isHovered &&
+			{type !== 'series' &&
+				isHovered &&
 				rect &&
 				createPortal(
-					<div
-						className='list-item preview'
+					<Paper
+						className='carousel-item preview'
 						style={previewStyle}
 						onMouseEnter={handleMouseEnter}
 						onMouseLeave={handleMouseLeave}
+						elevation={5}
 					>
 						<div className='video-wrapper'>
 							<iframe src={getEmbedUrl(item?.trailer)} frameBorder='0' />
@@ -114,11 +128,11 @@ const ListItem = ({ item }) => {
 							<div className='desc'>{item?.synopsis}</div>
 							<div className='genre'>{item?.genre?.map((g) => `${g} `)}</div>
 						</div>
-					</div>,
+					</Paper>,
 					document.body,
 				)}
 		</>
 	);
 };
 
-export default ListItem;
+export default CarouselItem;

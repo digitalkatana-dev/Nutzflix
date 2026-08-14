@@ -1,7 +1,6 @@
 import React from 'react';
 import SliderModule from 'react-slick';
-import ListItem from '../ListItem';
-import SeriesCarouselItem from '../SeriesCarouselItem';
+import CarouselItem from '../CarouselItem';
 import './carousel.scss';
 
 const Slider = SliderModule.default || SliderModule;
@@ -22,15 +21,15 @@ const Carousel = ({ list, count = 10, series, autoplay }) => {
 
 	return (
 		<div className='slider-wrapper'>
-			<span className='carousel-title'>{title}</span>
+			<span className='carousel-title responsive-h4'>{title}</span>
 			<Slider className='carousel' {...settings}>
-				{videos?.slice(0, count).map((item, i) => {
-					if (series) {
-						return <SeriesCarouselItem key={item + i} item={item} />;
-					} else {
-						return <ListItem key={item + i} item={item} />;
-					}
-				})}
+				{videos?.slice(0, count).map((item, i) => (
+					<CarouselItem
+						key={item + i}
+						item={item}
+						type={series ? 'series' : 'movie'}
+					/>
+				))}
 			</Slider>
 		</div>
 	);

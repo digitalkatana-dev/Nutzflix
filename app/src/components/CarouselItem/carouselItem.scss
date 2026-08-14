@@ -1,14 +1,14 @@
-.list-item {
+.carousel-item {
 	width: clamp(178px, calc(127.16px + 12.71vw), 437.3px);
 	aspect-ratio: 178 / 99.93;
 	padding: 0;
 	background: var(--bg);
 	color: var(--text-primary);
 	border-radius: 4px;
-	box-shadow:
-		rgba(255, 255, 255, 0.2) 0px 3px 5px -1px,
-		rgba(255, 255, 255, 0.14) 0px 5px 8px 0px,
-		rgba(255, 255, 255, 0.12) 0px 1px 14px 0px;
+	// box-shadow:
+	// 	rgba(255, 255, 255, 0.2) 0px 3px 5px -1px,
+	// 	rgba(255, 255, 255, 0.14) 0px 5px 8px 0px,
+	// 	rgba(255, 255, 255, 0.12) 0px 1px 14px 0px;
 	overflow: hidden;
 	cursor: pointer;
 
@@ -91,12 +91,14 @@
 
 			.desc {
 				font-size: 13px;
+				text-align: justify;
 				margin-bottom: 10px;
 				color: var(--text-on-accent) !important;
 			}
 
 			.genre {
 				font-size: 14px;
+				text-align: justify;
 				color: lightgrey;
 			}
 		}
