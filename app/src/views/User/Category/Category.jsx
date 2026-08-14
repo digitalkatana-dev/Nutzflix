@@ -40,6 +40,7 @@ const Category = ({ type }) => {
 								link={link}
 								image={item.poster}
 								caption={item.title}
+								elevation={5}
 								onClick={() => handleClick(item)}
 							/>
 						))}
@@ -56,6 +57,7 @@ const Category = ({ type }) => {
 										: item.poster
 								}
 								caption={item.title}
+								elevation={5}
 								onClick={() => handleClick(item)}
 							/>
 						))}

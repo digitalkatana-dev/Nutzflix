@@ -7,10 +7,11 @@ const GENRE_NAMES = [
 	'Horror',
 	'Suspense',
 	'Thriller',
+	'Science Fiction',
 	'Fantasy',
 	'Romance',
+	'Family',
 	'Documentary',
-	'Sci-Fi',
 ];
 
 export const shuffleArray = (arr) => {
@@ -73,11 +74,13 @@ export const getEmbedUrl = (youtubeUrl) => {
 		autoplay: '1',
 		mute: '1', // required by browsers for autoplay to work
 		controls: '0', // hides YouTube's control bar
-		modestbranding: '1',
+		modestbranding: '0',
 		loop: '1',
 		playlist: videoId, // required for loop to work on a single video
 		playsinline: '1',
 		rel: '0', // don't show related videos at the end
+		cc_load_policy: '0', // don't auto-load captions/subtitles
+		iv_load_policy: '3', // don't show video annotations
 	});
 
 	return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;

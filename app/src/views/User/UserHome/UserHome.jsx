@@ -7,7 +7,7 @@ import {
 	setSearchTerm,
 	clearSearchResults,
 } from '../../../redux/slices/videoSlice';
-import { buildGenreLists } from '../../../util/helpers';
+import { shuffleArray, buildGenreLists } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
 import Featured from './components/Featured';
 import Carousel from '../../../components/Carousel';
@@ -63,7 +63,7 @@ const UserHome = () => {
 				<>
 					<Featured />
 					<div className='carousel-wrapper'>
-						<Carousel series list={series} arrows count={20} />
+						<Carousel series list={shuffleArray(series)} arrows count={20} />
 						{lists
 							.filter((list) => list.movies.length > 0)
 							.map((list) => (

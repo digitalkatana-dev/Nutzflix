@@ -9,7 +9,8 @@
 	z-index: 1201;
 
 	&.scrolled {
-		background: var(--surface);
+		background: var(--bg);
+		transition: background 0.3s ease-in-out;
 	}
 
 	.brand {
