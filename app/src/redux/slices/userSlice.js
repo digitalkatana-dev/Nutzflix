@@ -22,6 +22,33 @@ export const userAuth = createAsyncThunk(
 	},
 );
 
+export const generatePasswordToken = createAsyncThunk(
+	'user/generate_password_token',
+	async (data, { rejectWithValue }) => {
+		try {
+			const res = await nutzflixApi.post(
+				'/api/users/generate-password-token',
+				data,
+			);
+			return res.data;
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	},
+);
+
+export const resetPassword = createAsyncThunk(
+	'user/reset_password',
+	async (data, { rejectWithValue }) => {
+		try {
+			const res = await nutzflixApi.post('/api/users/reset-password', data);
+			return res.data;
+		} catch (err) {
+			return rejectWithValue(err.response.data);
+		}
+	},
+);
+
 export const addSubscriber = createAsyncThunk(
 	'user/add_sub',
 	async (data, { rejectWithValue }) => {
@@ -87,6 +114,30 @@ export const userSlice = createSlice({
 				state.userErrors = null;
 			})
 			.addCase(userAuth.rejected, (state, action) => {
+				state.loading = false;
+				state.userErrors = action.payload;
+			})
+			.addCase(generatePasswordToken.pending, (state) => {
+				state.loading = true;
+				state.userErrors = null;
+			})
+			.addCase(generatePasswordToken.fulfilled, (state, action) => {
+				state.loading = false;
+				state.userSuccess = action.payload;
+			})
+			.addCase(generatePasswordToken.rejected, (state, action) => {
+				state.loading = false;
+				state.userErrors = action.payload;
+			})
+			.addCase(resetPassword.pending, (state) => {
+				state.loading = true;
+				state.userErrors = null;
+			})
+			.addCase(resetPassword.fulfilled, (state, action) => {
+				state.loading = false;
+				state.userSuccess = action.payload;
+			})
+			.addCase(resetPassword.rejected, (state, action) => {
 				state.loading = false;
 				state.userErrors = action.payload;
 			})
