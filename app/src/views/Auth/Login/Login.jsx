@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userAuth, clearUserErrors } from '../../redux/slices/userSlice';
-import './auth.scss';
-import Paper from '../../components/Paper';
-import TextInput from '../../components/TextInput';
-import Button from '../../components/Button';
+import { Link } from 'react-router-dom';
+import { userAuth, clearUserErrors } from '../../../redux/slices/userSlice';
+import Paper from '../../../components/Paper';
+import TextInput from '../../../components/TextInput';
+import Button from '../../../components/Button';
+import './login.scss';
 
-const Auth = () => {
+const Login = () => {
 	const { loading, userErrors } = useSelector((state) => state.user);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
@@ -66,9 +67,9 @@ const Auth = () => {
 						</Button>
 						{userErrors?.login && <p className='error'>{userErrors?.login}</p>}
 					</form>
-					<span>
-						New to Nutzflix? <b>Sign up now.</b>
-					</span>
+					<Link to='/forgot-password'>
+						<span className='link'>Forgot Password</span>
+					</Link>
 					<small>
 						This is protected by the Red, the Track, and Tical. With a key.
 					</small>
@@ -78,4 +79,4 @@ const Auth = () => {
 	);
 };
 
-export default Auth;
+export default Login;

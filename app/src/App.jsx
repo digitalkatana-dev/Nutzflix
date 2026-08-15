@@ -11,7 +11,9 @@ import { getVideos } from './redux/slices/videoSlice';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserLayout from './layouts/UserLayout';
 import AdminLayout from './layouts/AdminLayout';
-import Auth from './views/Auth';
+import Login from './views/Auth/Login';
+import Forgot from './views/Auth/Forgot';
+import Reset from './views/Auth/Reset';
 import UserHome from './views/User/UserHome';
 import Watch from './views/User/Watch';
 import AdminHome from './views/Admin/AdminHome';
@@ -40,7 +42,7 @@ const App = () => {
 	if (activeUser) {
 		element = <Navigate to='/home-user' />;
 	} else {
-		element = <Auth />;
+		element = <Login />;
 	}
 
 	if (activeUser) {
@@ -81,6 +83,8 @@ const App = () => {
 			<Router>
 				<Routes>
 					<Route path='/' element={element} />
+					<Route path='/forgot-password' element={<Forgot />} />
+					<Route path='/reset-password/:id' element={<Reset />} />
 					<Route
 						path='/home-user'
 						element={
