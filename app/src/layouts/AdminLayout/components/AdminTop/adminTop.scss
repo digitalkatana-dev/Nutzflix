@@ -13,16 +13,6 @@
 	color: var(--text-primary);
 	z-index: 1201;
 
-	.brand {
-		font-family: 'Comic Sans MS', cursive;
-		color: var(--accent);
-		font-size: 30px;
-		text-shadow:
-			0 0 8px black,
-			0 0 20px black,
-			0 0 40px black;
-	}
-
 	.mobile {
 		.menu-btn {
 			display: flex;
