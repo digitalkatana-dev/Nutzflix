@@ -49,8 +49,8 @@ const SeasonDetails = () => {
 									key={ep._id}
 									linkTo='/watch'
 									elevation={5}
-									image={ep.backdrop}
-									alt={`Episode ${ep.epNum}, ${ep.title}`}
+									image={ep.thumb}
+									alt={`Episode ${ep.epNum} - ${ep.title}`}
 									caption={`Episode ${ep.epNum} ${ep.title}`}
 									onClick={() => handleEpisodeClick(ep)}
 								/>
