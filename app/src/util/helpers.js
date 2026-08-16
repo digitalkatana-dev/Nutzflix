@@ -71,6 +71,7 @@ export const getEmbedUrl = (youtubeUrl) => {
 	if (!videoId) return null;
 
 	const params = new URLSearchParams({
+		cc_load_policy: '0', // don't auto-load captions/subtitles
 		autoplay: '1',
 		mute: '1', // required by browsers for autoplay to work
 		controls: '0', // hides YouTube's control bar
@@ -79,7 +80,6 @@ export const getEmbedUrl = (youtubeUrl) => {
 		playlist: videoId, // required for loop to work on a single video
 		playsinline: '1',
 		rel: '0', // don't show related videos at the end
-		cc_load_policy: '0', // don't auto-load captions/subtitles
 		iv_load_policy: '3', // don't show video annotations
 	});
 

@@ -8,9 +8,9 @@ import Paper from '../../../../../components/Paper';
 import './featured.scss';
 
 const Featured = () => {
-	const { movies } = useSelector((state) => state.video);
+	const { featured } = useSelector((state) => state.video);
 	const dispatch = useDispatch();
-	const featured = shuffleArray(movies)[0] ?? false;
+	// const featured = shuffleArray(movies)[0] ?? false;
 
 	const handleClick = () => {
 		dispatch(setSelectedVideo(featured));

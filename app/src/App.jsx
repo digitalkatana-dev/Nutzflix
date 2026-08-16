@@ -7,7 +7,8 @@ import {
 	Navigate,
 } from 'react-router-dom';
 import { setDrawerOpen } from './redux/slices/appSlice';
-import { getVideos } from './redux/slices/videoSlice';
+import { getVideos, setFeatured } from './redux/slices/videoSlice';
+import { shuffleArray } from './util/helpers';
 import ProtectedRoute from './components/ProtectedRoute';
 import UserLayout from './layouts/UserLayout';
 import AdminLayout from './layouts/AdminLayout';
@@ -26,6 +27,7 @@ import Category from './views/User/Category';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+const TEN_MIN_MS = 10 * 60 * 1000; // 10 minutes
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const CHECK_INTERVAL_MS = 2 * 60 * 60 * 1000; // check every 2 hours, refetch when stale
 
@@ -64,6 +66,18 @@ const App = () => {
 		const interval = setInterval(checkStaleness, CHECK_INTERVAL_MS);
 		return () => clearInterval(interval);
 	}, [activeUser, lastFetched, dispatch]);
+
+	useEffect(() => {
+	  if(!activeUser) return;
+
+	  const refreshFeatured = ()=> {
+		dispatch(setFeatured(shuffleArray(movies)[0]));
+	  }
+
+	  const interval = setInterval(refreshFeatured, TEN_MIN_MS);
+		return () => clearInterval(interval);
+	}, [activeUser, dispatch, movies])
+	
 
 	useEffect(() => {
 		const checkWidth = () => {
