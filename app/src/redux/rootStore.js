@@ -33,6 +33,7 @@ const videoPersistConfig = {
 	storage: resolvedStorage,
 	whitelist: [
 		'lastFetched',
+		'featured',
 		'selectedVideo',
 		'selectedSeries',
 		'selectedSeason',
