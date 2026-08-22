@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import {
-	persistReducer,
-	persistStore,
-	FLUSH,
-	PAUSE,
-	PERSIST,
-	PURGE,
-	REGISTER,
-	REHYDRATE,
+  persistReducer,
+  persistStore,
+  FLUSH,
+  PAUSE,
+  PERSIST,
+  PURGE,
+  REGISTER,
+  REHYDRATE,
 } from 'redux-persist';
 import storage from 'redux-persist/lib/storage'; // ✅ correct (localStorage)
 import appReducer from './slices/appSlice';
@@ -17,41 +17,42 @@ import videoReducer from './slices/videoSlice';
 const resolvedStorage = storage?.default || storage;
 
 const appPersistConfig = {
-	key: 'app',
-	storage: resolvedStorage,
-	whitelist: ['theme'],
+  key: 'app',
+  storage: resolvedStorage,
+  whitelist: ['theme'],
 };
 
 const userPersistConfig = {
-	key: 'user',
-	storage: resolvedStorage,
-	whitelist: ['activeUser', 'allUsers'],
+  key: 'user',
+  storage: resolvedStorage,
+  whitelist: ['activeUser', 'allUsers'],
 };
 
 const videoPersistConfig = {
-	key: 'video',
-	storage: resolvedStorage,
-	whitelist: [
-		'lastFetched',
-		'featured',
-		'selectedVideo',
-		'selectedSeries',
-		'selectedSeason',
-	],
+  key: 'video',
+  storage: resolvedStorage,
+  whitelist: [
+    'lastFetched',
+    'featured',
+    'favorites',
+    'selectedVideo',
+    'selectedSeries',
+    'selectedSeason',
+  ],
 };
 
 export const store = configureStore({
-	reducer: {
-		app: persistReducer(appPersistConfig, appReducer),
-		user: persistReducer(userPersistConfig, userReducer),
-		video: persistReducer(videoPersistConfig, videoReducer),
-	},
-	middleware: (getDefaultMiddleware) =>
-		getDefaultMiddleware({
-			serializableCheck: {
-				ignoreActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE],
-			},
-		}),
+  reducer: {
+    app: persistReducer(appPersistConfig, appReducer),
+    user: persistReducer(userPersistConfig, userReducer),
+    video: persistReducer(videoPersistConfig, videoReducer),
+  },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoreActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE],
+      },
+    }),
 });
 
 export const persistor = persistStore(store);
