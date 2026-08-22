@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { setSelectedVideo } from '../../../redux/slices/videoSlice';
-import { getEmbedUrl } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
+import Trailer from '../../../components/Trailer';
 import './details.scss';
 
 const VideoDetails = () => {
@@ -17,14 +17,7 @@ const VideoDetails = () => {
 
 	return (
 		<div id='video-details'>
-			<div className='trailer-wrapper'>
-				<Container maxWidth='xl'>
-					<div className='video-wrapper'>
-						<iframe src={getEmbedUrl(selectedVideo?.trailer)} frameBorder='0' />
-						<img className='logo' src={selectedVideo?.logo} alt='' />
-					</div>
-				</Container>
-			</div>
+			<Trailer video={selectedVideo}/>
 			<div className='video-info'>
 				<div className='flex-wrapper'>
 					<Paper className='poster-wrapper' elevation={5}>

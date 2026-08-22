@@ -9,13 +9,13 @@ import {
 } from '../../../redux/slices/videoSlice';
 import { shuffleArray, buildGenreLists } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
-import Featured from './components/Featured';
+import Trailer from '../../../components/Trailer';
 import Carousel from '../../../components/Carousel';
 import './userhome.scss';
 
 const UserHome = () => {
 	const { drawerOpen } = useSelector((state) => state.app);
-	const { movies, series, searchResults } = useSelector((state) => state.video);
+	const {featured, movies, series, searchResults } = useSelector((state) => state.video);
 	const dispatch = useDispatch();
 	const lists = buildGenreLists(movies);
 
@@ -28,6 +28,10 @@ const UserHome = () => {
 		dispatch(setSearchTerm(''));
 		dispatch(clearSearchResults());
 	};
+
+	const handleFeaturedClick = ()=> {
+		dispatch(setSelectedVideo(featured));
+	}
 
 	return (
 		<div className='home'>
@@ -61,7 +65,7 @@ const UserHome = () => {
 				</div>
 			) : (
 				<>
-					<Featured />
+					<Trailer featured video={featured} onClick={handleFeaturedClick}/>
 					<div className='carousel-wrapper'>
 						<Carousel series list={shuffleArray(series)} arrows count={20} />
 						{lists
