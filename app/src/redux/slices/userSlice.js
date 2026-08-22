@@ -4,7 +4,7 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
-import { setVideos, setFavorites } from './videoSlice';
+import { setVideos } from './videoSlice';
 import nutzflixApi from '../../api/nutflixApi';
 
 export const userAuth = createAsyncThunk(
@@ -14,13 +14,7 @@ export const userAuth = createAsyncThunk(
       const res = await nutzflixApi.post('/api/users/auth', data);
       const { token, userProfile, video, success } = res.data;
       localStorage.setItem('token', token);
-      const { allVideos } = video;
-      const { favorites } = userProfile;
-      const rawFavs = allVideos?.filter((item) =>
-        favorites?.includes(item._id),
-      );
       dispatch(setVideos(video));
-      dispatch(setFavorites(rawFavs));
       return { userProfile, success };
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -74,7 +68,9 @@ export const addRemoveFavorite = createAsyncThunk(
       const res = await nutzflixApi.put(
         `/api/profiles/${data}/add-remove-favorite`,
       );
-      return res.data;
+      const { updatedProfile, video, success } = res.data;
+      dispatch(setVideos(video));
+      return { updatedProfile, success };
     } catch (err) {
       return rejectWithValue(err.response.data);
     }
@@ -176,6 +172,20 @@ export const userSlice = createSlice({
         state.userErrors = null;
       })
       .addCase(addSubscriber.rejected, (state, action) => {
+        state.loading = false;
+        state.userErrors = action.payload;
+      })
+      .addCase(addRemoveFavorite.pending, (state) => {
+        state.loading = true;
+        state.userErrors = null;
+      })
+      .addCase(addRemoveFavorite.fulfilled, (state, action) => {
+        state.loading = false;
+        state.activeUser = action.payload.updatedProfile;
+        state.userSuccess = action.payload.success;
+        state.userErrors = null;
+      })
+      .addCase(addRemoveFavorite.rejected, (state, action) => {
         state.loading = false;
         state.userErrors = action.payload;
       })

@@ -45,15 +45,13 @@ export const videoSlice = createSlice({
     setVideos: (state, action) => {
       state.allVideos = action.payload.allVideos;
       state.featured = shuffleArray(action.payload.movies)[0];
+      state.favorites = shuffleArray(action.payload.favorites) ?? [];
       state.movies = action.payload.movies;
       state.series = action.payload.series;
       state.lastFetched = Date.now();
     },
     setFeatured: (state, action) => {
       state.featured = action.payload;
-    },
-    setFavorites: (state, action) => {
-      state.favorites = action.payload ?? [];
     },
     setSelectedVideo: (state, action) => {
       state.selectedVideo = action.payload;
@@ -117,6 +115,7 @@ export const videoSlice = createSlice({
       .addCase(getVideos.fulfilled, (state, action) => {
         state.loading = false;
         state.allVideos = action.payload.allVideos ?? [];
+        state.favorites = shuffleArray(action.payload.favorites) ?? [];
         state.movies = action.payload.movies ?? [];
         state.series = action.payload.series ?? [];
         state.lastFetched = Date.now();
@@ -138,7 +137,6 @@ export const {
   movieSearch,
   seriesSearch,
   setFeatured,
-  setFavorites,
   setSelectedVideo,
   setSelectedSeries,
   setSelectedSeason,
