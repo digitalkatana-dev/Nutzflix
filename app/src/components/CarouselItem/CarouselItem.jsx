@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { IconButton } from '@mui/material';
 import { addRemoveFavorite } from '../../redux/slices/userSlice';
 import {
@@ -26,6 +26,7 @@ const CarouselItem = ({ type, item }) => {
   const openTimer = useRef(null);
   const closeTimer = useRef(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const watchList = activeUser?.favorites;
 
@@ -35,6 +36,8 @@ const CarouselItem = ({ type, item }) => {
     } else {
       dispatch(setSelectedVideo(item));
     }
+
+    navigate('/watch');
   };
 
   const clearOpenTimer = () => {
@@ -81,8 +84,8 @@ const CarouselItem = ({ type, item }) => {
       }
     : {};
 
-  const handleFavorite = (value) => {
-    dispatch(addRemoveFavorite(value));
+  const handleFavorite = () => {
+    dispatch(addRemoveFavorite(item._id));
   };
 
   return (
@@ -117,10 +120,10 @@ const CarouselItem = ({ type, item }) => {
             </div>
             <div className='item-info'>
               <div className='icons'>
-                <Link to='/watch' onClick={handleClick}>
+                <IconButton onClick={handleClick}>
                   <PlayArrowIcon className='icon' />
-                </Link>
-                <IconButton onClick={() => handleFavorite(item._id)}>
+                </IconButton>
+                <IconButton onClick={handleFavorite}>
                   {watchList?.includes(item._id) ? (
                     <FavoriteIcon className='icon full' />
                   ) : (
