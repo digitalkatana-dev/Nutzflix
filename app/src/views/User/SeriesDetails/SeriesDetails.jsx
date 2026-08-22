@@ -1,10 +1,10 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Container, Stack } from '@mui/material';
+import { Stack } from '@mui/material';
 import { setSelectedSeason } from '../../../redux/slices/videoSlice';
-import { getEmbedUrl } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
+import Trailer from '../../../components/Trailer';
 import './seriesDetails.scss';
 
 const SeriesDetails = () => {
@@ -17,17 +17,7 @@ const SeriesDetails = () => {
 
 	return (
 		<div id='series-details'>
-			<div className='trailer-wrapper'>
-				<Container maxWidth='xl'>
-					<div className='video-wrapper'>
-						<iframe
-							src={getEmbedUrl(selectedSeries?.trailer)}
-							frameBorder='0'
-						/>
-						<img className='logo' src={selectedSeries?.logo} alt='' />
-					</div>
-				</Container>
-			</div>
+			<Trailer video={selectedSeries}/>
 			<div className='series-info'>
 				<div className='flex-wrapper'>
 					<Paper className='poster-wrapper' elevation={5}>
