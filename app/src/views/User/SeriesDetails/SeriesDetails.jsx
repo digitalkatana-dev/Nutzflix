@@ -85,8 +85,8 @@ const SeriesDetails = () => {
           <div className='people'>
             <h2 className='responsive-h2'>Cast & Crew</h2>
             <div className='people-flex'>
-              {selectedSeries?.people?.map((p) => (
-                <div className='crew' key={p.Id}>
+              {selectedSeries?.people?.map((p, i) => (
+                <div className='crew' key={`${p.Id}-${p.Role}-${i}`}>
                   <span>{p.Role}</span>
                   <span>{p.Name}</span>
                 </div>
