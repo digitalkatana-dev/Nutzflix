@@ -46,6 +46,7 @@ export const videoSlice = createSlice({
       state.allVideos = action.payload.allVideos;
       state.featured = shuffleArray(action.payload.movies)[0];
       state.favorites = shuffleArray(action.payload.favorites) ?? [];
+      state.selectedVideo = action.payload.newFav ?? null;
       state.movies = action.payload.movies;
       state.series = action.payload.series;
       state.lastFetched = Date.now();
