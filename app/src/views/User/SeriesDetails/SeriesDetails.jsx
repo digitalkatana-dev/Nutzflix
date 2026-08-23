@@ -1,86 +1,102 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Stack } from '@mui/material';
+import { IconButton, Stack } from '@mui/material';
+import { addRemoveFavorite } from '../../../redux/slices/userSlice';
 import { setSelectedSeason } from '../../../redux/slices/videoSlice';
+import NotFavoriteIcon from '@mui/icons-material/FavoriteBorder';
+import FavoriteIcon from '@mui/icons-material/Favorite';
 import Paper from '../../../components/Paper';
 import Trailer from '../../../components/Trailer';
 import './seriesDetails.scss';
 
 const SeriesDetails = () => {
-	const { selectedSeries } = useSelector((state) => state.video);
-	const dispatch = useDispatch();
+  const { activeUser } = useSelector((state) => state.user);
+  const { selectedSeries } = useSelector((state) => state.video);
+  const dispatch = useDispatch();
+  const watchList = activeUser?.favorites ?? [];
 
-	const handleSeasonClick = (season) => {
-		dispatch(setSelectedSeason(season));
-	};
+  const handleSeasonClick = (season) => {
+    dispatch(setSelectedSeason(season));
+  };
 
-	return (
-		<div id='series-details'>
-			<Trailer video={selectedSeries}/>
-			<div className='series-info'>
-				<div className='flex-wrapper'>
-					<Paper className='poster-wrapper' elevation={5}>
-						<img src={selectedSeries?.folder} alt='' className='poster' />
-					</Paper>
-					<div className='common-info-wrapper'>
-						<Stack direction='column' spacing={1}>
-							<span className='responsive-h4'>{selectedSeries?.title}</span>
-							<span className='responsive-h5 rating'>
-								{selectedSeries?.rating}
-							</span>
-							<span className='responsive-p year'>{selectedSeries?.year}</span>
-						</Stack>
-						{selectedSeries?.tagline && (
-							<span className='responsive-h6'>{selectedSeries?.tagline}</span>
-						)}
-						<span className='responsive-p genre'>
-							{selectedSeries?.genre?.map((g) => `${g} `)}
-						</span>
-					</div>
-				</div>
-				<div className='details-wrapper'>
-					<div className='synopsis'>
-						<h2 className='responsive-h2'>Synopsis</h2>
-						<p className='responsive-h5'>{selectedSeries?.synopsis}</p>
-					</div>
-					<div className='seasons'>
-						<h2 className='responsive-h2'>Seasons</h2>
-						<div className='seasons-wrapper'>
-							{selectedSeries?.seasons?.map((season, i) => (
-								<Link
-									key={season._id}
-									to='/season-details'
-									className='season-link'
-									onClick={() => handleSeasonClick(season)}
-								>
-									<Paper className='poster-wrapper' elevation={5}>
-										<img
-											src={season.folder}
-											alt={`Season ${i + 1}`}
-											className='poster'
-										/>
-									</Paper>
-									<h5>{season.season}</h5>
-								</Link>
-							))}
-						</div>
-					</div>
-					<div className='people'>
-						<h2 className='responsive-h2'>Cast & Crew</h2>
-						<div className='people-flex'>
-							{selectedSeries?.people?.map((p) => (
-								<div className='crew' key={p.Id}>
-									<span>{p.Role}</span>
-									<span>{p.Name}</span>
-								</div>
-							))}
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	);
+  const handleFavorite = () => {
+    dispatch(addRemoveFavorite(selectedSeries._id));
+  };
+
+  return (
+    <div id='series-details'>
+      <Trailer video={selectedSeries} />
+      <div className='series-info'>
+        <div className='flex-wrapper'>
+          <Paper className='poster-wrapper' elevation={5}>
+            <img src={selectedSeries?.folder} alt='' className='poster' />
+          </Paper>
+          <div className='common-info-wrapper'>
+            <Stack direction='column' spacing={1}>
+              <span className='responsive-h4'>{selectedSeries?.title}</span>
+              <span className='responsive-h5 rating'>
+                {selectedSeries?.rating}
+              </span>
+              <span className='responsive-p year'>{selectedSeries?.year}</span>
+            </Stack>
+            {selectedSeries?.tagline && (
+              <span className='responsive-h6'>{selectedSeries?.tagline}</span>
+            )}
+            <span className='responsive-p genre'>
+              {selectedSeries?.genre?.map((g) => `${g} `)}
+            </span>
+            <IconButton className='fav-btn' onClick={handleFavorite}>
+              {watchList?.includes(selectedSeries._id) ? (
+                <FavoriteIcon className='fav-icon full' />
+              ) : (
+                <NotFavoriteIcon className='fav-icon' />
+              )}
+            </IconButton>
+          </div>
+        </div>
+        <div className='details-wrapper'>
+          <div className='synopsis'>
+            <h2 className='responsive-h2'>Synopsis</h2>
+            <p className='responsive-h5'>{selectedSeries?.synopsis}</p>
+          </div>
+          <div className='seasons'>
+            <h2 className='responsive-h2'>Seasons</h2>
+            <div className='seasons-wrapper'>
+              {selectedSeries?.seasons?.map((season, i) => (
+                <Link
+                  key={season._id}
+                  to='/season-details'
+                  className='season-link'
+                  onClick={() => handleSeasonClick(season)}
+                >
+                  <Paper className='poster-wrapper' elevation={5}>
+                    <img
+                      src={season.folder}
+                      alt={`Season ${i + 1}`}
+                      className='poster'
+                    />
+                  </Paper>
+                  <h5>{season.season}</h5>
+                </Link>
+              ))}
+            </div>
+          </div>
+          <div className='people'>
+            <h2 className='responsive-h2'>Cast & Crew</h2>
+            <div className='people-flex'>
+              {selectedSeries?.people?.map((p) => (
+                <div className='crew' key={p.Id}>
+                  <span>{p.Role}</span>
+                  <span>{p.Name}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export default SeriesDetails;

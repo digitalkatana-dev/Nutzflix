@@ -1,58 +1,69 @@
 #user-side {
-	width: 280px;
-	height: calc(100vh - 70px);
-	position: fixed;
-	top: 70px;
-	left: 0;
-	color: var(--text-primary);
-	background: linear-gradient(to top, var(--accent) 0%, var(--bg) 40%);
-	transform: translateX(-100%);
-	transition: transform 0.3s ease;
-	z-index: 1101;
+  width: 100vw;
+  height: calc(100vh - 69px);
+  position: fixed;
+  top: 69px;
+  left: 0;
+  display: flex;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  z-index: 1101;
 
-	&.open {
-		transform: translateX(0);
-	}
+  &.open {
+    transform: translateX(0);
+  }
 
-	.profile {
-		width: 100%;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 10px;
+  .menu-container {
+    width: 280px;
+    height: inherit;
+    color: var(--text-primary);
+    background: linear-gradient(to top, var(--accent) 0%, var(--bg) 40%);
 
-		.user-info {
-			display: flex;
-			align-items: center;
-			gap: 15px;
+    .profile {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px;
 
-			h2 {
-				color: var(--text-on-accent);
-			}
-		}
+      .user-info {
+        display: flex;
+        align-items: center;
+        gap: 15px;
 
-		.logout-icon {
-			color: var(--error);
-		}
-	}
+        h2 {
+          color: var(--text-on-accent);
+        }
+      }
 
-	.search {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
+      .logout-icon {
+        color: var(--error);
+      }
+    }
 
-	.search-results {
-		max-height: 250px;
-		display: flex;
-		justify-content: center;
-		padding: 5px 0;
-		flex-wrap: wrap;
-		gap: 10px;
-		overflow-y: auto;
-	}
+    .search {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
 
-	@media only screen and (min-width: 820px) {
-		display: none;
-	}
+    .search-results {
+      max-height: 250px;
+      display: flex;
+      justify-content: center;
+      padding: 5px 0;
+      flex-wrap: wrap;
+      gap: 10px;
+      overflow-y: auto;
+    }
+  }
+
+  .backdrop-overflow {
+    width: calc(100vw - 280px);
+    height: inherit;
+  }
+
+  @media only screen and (min-width: 820px) {
+    display: none;
+  }
 }

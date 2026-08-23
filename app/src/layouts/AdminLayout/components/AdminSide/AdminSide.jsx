@@ -12,71 +12,74 @@ import NavItem from '../../../../components/NavItem';
 import './adminSide.scss';
 
 const AdminSide = () => {
-	const { drawerOpen } = useSelector((state) => state.app);
+  const { drawerOpen } = useSelector((state) => state.app);
 
-	const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-	const handleDrawer = () => {
-		dispatch(setDrawerOpen(false));
-	};
+  const handleDrawer = () => {
+    dispatch(setDrawerOpen(false));
+  };
 
-	const handleLogout = () => {
-		dispatch(logout());
-	};
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
-	return (
-		<nav id='admin-side' className={drawerOpen ? 'open' : ''}>
-			<Box sx={{ pt: '15px', pl: '15px' }}>
-				<p className='label'>Main</p>
-				<NavItem
-					admin
-					link='/home-admin'
-					className='router-link'
-					icon={<DashboardIcon className='icon' />}
-					label='Dashboard'
-					onClick={handleDrawer}
-				/>
-				<p className='label'>QUICK MENU</p>
-				<NavItem
-					admin
-					link='/home-user'
-					className='router-link'
-					icon={<PersonOutlineIcon className='icon' />}
-					label='User Home'
-					onClick={handleDrawer}
-				/>
-				<NavItem
-					admin
-					link='/subs'
-					className='router-link'
-					icon={<PersonOutlineIcon className='icon' />}
-					label='Subscribers'
-					onClick={handleDrawer}
-				/>
-				<NavItem
-					admin
-					link='/inventory'
-					className='router-link'
-					icon={<PlayIcon className='icon' />}
-					label='Inventory'
-					onClick={handleDrawer}
-				/>
-				<p className='label'>USER</p>
-				<NavItem
-					admin
-					icon={<AccountCircleOutlinedIcon className='icon' />}
-					label='Profile'
-					onClick={handleDrawer}
-				/>
-				<NavItem
-					admin
-					icon={<ExitToAppIcon className='icon' />}
-					label='Logout'
-					onClick={handleLogout}
-				/>
-			</Box>
-		</nav>
-	);
+  return (
+    <nav id='admin-side' className={drawerOpen ? 'open' : ''}>
+      <div className='menu-container'>
+        <Box sx={{ pt: '15px', pl: '15px' }}>
+          <p className='label'>Main</p>
+          <NavItem
+            admin
+            link='/home-admin'
+            className='router-link'
+            icon={<DashboardIcon className='icon' />}
+            label='Dashboard'
+            onClick={handleDrawer}
+          />
+          <p className='label'>QUICK MENU</p>
+          <NavItem
+            admin
+            link='/home-user'
+            className='router-link'
+            icon={<PersonOutlineIcon className='icon' />}
+            label='User Home'
+            onClick={handleDrawer}
+          />
+          <NavItem
+            admin
+            link='/subs'
+            className='router-link'
+            icon={<PersonOutlineIcon className='icon' />}
+            label='Subscribers'
+            onClick={handleDrawer}
+          />
+          <NavItem
+            admin
+            link='/inventory'
+            className='router-link'
+            icon={<PlayIcon className='icon' />}
+            label='Inventory'
+            onClick={handleDrawer}
+          />
+          <p className='label'>USER</p>
+          <NavItem
+            admin
+            icon={<AccountCircleOutlinedIcon className='icon' />}
+            label='Profile'
+            onClick={handleDrawer}
+          />
+          <NavItem
+            admin
+            icon={<ExitToAppIcon className='icon' />}
+            label='Logout'
+            onClick={handleLogout}
+          />
+        </Box>
+      </div>
+      <div className='backdrop-overflow' onClick={handleDrawer} />
+    </nav>
+  );
 };
 
 export default AdminSide;
