@@ -24,6 +24,7 @@ export const videoAdapter = createEntityAdapter();
 const initialState = videoAdapter.getInitialState({
   loading: false,
   allVideos: [],
+  recentlyAdded: [],
   movies: [],
   series: [],
   lastFetched: null,
@@ -45,6 +46,7 @@ export const videoSlice = createSlice({
     setVideos: (state, action) => {
       state.allVideos = action.payload.allVideos;
       state.featured = shuffleArray(action.payload.movies)[0];
+      state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
       state.favorites = shuffleArray(action.payload.favorites) ?? [];
       state.selectedVideo = action.payload.newFav ?? null;
       state.movies = action.payload.movies;
@@ -117,6 +119,7 @@ export const videoSlice = createSlice({
         state.loading = false;
         state.allVideos = action.payload.allVideos ?? [];
         state.favorites = shuffleArray(action.payload.favorites) ?? [];
+        state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
         state.movies = action.payload.movies ?? [];
         state.series = action.payload.series ?? [];
         state.lastFetched = Date.now();
