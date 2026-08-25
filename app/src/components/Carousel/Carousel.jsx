@@ -5,8 +5,21 @@ import './carousel.scss';
 
 const Slider = SliderModule.default || SliderModule;
 
-const Carousel = ({ list, count = 10, series, favs, autoplay }) => {
-  const title = series ? 'Series' : favs ? 'My List' : list?.name;
+const Carousel = ({
+  list,
+  count = list.length,
+  series,
+  favs,
+  recent,
+  autoplay,
+}) => {
+  const title = series
+    ? 'Series'
+    : favs
+      ? 'My List'
+      : recent
+        ? 'Recently Added'
+        : list?.name;
   const videos = list?.movies || list;
 
   const settings = {

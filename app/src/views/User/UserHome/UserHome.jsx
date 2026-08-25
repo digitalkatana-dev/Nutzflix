@@ -15,9 +15,8 @@ import './userhome.scss';
 
 const UserHome = () => {
   const { drawerOpen } = useSelector((state) => state.app);
-  const { featured, movies, series, searchResults, favorites } = useSelector(
-    (state) => state.video,
-  );
+  const { featured, movies, series, searchResults, favorites, recentlyAdded } =
+    useSelector((state) => state.video);
   const dispatch = useDispatch();
   const lists = buildGenreLists(movies);
 
@@ -72,11 +71,14 @@ const UserHome = () => {
             {favorites.length && (
               <Carousel favs list={shuffleArray(favorites)} arrows />
             )}
-            <Carousel series list={shuffleArray(series)} arrows count={20} />
+            {recentlyAdded.length && (
+              <Carousel recent list={shuffleArray(recentlyAdded)} arrows />
+            )}
+            <Carousel series list={shuffleArray(series)} arrows />
             {lists
               .filter((list) => list.movies.length > 0)
               .map((list) => (
-                <Carousel key={list.name} list={list} arrows />
+                <Carousel key={list.name} list={list} arrows count={10} />
               ))}
           </div>
         </>

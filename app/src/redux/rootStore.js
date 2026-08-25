@@ -34,7 +34,6 @@ const videoPersistConfig = {
   whitelist: [
     'lastFetched',
     'featured',
-    'favorites',
     'selectedVideo',
     'selectedSeries',
     'selectedSeason',
