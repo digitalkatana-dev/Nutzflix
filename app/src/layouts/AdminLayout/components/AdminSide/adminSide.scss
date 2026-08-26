@@ -67,6 +67,7 @@
 
   @media only screen and (min-width: 820px) {
     display: block;
+    width: 280px;
     transform: translateX(0); /* always visible/permanent */
     transition: none;
     border-right: 1px ridge rgb(230, 227, 227);
