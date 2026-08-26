@@ -70,6 +70,9 @@
     width: 280px;
     transform: translateX(0); /* always visible/permanent */
     transition: none;
-    border-right: 1px ridge rgb(230, 227, 227);
+
+    .menu-container {
+      border-right: 1px ridge rgb(230, 277, 277);
+    }
   }
 }
