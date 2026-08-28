@@ -1,40 +1,42 @@
 # Ignore node_modules in both app and server
-app/node_modules/
+web/node_modules/
 server/node_modules/
 
-# Ignore package-lock.json in both app and server
-app/package-lock.json
+# Ignore package-lock.json in both web and server
+web/package-lock.json
 server/package-lock.json
 
-# Ignore .env files in bot app and server
-app/.env
+# Ignore .env files in bot web and server
+web/.env
 server/.env
 
 # production
-app/dist
-app/dist-ssr
-app/*.local
+web/dist
+web/dist-ssr
+web/*.local
 
 # Logs
-app/logs
-app/*.log
-app/npm-debug.log*
-app/yarn-debug.log*
-app/yarn-error.log*
-app/pnpm-debug.log*
-app/lerna-debug.log*
+web/logs
+web/*.log
+web/npm-debug.log*
+web/yarn-debug.log*
+web/yarn-error.log*
+web/pnpm-debug.log*
+web/lerna-debug.log*
 
 # Editor directories and files
-app/.vscode/*
-app/!.vscode/extensions.json
-app/.idea
-app/.DS_Store
-app/*.suo
-app/*.ntvs*
-app/*.njsproj
-app/*.sln
-app/*.sw?
+web/.vscode/*
+web/!.vscode/extensions.json
+web/.idea
+web/.DS_Store
+web/*.suo
+web/*.ntvs*
+web/*.njsproj
+web/*.sln
+web/*.sw?
 
 # (Optional) If you ever have top-level node_modules or env files
 node_modules/
 .env
+
+server/assets/photos
