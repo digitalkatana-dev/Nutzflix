@@ -1,9 +1,11 @@
 # Ignore node_modules in both app and server
 web/node_modules/
+tv/node_modules/
 server/node_modules/
 
 # Ignore package-lock.json in both web and server
 web/package-lock.json
+tv/package-lock.json
 server/package-lock.json
 
 # Ignore .env files in bot web and server
@@ -15,6 +17,15 @@ web/dist
 web/dist-ssr
 web/*.local
 
+# Ignore Expo/TV build artifacts
+tv/.expo/
+tv/dist/
+tv/web-build/
+tv/expo-env.d.ts
+
+# Metro bundler
+tv/.metro-health-check*
+
 # Logs
 web/logs
 web/*.log
@@ -23,6 +34,9 @@ web/yarn-debug.log*
 web/yarn-error.log*
 web/pnpm-debug.log*
 web/lerna-debug.log*
+tv/npm-debug.*
+tv/yarn-debug.*
+tv/yarn-error.*
 
 # Editor directories and files
 web/.vscode/*
@@ -34,6 +48,22 @@ web/*.ntvs*
 web/*.njsproj
 web/*.sln
 web/*.sw?
+tv/.kotlin/
+tv/*.orig.*
+tv/*.jks
+tv/*.p8
+tv/*.p12
+tv/*.key
+tv/*.mobileprovision
+tv/ios/
+tv/android/
+
+# macOS / cert files
+tv/.DS_Store
+tv/*.pem
+
+# Local env files
+tv/.env*.local
 
 # (Optional) If you ever have top-level node_modules or env files
 node_modules/
