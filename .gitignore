@@ -39,4 +39,4 @@ web/*.sw?
 node_modules/
 .env
 
-server/assets/photos
+server/assets/photos/*
