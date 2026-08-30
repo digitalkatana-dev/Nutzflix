@@ -31,7 +31,8 @@
         }
       ],
       "expo-font",
-      "@react-native-vector-icons/material-icons"
+      "@react-native-vector-icons/material-icons",
+      "expo-video"
     ]
   }
 }
