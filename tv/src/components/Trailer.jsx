@@ -1,13 +1,25 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Surface } from 'react-native-paper';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import { useNavigation } from '@react-navigation/native';
+import { setFocusedKey } from '../redux/slices/appSlice';
 import { getEmbedHtml } from '../util/helpers';
 
 const Trailer = ({ featured, video, onClick }) => {
+  const { focusedKey } = useSelector((state) => state.app);
+  const dispatch = useDispatch();
   const navigation = useNavigation();
+
+  const handleFocus = (value) => {
+    dispatch(setFocusedKey(value));
+  };
+
+  const handleBlur = () => {
+    dispatch(setFocusedKey(null));
+  };
 
   const handlePlay = () => {
     onClick?.();
@@ -29,15 +41,38 @@ const Trailer = ({ featured, video, onClick }) => {
       </Text>
       <View style={styles.btnContainer}>
         <Pressable
-          style={[styles.trailerBtn, styles.playBtn]}
+          style={[
+            styles.trailerBtn,
+            styles.playBtn,
+            focusedKey === 'trailer-play' && styles.focused,
+          ]}
+          onFocus={() => handleFocus('trailer-play')}
+          onBlur={handleBlur}
           onPress={handlePlay}
           focusable
         >
-          <MaterialIcons name='play-arrow' size={20} color='#000' />
-          <Text style={styles.playText}>Play</Text>
+          <MaterialIcons
+            name='play-arrow'
+            size={20}
+            color={focusedKey === 'trailer-play' ? '#fff' : '#000'}
+          />
+          <Text
+            style={[
+              styles.playText,
+              focusedKey === 'trailer-play' && styles.focusedTxt,
+            ]}
+          >
+            Play
+          </Text>
         </Pressable>
         <Pressable
-          style={[styles.trailerBtn, styles.moreBtn]}
+          style={[
+            styles.trailerBtn,
+            styles.moreBtn,
+            focusedKey === 'trailer-info' && styles.focused,
+          ]}
+          onFocus={() => handleFocus('trailer-info')}
+          onBlur={handleBlur}
           onPress={handleInfo}
         >
           <MaterialIcons name='info-outline' size={20} color='#fff' />
@@ -128,11 +163,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 8,
     paddingHorizontal: 20,
-    borderRadius: 4,
+    borderRadius: 20,
     gap: 6,
   },
   playBtn: { backgroundColor: '#fff' },
-  moreBtn: { backgroundColor: '#6b0ac9' },
+  moreBtn: { backgroundColor: 'rgba(255,255,255,0.2)' },
   playText: { color: '#000', fontWeight: 'bold' },
   moreText: { color: '#fff', fontWeight: 'bold' },
+  focused: {
+    backgroundColor: '#7b0fe0',
+  },
+  focusedTxt: {
+    color: '#fff',
+    fontWeight: 'bold',
+  },
 });

@@ -4,15 +4,27 @@ import { StyleSheet, View, ScrollView, Text, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button, Menu } from 'react-native-paper';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
+import { setFocusedKey } from '../redux/slices/appSlice';
 import { logout } from '../redux/slices/userSlice';
 
 const MainLayout = ({ children }) => {
+  const { focusedKey } = useSelector((state) => state.app);
   const { activeUser } = useSelector((state) => state.user);
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
 
   const openMenu = () => setMenuOpen(true);
   const closeMenu = () => setMenuOpen(false);
+
+  const navLinks = ['Home', 'Series', 'Movies', 'My List'];
+
+  const handleFocus = (value) => {
+    dispatch(setFocusedKey(value));
+  };
+
+  const handleBlur = () => {
+    dispatch(setFocusedKey(null));
+  };
 
   const handleLogout = () => {
     dispatch(logout());
@@ -31,24 +43,52 @@ const MainLayout = ({ children }) => {
           visible={menuOpen}
           onDismiss={closeMenu}
           anchor={
-            <Pressable style={styles.profile} onPress={openMenu} focusable>
+            <Pressable
+              style={[
+                styles.profile,
+                focusedKey === 'profile' && styles.focused,
+              ]}
+              onFocus={() => handleFocus('profile')}
+              onBlur={handleBlur}
+              onPress={openMenu}
+              focusable
+            >
               <Avatar.Image
-                size={40}
+                size={35}
                 source={{ uri: activeUser?.profilePhoto }}
               />
               <MaterialIcons name='arrow-drop-down' size={24} color='#888' />
             </Pressable>
           }
         >
-          <Pressable onPress={handleLogout} focusable>
+          <Pressable
+            style={focusedKey === 'logout' && styles.focused}
+            onFocus={() => handleFocus('logout')}
+            onBlur={handleBlur}
+            onPress={handleLogout}
+            focusable
+          >
             <Menu.Item title='Logout' dense />
           </Pressable>
         </Menu>
         <View style={styles.links}>
-          <Text style={styles.temp}>Home</Text>
-          <Text style={styles.temp}>Shows</Text>
-          <Text style={styles.temp}>Movies</Text>
-          <Text style={styles.temp}>My List</Text>
+          {navLinks.map((label) => (
+            <Pressable
+              key={label}
+              onFocus={() => handleFocus(label)}
+              onBlur={handleBlur}
+              focusable
+            >
+              <Text
+                style={[
+                  styles.temp,
+                  focusedKey === label && styles.focusedText,
+                ]}
+              >
+                {label}
+              </Text>
+            </Pressable>
+          ))}
         </View>
         <Text style={styles.brand}>NUTZFLIX</Text>
       </View>
@@ -75,6 +115,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#141414',
     zIndex: 1000,
+  },
+  focused: {
+    borderWidth: 2,
+    borderColor: '#6b0ac9',
+    borderRadius: 4,
+  },
+  focusedText: {
+    color: '#6b0ac9',
   },
   profile: {
     width: 40,
