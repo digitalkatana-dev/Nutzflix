@@ -30,7 +30,8 @@
           "image": "./assets/icon-512.png"
         }
       ],
-      "expo-font"
+      "expo-font",
+      "@react-native-vector-icons/material-icons"
     ]
   }
 }
