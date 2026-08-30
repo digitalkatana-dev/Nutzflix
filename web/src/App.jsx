@@ -47,11 +47,12 @@ const App = () => {
     element = <Login />;
   }
 
-  if (activeUser) {
-    if (!allVideos?.length || !movies?.length || !series?.length) {
+  useEffect(() => {
+    if (!activeUser) return;
+    if (!allVideos?.length || !!movies?.length || !series?.length) {
       dispatch(getVideos());
     }
-  }
+  }, [activeUser, allVideos?.length, movies?.length, series?.length, dispatch]);
 
   useEffect(() => {
     if (!activeUser) return;
