@@ -1,12 +1,22 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, View, ScrollView, Text, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Avatar, Icon } from 'react-native-paper';
-import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import { Avatar, Button, Menu } from 'react-native-paper';
+import { MaterialIcons } from '@react-native-vector-icons/material-icons';
+import { logout } from '../redux/slices/userSlice';
 
 const MainLayout = ({ children }) => {
   const { activeUser } = useSelector((state) => state.user);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const openMenu = () => setMenuOpen(true);
+  const closeMenu = () => setMenuOpen(false);
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <LinearGradient
@@ -17,12 +27,32 @@ const MainLayout = ({ children }) => {
       style={styles.container}
     >
       <View style={styles.topbar}>
-        <View>
-          <Avatar.Image size={24} source={activeUser?.profilePhoto} />
-          <MaterialIcons name='arrow-drop-down' size={24} color='black' />
+        <Menu
+          visible={menuOpen}
+          onDismiss={closeMenu}
+          anchor={
+            <Pressable style={styles.profile} onPress={openMenu} focusable>
+              <Avatar.Image
+                size={40}
+                source={{ uri: activeUser?.profilePhoto }}
+              />
+              <MaterialIcons name='arrow-drop-down' size={24} color='#888' />
+            </Pressable>
+          }
+        >
+          <Pressable onPress={handleLogout} focusable>
+            <Menu.Item title='Logout' dense />
+          </Pressable>
+        </Menu>
+        <View style={styles.links}>
+          <Text style={styles.temp}>Home</Text>
+          <Text style={styles.temp}>Shows</Text>
+          <Text style={styles.temp}>Movies</Text>
+          <Text style={styles.temp}>My List</Text>
         </View>
+        <Text style={styles.brand}>NUTZFLIX</Text>
       </View>
-      {children}
+      <ScrollView style={styles.main}>{children}</ScrollView>
     </LinearGradient>
   );
 };
@@ -36,9 +66,36 @@ const styles = StyleSheet.create({
   },
   topbar: {
     width: '100%',
-    height: 70,
+    height: 60,
     position: 'absolute',
     top: 0,
-    backgroundColor: 'orange',
+    paddingHorizontal: 30,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: '#141414',
+    zIndex: 1000,
+  },
+  profile: {
+    width: 40,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  links: {
+    flexDirection: 'row',
+    gap: 40,
+  },
+  temp: {
+    color: '#fff',
+  },
+  brand: {
+    color: '#6b0ac9',
+    fontSize: 25,
+    fontFamily: 'SourGummy_600SemiBold',
+  },
+  main: {
+    flex: 1,
+    flexDirection: 'column',
+    marginTop: 30,
   },
 });

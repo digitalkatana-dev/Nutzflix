@@ -72,7 +72,7 @@ export const getEmbedUrl = (youtubeUrl) => {
 
   const params = new URLSearchParams({
     autoplay: '1',
-    mute: '1', // required by browsers for autoplay to work
+    // mute: '1', // required by browsers for autoplay to work
     controls: '0', // hides YouTube's control bar
     modestbranding: '0',
     loop: '1',
@@ -84,6 +84,31 @@ export const getEmbedUrl = (youtubeUrl) => {
   });
 
   return `https://www.youtube.com/embed/${videoId}?${params.toString()}`;
+};
+
+export const getEmbedHtml = (youtubeUrl) => {
+  const embedUrl = getEmbedUrl(youtubeUrl);
+  if (!embedUrl) return null;
+
+  return `
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+          html, body { margin: 0; padding: 0; background: #000; overflow: hidden; }
+          iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+        </style>
+      </head>
+      <body>
+        <iframe
+          src="${embedUrl}"
+          allow="autoplay; encrypted-media"
+          allowfullscreen
+        ></iframe>
+      </body>
+    </html>
+  `;
 };
 
 export const buildGenreLists = (movies) => {
