@@ -85,15 +85,19 @@ const Trailer = ({ featured, video, onClick }) => {
   return (
     <View style={[styles.container, !featured && styles.category]}>
       <Surface style={[styles.videoWrapper, !featured && styles.category]}>
-        <WebView
-          source={{
-            html: getEmbedHtml(video?.trailer),
-            baseUrl: 'https://www.nutzflix.net',
-          }}
-          style={styles.video}
-          allowsFullscreenVideo
-          mediaPlaybackRequiresUserAction={false}
-        />
+        {getEmbedHtml(video?.trailer) ? (
+          <WebView
+            source={{
+              html: getEmbedHtml(video?.trailer),
+              baseUrl: 'https://www.nutzflix.net',
+            }}
+            style={styles.video}
+            allowsFullscreenVideo
+            mediaPlaybackRequiresUserAction={false}
+          />
+        ) : (
+          <View style={[styles.video, { backgroundColor: '#000' }]} />
+        )}
         <View style={styles.footer}>
           {video?.logo && (
             <Image

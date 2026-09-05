@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, View, ScrollView, Text, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
-import { Avatar, Button, Menu } from 'react-native-paper';
+import { Avatar, Button, Divider, Menu } from 'react-native-paper';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import { setFocusedKey } from '../redux/slices/appSlice';
 import { logout } from '../redux/slices/userSlice';
@@ -24,6 +24,10 @@ const MainLayout = ({ children }) => {
 
   const handleBlur = () => {
     dispatch(setFocusedKey(null));
+  };
+
+  const handleEscape = () => {
+    setMenuOpen(false);
   };
 
   const handleLogout = () => {
@@ -54,7 +58,7 @@ const MainLayout = ({ children }) => {
               focusable
             >
               <Avatar.Image
-                size={35}
+                size={30}
                 source={{ uri: activeUser?.profilePhoto }}
               />
               <MaterialIcons name='arrow-drop-down' size={24} color='#888' />
@@ -62,13 +66,36 @@ const MainLayout = ({ children }) => {
           }
         >
           <Pressable
-            style={focusedKey === 'logout' && styles.focused}
+            style={[styles.btn, focusedKey === 'escape' && styles.focused]}
+            onFocus={() => handleFocus('escape')}
+            onBlur={handleBlur}
+            onPress={handleEscape}
+            focusable
+          >
+            <Menu.Item
+              leadingIcon={() => (
+                <Avatar.Image
+                  size={25}
+                  source={{ uri: activeUser?.profilePhoto }}
+                />
+              )}
+              title={activeUser?.firstName}
+              dense
+            />
+          </Pressable>
+          <Divider />
+          <Pressable
+            style={[
+              styles.btn,
+              styles.btnBottom,
+              focusedKey === 'logout' && styles.focused,
+            ]}
             onFocus={() => handleFocus('logout')}
             onBlur={handleBlur}
             onPress={handleLogout}
             focusable
           >
-            <Menu.Item title='Logout' dense />
+            <Menu.Item leadingIcon='logout' title='Logout' dense />
           </Pressable>
         </Menu>
         <View style={styles.links}>
@@ -116,16 +143,18 @@ const styles = StyleSheet.create({
     backgroundColor: '#141414',
     zIndex: 1000,
   },
+  btn: {
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+  },
   focused: {
     borderWidth: 2,
     borderColor: '#6b0ac9',
-    borderRadius: 4,
   },
   focusedText: {
     color: '#6b0ac9',
   },
   profile: {
-    width: 40,
     flexDirection: 'row',
     alignItems: 'center',
   },
