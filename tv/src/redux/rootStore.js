@@ -10,6 +10,7 @@ import {
   REHYDRATE,
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Reactotron from '../../ReactotronConfig';
 import appReducer from './slices/appSlice';
 import userReducer from './slices/userSlice';
 import videoReducer from './slices/videoSlice';
@@ -66,6 +67,10 @@ export const store = configureStore({
         ],
       },
     }),
+  enhancers: (getDefaultEnhancers) =>
+    __DEV__
+      ? getDefaultEnhancers().concat(Reactotron.createEnhancer())
+      : getDefaultEnhancers(),
 });
 
 export const persistor = persistStore(store);

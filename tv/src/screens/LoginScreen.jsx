@@ -3,23 +3,32 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   View,
   Text,
-  // TextInput,
   Pressable,
   ImageBackground,
   StyleSheet,
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
+import { setFocusedKey } from '../redux/slices/appSlice';
 import { userAuth, clearUserErrors } from '../redux/slices/userSlice';
 
 const LoginScreen = () => {
+  const { focusedKey } = useSelector((state) => state.app);
   const { loading, userErrors } = useSelector((state) => state.user);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
-  const handleFocus = () => {
+  const handleFocus = (value) => {
+    dispatch(setFocusedKey(value));
+  };
+
+  const handleBlur = () => {
+    dispatch(setFocusedKey(null));
+  };
+
+  const handleClearErrors = () => {
     dispatch(clearUserErrors());
   };
 
@@ -65,12 +74,13 @@ const LoginScreen = () => {
           <TextInput
             mode='outlined'
             style={styles.input}
+            textColor='#fff'
             dense
             placeholder='Email'
             placeholderTextColor='#888'
             autoCapitalize='none'
             inputMode='email'
-            onFocus={handleFocus}
+            onFocus={handleClearErrors}
             value={email}
             onChangeText={setEmail}
           />
@@ -80,17 +90,22 @@ const LoginScreen = () => {
           <TextInput
             mode='outlined'
             style={styles.input}
+            textColor='#fff'
             dense
             placeholder='Password'
             placeholderTextColor='#888'
             secureTextEntry={show ? false : true}
-            onFocus={handleFocus}
+            onFocus={handleClearErrors}
             value={password}
             onChangeText={setPassword}
             right={
               <TextInput.Icon
                 icon={show ? 'eye-off' : 'eye'}
+                style={focusedKey === 'password' && styles.focused}
+                onFocus={() => handleFocus('password')}
+                onBlur={handleBlur}
                 onPress={() => setShow(!show)}
+                focusable
               />
             }
           />
@@ -98,12 +113,19 @@ const LoginScreen = () => {
             <Text style={styles.error}>{userErrors?.password}</Text>
           )}
           <Pressable
-            style={styles.btn}
+            style={[styles.btn, focusedKey === 'login' && styles.focusedBtn]}
+            onFocus={() => handleFocus('login')}
+            onBlur={handleBlur}
             onPress={handleLogin}
             disabled={loading}
             focusable
           >
-            <Text style={styles.btnTxt}>
+            <Text
+              style={[
+                styles.btnTxt,
+                focusedKey === 'login' && styles.focusedBtnTxt,
+              ]}
+            >
               {loading ? 'Signing in...' : 'Sign In'}
             </Text>
           </Pressable>
@@ -169,15 +191,25 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     marginBottom: 16,
   },
-  btn: {
+  focused: {
     backgroundColor: '#6b0ac9',
+  },
+  btn: {
+    backgroundColor: '#fff',
     paddingVertical: 12,
     paddingHorizontal: 40,
     borderRadius: 6,
     marginTop: 8,
     alignItems: 'center',
   },
+  focusedBtn: {
+    backgroundColor: '#6b0ac9',
+  },
   btnTxt: {
+    color: '#6b0ac9',
+    fontWeight: 'bold',
+  },
+  focusedBtnTxt: {
     color: '#fff',
     fontWeight: 'bold',
   },

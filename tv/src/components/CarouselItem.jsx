@@ -15,7 +15,6 @@ import {
   setSelectedSeries,
 } from '../redux/slices/videoSlice';
 import { setFocusedKey } from '../redux/slices/appSlice';
-import { addRemoveFavorite } from '../redux/slices/userSlice';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const ITEM_WIDTH = Math.min(
@@ -52,8 +51,6 @@ const CarouselItem = ({ item, type, onFocusItem }) => {
     }
   };
 
-  const handleFavorite = () => dispatch(addRemoveFavorite(item._id));
-
   return (
     <Pressable
       style={[styles.container, isFocused && styles.focused]}
@@ -69,21 +66,12 @@ const CarouselItem = ({ item, type, onFocusItem }) => {
       {isFocused && (
         <View style={styles.overlay}>
           <View style={styles.icons}>
-            <View style={styles.iconBtn}>
-              <MaterialIcons name='play-arrow' size={18} color='#fff' />
-            </View>
-            {type !== 'series' && (
-              <Pressable
-                onPress={handleFavorite}
-                style={styles.iconBtn}
-                focusable
-              >
-                <MaterialIcons
-                  name={isFavorite ? 'favorite' : 'favorite-border'}
-                  size={18}
-                  color={isFavorite ? '#e50914' : '#fff'}
-                />
-              </Pressable>
+            {isFavorite && (
+              <MaterialIcons
+                name={isFavorite ? 'favorite' : 'favorite-border'}
+                size={18}
+                color={isFavorite ? '#e50914' : '#fff'}
+              />
             )}
           </View>
           <Text style={styles.title} numberOfLines={1}>
