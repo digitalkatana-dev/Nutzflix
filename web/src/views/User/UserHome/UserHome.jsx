@@ -18,7 +18,7 @@ const UserHome = () => {
   const { featured, movies, series, searchResults, favorites, recentlyAdded } =
     useSelector((state) => state.video);
   const dispatch = useDispatch();
-  const lists = buildGenreLists(shuffleArray(movies));
+  const lists = buildGenreLists(movies);
 
   const handleSelectedVideo = (video) => {
     if (video.videoType.toLowerCase() === 'series') {
@@ -68,11 +68,9 @@ const UserHome = () => {
         <>
           <Trailer featured video={featured} onClick={handleFeaturedClick} />
           <div className='carousel-wrapper'>
-            {favorites.length && (
-              <Carousel favs list={shuffleArray(favorites)} arrows />
-            )}
+            {favorites.length && <Carousel favs list={favorites} arrows />}
             {recentlyAdded.length && (
-              <Carousel recent list={shuffleArray(recentlyAdded)} arrows />
+              <Carousel recent list={recentlyAdded} arrows />
             )}
             <Carousel series list={shuffleArray(series)} arrows />
             {lists

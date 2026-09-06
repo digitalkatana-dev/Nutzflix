@@ -5,6 +5,7 @@ import {
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 import { logout } from './userSlice';
+import { shuffleArray } from '../../util/helpers';
 import nutzflixApi from '../../api/nutflixApi';
 
 export const getVideos = createAsyncThunk(
@@ -42,9 +43,9 @@ export const videoSlice = createSlice({
   initialState,
   reducers: {
     setVideos: (state, action) => {
-      state.featured = action.payload.movies[0];
-      state.recentlyAdded = action.payload.recentlyAdded ?? [];
-      state.favorites = action.payload.favorites ?? [];
+      state.featured = shuffleArray(action.payload.movies)[0];
+      state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
+      state.favorites = shuffleArray(action.payload.favorites) ?? [];
       state.selectedVideo = action.payload.newFav ?? null;
       state.movies = action.payload.movies;
       state.series = action.payload.series;
@@ -115,8 +116,8 @@ export const videoSlice = createSlice({
       })
       .addCase(getVideos.fulfilled, (state, action) => {
         state.loading = false;
-        state.favorites = action.payload.favorites ?? [];
-        state.recentlyAdded = action.payload.recentlyAdded ?? [];
+        state.favorites = shuffleArray(action.payload.favorites) ?? [];
+        state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
         state.movies = action.payload.movies ?? [];
         state.series = action.payload.series ?? [];
         state.lastFetched = Date.now();
