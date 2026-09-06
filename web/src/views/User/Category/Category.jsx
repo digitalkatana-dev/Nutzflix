@@ -4,6 +4,7 @@ import {
   setSelectedVideo,
   setSelectedSeries,
 } from '../../../redux/slices/videoSlice';
+import { shuffleArray } from '../../../util/helpers';
 import VideoItemV from '../../../components/VideoItemV';
 import './category.scss';
 
@@ -14,10 +15,10 @@ const Category = ({ type }) => {
   const dispatch = useDispatch();
   const category =
     type === 'series'
-      ? series
+      ? shuffleArray(series)
       : type === 'movies'
-        ? movies
-        : type === 'fav' && favorites;
+        ? shuffleArray(movies)
+        : type === 'fav' && shuffleArray(favorites);
 
   const handleClick = (selected) => {
     if (selected.videoType.toLowerCase() === 'series') {

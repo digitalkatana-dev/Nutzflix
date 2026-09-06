@@ -18,7 +18,7 @@ const UserHome = () => {
   const { featured, movies, series, searchResults, favorites, recentlyAdded } =
     useSelector((state) => state.video);
   const dispatch = useDispatch();
-  const lists = buildGenreLists(movies);
+  const lists = buildGenreLists(shuffleArray(movies));
 
   const handleSelectedVideo = (video) => {
     if (video.videoType.toLowerCase() === 'series') {

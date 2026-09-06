@@ -99,3 +99,7 @@ export const buildGenreLists = (movies) => {
   });
   return lists;
 };
+
+export const sortByTitle = (array) => {
+  return [...array].sort((a, b) => a.title.localeCompare(b.title));
+};

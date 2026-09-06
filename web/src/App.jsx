@@ -34,9 +34,7 @@ const CHECK_INTERVAL_MS = 2 * 60 * 60 * 1000; // check every 2 hours, refetch wh
 const App = () => {
   const { theme, drawerOpen } = useSelector((state) => state.app);
   const { activeUser } = useSelector((state) => state.user);
-  const { allVideos, movies, series, lastFetched } = useSelector(
-    (state) => state.video,
-  );
+  const { movies, series, lastFetched } = useSelector((state) => state.video);
   const dispatch = useDispatch();
 
   let element;
@@ -49,10 +47,10 @@ const App = () => {
 
   useEffect(() => {
     if (!activeUser) return;
-    if (!allVideos?.length || !!movies?.length || !series?.length) {
+    if (!movies?.length || !series?.length) {
       dispatch(getVideos());
     }
-  }, [activeUser, allVideos?.length, movies?.length, series?.length, dispatch]);
+  }, [activeUser, movies?.length, series?.length, dispatch]);
 
   useEffect(() => {
     if (!activeUser) return;
