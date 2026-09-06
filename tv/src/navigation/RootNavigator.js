@@ -23,7 +23,7 @@ export default function RootNavigator() {
           <Stack.Screen name='Watch' component={WatchScreen} />
           <Stack.Screen name='Movies' component={MoviesScreen} />
           <Stack.Screen name='Series' component={SeriesScreen} />
-          <Stack.Screen name='MyList' component={MyListScreen} />
+          <Stack.Screen name='My List' component={MyListScreen} />
           <Stack.Screen name='VideoDetails' component={VideoDetailsScreen} />
           <Stack.Screen name='SeriesDetails' component={SeriesDetailsScreen} />
           <Stack.Screen name='SeasonDetails' component={SeasonDetailsScreen} />
