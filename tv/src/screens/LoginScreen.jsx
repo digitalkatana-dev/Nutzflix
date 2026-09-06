@@ -9,23 +9,22 @@ import {
 } from 'react-native';
 import { TextInput } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
-import { setFocusedKey } from '../redux/slices/appSlice';
 import { userAuth, clearUserErrors } from '../redux/slices/userSlice';
 
 const LoginScreen = () => {
-  const { focusedKey } = useSelector((state) => state.app);
   const { loading, userErrors } = useSelector((state) => state.user);
+  const [focusedKey, setFocusedKey] = useState(null);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [show, setShow] = useState(false);
   const dispatch = useDispatch();
 
   const handleFocus = (value) => {
-    dispatch(setFocusedKey(value));
+    setFocusedKey(value);
   };
 
   const handleBlur = () => {
-    dispatch(setFocusedKey(null));
+    setFocusedKey(null);
   };
 
   const handleClearErrors = () => {
@@ -172,9 +171,9 @@ const styles = StyleSheet.create({
     textShadowOffset: { width: 0, height: 0 },
   },
   card: {
-    width: 350,
+    width: 280,
     backgroundColor: 'rgb(11,11,11)',
-    padding: 30,
+    padding: 20,
     borderRadius: 6,
   },
   header: {

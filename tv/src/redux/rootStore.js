@@ -11,20 +11,13 @@ import {
 } from 'redux-persist';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Reactotron from '../../ReactotronConfig';
-import appReducer from './slices/appSlice';
 import userReducer from './slices/userSlice';
 import videoReducer from './slices/videoSlice';
-
-const appPersistConfig = {
-  key: 'app',
-  storage: AsyncStorage,
-  whitelist: ['focusedKey'],
-};
 
 const userPersistConfig = {
   key: 'user',
   storage: AsyncStorage,
-  whitelist: ['activeUser', 'allUsers'],
+  whitelist: ['activeUser'],
 };
 
 const videoPersistConfig = {
@@ -41,7 +34,6 @@ const videoPersistConfig = {
 
 export const store = configureStore({
   reducer: {
-    app: persistReducer(appPersistConfig, appReducer),
     user: persistReducer(userPersistConfig, userReducer),
     video: persistReducer(videoPersistConfig, videoReducer),
   },
@@ -50,7 +42,6 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE],
         ignoredPaths: [
-          'video.allVideos',
           'video.movies',
           'video.series',
           'video.recentlyAdded',
@@ -59,7 +50,6 @@ export const store = configureStore({
       },
       immutableCheck: {
         ignoredPaths: [
-          'video.allVideos',
           'video.movies',
           'video.series',
           'video.recentlyAdded',

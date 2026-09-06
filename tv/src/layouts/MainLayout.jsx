@@ -1,30 +1,23 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, View, ScrollView, Text, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button, Divider, Menu } from 'react-native-paper';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
-import { setFocusedKey } from '../redux/slices/appSlice';
 import { logout } from '../redux/slices/userSlice';
+import { clearAllSelected } from '../redux/slices/videoSlice';
 
-const MainLayout = ({ children }) => {
-  const { focusedKey } = useSelector((state) => state.app);
+const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
   const { activeUser } = useSelector((state) => state.user);
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
+  const navigation = useNavigation();
 
   const openMenu = () => setMenuOpen(true);
   const closeMenu = () => setMenuOpen(false);
 
   const navLinks = ['Home', 'Series', 'Movies', 'My List'];
-
-  const handleFocus = (value) => {
-    dispatch(setFocusedKey(value));
-  };
-
-  const handleBlur = () => {
-    dispatch(setFocusedKey(null));
-  };
 
   const handleEscape = () => {
     setMenuOpen(false);
@@ -32,6 +25,11 @@ const MainLayout = ({ children }) => {
 
   const handleLogout = () => {
     dispatch(logout());
+  };
+
+  const handleLinkPress = (label) => {
+    navigation.navigate(label);
+    dispatch(clearAllSelected());
   };
 
   return (
@@ -52,8 +50,8 @@ const MainLayout = ({ children }) => {
                 styles.profile,
                 focusedKey === 'profile' && styles.focused,
               ]}
-              onFocus={() => handleFocus('profile')}
-              onBlur={handleBlur}
+              onFocus={() => onFocus('profile')}
+              onBlur={onBlur}
               onPress={openMenu}
               focusable
             >
@@ -67,8 +65,8 @@ const MainLayout = ({ children }) => {
         >
           <Pressable
             style={[styles.btn, focusedKey === 'escape' && styles.focused]}
-            onFocus={() => handleFocus('escape')}
-            onBlur={handleBlur}
+            onFocus={() => onFocus('escape')}
+            onBlur={onBlur}
             onPress={handleEscape}
             focusable
           >
@@ -90,8 +88,8 @@ const MainLayout = ({ children }) => {
               styles.btnBottom,
               focusedKey === 'logout' && styles.focused,
             ]}
-            onFocus={() => handleFocus('logout')}
-            onBlur={handleBlur}
+            onFocus={() => onFocus('logout')}
+            onBlur={onBlur}
             onPress={handleLogout}
             focusable
           >
@@ -102,8 +100,9 @@ const MainLayout = ({ children }) => {
           {navLinks.map((label) => (
             <Pressable
               key={label}
-              onFocus={() => handleFocus(label)}
-              onBlur={handleBlur}
+              onFocus={() => onFocus(label)}
+              onBlur={onBlur}
+              onPress={() => handleLinkPress(label)}
               focusable
             >
               <Text

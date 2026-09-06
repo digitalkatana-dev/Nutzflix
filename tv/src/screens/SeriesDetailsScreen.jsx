@@ -1,11 +1,26 @@
+import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
+import MainLayout from '../layouts/MainLayout';
 
 const SeriesDetailsScreen = () => {
+  const [focusedKey, setFocusedKey] = useState(null);
+
+  const handleFocus = (value) => {
+    setFocusedKey(value);
+  };
+
+  const handleBlur = () => {
+    setFocusedKey(null);
+  };
+
   return (
-    <View>
+    <MainLayout
+      focusedKey={focusedKey}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
       <Text>SeriesDetailsScreen</Text>
-    </View>
+    </MainLayout>
   );
 };
 

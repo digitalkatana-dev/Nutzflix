@@ -1,7 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, Text, View, Pressable } from 'react-native';
-import { getVideos, setFeatured } from '../redux/slices/videoSlice';
+import { StyleSheet, View } from 'react-native';
+import {
+  getVideos,
+  setFeatured,
+  setSelectedVideo,
+} from '../redux/slices/videoSlice';
 import { shuffleArray, buildGenreLists } from '../util/helpers';
 import MainLayout from '../layouts/MainLayout';
 import Trailer from '../components/Trailer';
@@ -12,26 +16,31 @@ const ONE_DAY_MS = 24 * 60 * 60 * 1000;
 const CHECK_INTERVAL_MS = 2 * 60 * 60 * 1000; // check every 2 hours, refetch when stale
 
 const HomeScreen = () => {
+  const [focusedKey, setFocusedKey] = useState(null);
   const { activeUser } = useSelector((state) => state.user);
-  const {
-    featured,
-    allVideos,
-    movies,
-    series,
-    searchResults,
-    favorites,
-    recentlyAdded,
-    lastFetched,
-  } = useSelector((state) => state.video);
+  const { featured, movies, series, favorites, recentlyAdded, lastFetched } =
+    useSelector((state) => state.video);
   const dispatch = useDispatch();
   const lists = buildGenreLists(movies);
 
+  const handleFocus = (value) => {
+    setFocusedKey(value);
+  };
+
+  const handleBlur = () => {
+    setFocusedKey(null);
+  };
+
+  const handleClick = () => {
+    dispatch(setSelectedVideo(featured));
+  };
+
   useEffect(() => {
     if (!activeUser) return;
-    if (!allVideos?.length || !movies?.length || !series?.length) {
+    if (!movies?.length || !series?.length) {
       dispatch(getVideos());
     }
-  }, [activeUser, allVideos?.length, movies?.length, series?.length, dispatch]);
+  }, [activeUser, movies?.length, series?.length, dispatch]);
 
   useEffect(() => {
     if (!activeUser) return;
@@ -59,23 +68,58 @@ const HomeScreen = () => {
   }, [activeUser, dispatch, movies]);
 
   return (
-    <MainLayout>
+    <MainLayout
+      focusedKey={focusedKey}
+      onFocus={handleFocus}
+      onBlur={handleBlur}
+    >
       <View style={styles.container}>
-        <Trailer featured video={featured} />
+        <Trailer
+          featured
+          video={featured}
+          focusedKey={focusedKey}
+          onFocus={handleFocus}
+          onBlur={handleBlur}
+          onClick={handleClick}
+        />
         <View style={styles.carouselWrapper}>
-          {favorites?.length > 0 && <Carousel favs list={favorites} />}
+          {favorites?.length > 0 && (
+            <Carousel
+              favs
+              list={favorites}
+              focusedKey={focusedKey}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          )}
           {recentlyAdded?.length > 0 && (
-            <Carousel recent list={shuffleArray(recentlyAdded)} />
+            <Carousel
+              recent
+              list={shuffleArray(recentlyAdded)}
+              focusedKey={focusedKey}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
           )}
           <Carousel
             series
             list={shuffleArray(series ?? [])}
             count={series.length ?? 0}
+            focusedKey={focusedKey}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
           />
           {lists
             .filter((list) => list.movies.length > 0)
             .map((list) => (
-              <Carousel key={list.name} list={list} count={10} />
+              <Carousel
+                key={list.name}
+                list={list}
+                count={10}
+                focusedKey={focusedKey}
+                onFocus={handleFocus}
+                onBlur={handleBlur}
+              />
             ))}
         </View>
       </View>
@@ -95,6 +139,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     gap: 20,
     justifyContent: 'center',
-    paddingVertical: 20,
+    paddingVertical: 70,
   },
 });

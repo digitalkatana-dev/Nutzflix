@@ -14,7 +14,6 @@ import {
   setSelectedVideo,
   setSelectedSeries,
 } from '../redux/slices/videoSlice';
-import { setFocusedKey } from '../redux/slices/appSlice';
 
 const { width: SCREEN_WIDTH } = Dimensions.get('window');
 const ITEM_WIDTH = Math.min(
@@ -23,8 +22,14 @@ const ITEM_WIDTH = Math.min(
 );
 const ITEM_HEIGHT = ITEM_WIDTH * (99.93 / 178);
 
-const CarouselItem = ({ item, type, onFocusItem }) => {
-  const { focusedKey } = useSelector((state) => state.app);
+const CarouselItem = ({
+  item,
+  type,
+  onFocusItem,
+  focusedKey,
+  onFocus,
+  onBlur,
+}) => {
   const { activeUser } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const navigation = useNavigation();
@@ -33,12 +38,8 @@ const CarouselItem = ({ item, type, onFocusItem }) => {
   const isFavorite = activeUser?.favorites?.includes(item._id);
 
   const handleFocus = () => {
-    dispatch(setFocusedKey(item._id));
+    onFocus(item._id);
     onFocusItem?.();
-  };
-
-  const handleBlur = () => {
-    dispatch(setFocusedKey(null));
   };
 
   const handlePress = () => {
@@ -47,7 +48,7 @@ const CarouselItem = ({ item, type, onFocusItem }) => {
       navigation.navigate('SeriesDetails');
     } else {
       dispatch(setSelectedVideo(item));
-      navigation.navigate('Watch');
+      navigation.navigate('VideoDetails');
     }
   };
 
@@ -55,7 +56,7 @@ const CarouselItem = ({ item, type, onFocusItem }) => {
     <Pressable
       style={[styles.container, isFocused && styles.focused]}
       onFocus={handleFocus}
-      onBlur={handleBlur}
+      onBlur={onBlur}
       onPress={handlePress}
     >
       <Image
