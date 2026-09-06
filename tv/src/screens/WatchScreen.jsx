@@ -1,30 +1,33 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, View, Text, Pressable, BackHandler } from 'react-native';
+import {
+  StyleSheet,
+  View,
+  Text,
+  Pressable,
+  BackHandler,
+  useTVEventHandler,
+} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { useVideoPlayer, VideoView } from 'expo-video';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
-import { setFocusedKey } from '../redux/slices/appSlice';
 import { clearAllSelected } from '../redux/slices/videoSlice';
 import nutzflixApi from '../api/nutzflixApi';
 
-const HIDE_DELAY_MS = 5000;
+const HIDE_DELAY_MS = 7000;
 const SEEK_SECONDS = 10;
 
 const WatchScreen = () => {
-  const { focusedKey } = useSelector((state) => state.app);
   const { selectedVideo } = useSelector((state) => state.video);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const [focusedKey, setFocusedKey] = useState(null);
   const [streamInfo, setStreamInfo] = useState(null);
   const [error, setError] = useState(null);
   const [controlsVisible, setControlsVisible] = useState(true);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [isFullscreen, setIsFullscreen] = useState(false);
   const [progress, setProgress] = useState({ current: 0, duration: 0 });
 
-  const videoViewRef = useRef(null);
-  const wakeRef = useRef(null);
   const playPauseRef = useRef(null);
   const hideTimer = useRef(null);
 
@@ -32,15 +35,16 @@ const WatchScreen = () => {
     streamInfo?.videoId === selectedVideo?._id ? streamInfo : null;
 
   const player = useVideoPlayer(null, (p) => {
+    p.timeUpdateEventInterval = 1; // emit timeUpdate roughly once per second
     p.play();
   });
 
   const handleFocus = (value) => {
-    dispatch(setFocusedKey(value));
+    setFocusedKey(value);
   };
 
   const handleBlur = () => {
-    dispatch(setFocusedKey(null));
+    setFocusedKey(null);
   };
 
   // --- controls visibility / auto-hide ---
@@ -69,11 +73,15 @@ const WatchScreen = () => {
     }
   }, [controlsVisible]);
 
-  // the "wake" surface: the only focusable thing while controls are hidden.
-  // Pressing OK/center on it reveals the bar and hands focus to play/pause.
-  const handleWake = () => {
-    if (!controlsVisible) showControls();
+  // wake on any D-pad press (directional or center), not just a focused Pressable's onPress
+  const tvEventHandlerCallback = (event) => {
+    const dpadKeys = ['up', 'down', 'left', 'right', 'select'];
+    if (dpadKeys.includes(event?.eventType)) {
+      showControls();
+    }
   };
+
+  useTVEventHandler(tvEventHandlerCallback);
 
   // --- playback state sync ---
   useEffect(() => {
@@ -88,7 +96,10 @@ const WatchScreen = () => {
 
   useEffect(() => {
     const sub = player.addListener('timeUpdate', ({ currentTime }) => {
-      setProgress({ current: currentTime, duration: player.duration || 0 });
+      setProgress((prev) => ({
+        current: currentTime,
+        duration: player.duration || prev.duration,
+      }));
     });
     return () => sub.remove();
   }, [player]);
@@ -162,12 +173,6 @@ const WatchScreen = () => {
     showControls();
   };
 
-  const toggleFullscreen = () => {
-    if (isFullscreen) videoViewRef.current?.exitFullscreen?.();
-    else videoViewRef.current?.enterFullscreen?.();
-    showControls();
-  };
-
   const formatTime = (secs) => {
     if (!secs || Number.isNaN(secs)) return '0:00';
     const m = Math.floor(secs / 60);
@@ -180,32 +185,30 @@ const WatchScreen = () => {
   return (
     <View style={styles.watch}>
       <VideoView
-        ref={videoViewRef}
         style={styles.video}
         player={player}
         contentFit='contain'
         nativeControls={false}
-        allowsFullscreen
-        onFullscreenEnter={() => setIsFullscreen(true)}
-        onFullscreenExit={() => setIsFullscreen(false)}
       />
 
-      {/* invisible full-screen wake surface — only focusable thing while controls are hidden */}
       {!controlsVisible && (
         <Pressable
-          ref={wakeRef}
           style={StyleSheet.absoluteFill}
-          onPress={handleWake}
           focusable
+          hasTVPreferredFocus
         />
       )}
 
       {controlsVisible && (
         <View style={styles.controlsOverlay}>
-          <Pressable style={styles.back} onPress={handleBack} focusable>
-            <View style={styles.iconBacking}>
-              <MaterialIcons name='arrow-back-ios' size={18} color='#fff' />
-            </View>
+          <Pressable
+            style={[styles.back, focusedKey === 'back' && styles.focused]}
+            onFocus={() => handleFocus('back')}
+            onBlur={handleBlur}
+            onPress={handleBack}
+            focusable
+          >
+            <MaterialIcons name='arrow-back-ios' size={18} color='#fff' />
             <Text style={styles.backText}>Home</Text>
           </Pressable>
 
@@ -231,7 +234,12 @@ const WatchScreen = () => {
 
             <View style={styles.buttonRow}>
               <Pressable
-                style={styles.ctrlBtn}
+                style={[
+                  styles.ctrlBtn,
+                  focusedKey === 'rewind' && styles.focused,
+                ]}
+                onFocus={() => handleFocus('rewind')}
+                onBlur={handleBlur}
                 onPress={() => seek(-SEEK_SECONDS)}
                 focusable
               >
@@ -240,7 +248,12 @@ const WatchScreen = () => {
 
               <Pressable
                 ref={playPauseRef}
-                style={styles.ctrlBtn}
+                style={[
+                  styles.ctrlBtn,
+                  focusedKey === 'playPause' && styles.focused,
+                ]}
+                onFocus={() => handleFocus('playPause')}
+                onBlur={handleBlur}
                 onPress={togglePlay}
                 focusable
                 hasTVPreferredFocus
@@ -253,43 +266,21 @@ const WatchScreen = () => {
               </Pressable>
 
               <Pressable
-                style={styles.ctrlBtn}
+                style={[
+                  styles.ctrlBtn,
+                  focusedKey === 'forward' && styles.focused,
+                ]}
+                onFocus={() => handleFocus('forward')}
+                onBlur={handleBlur}
                 onPress={() => seek(SEEK_SECONDS)}
                 focusable
               >
                 <MaterialIcons name='forward-10' size={28} color='#fff' />
               </Pressable>
-
-              <Pressable
-                style={styles.ctrlBtn}
-                onPress={toggleFullscreen}
-                focusable
-              >
-                <MaterialIcons
-                  name={isFullscreen ? 'fullscreen-exit' : 'fullscreen'}
-                  size={28}
-                  color='#fff'
-                />
-              </Pressable>
             </View>
           </View>
         </View>
       )}
-
-      {/* <Pressable
-        style={[styles.back, focusedKey === 'back' && styles.focused]}
-        onFocus={() => handleFocus('back')}
-        onBlur={handleBlur}
-        onPress={handleBack}
-        rippleColor='rgba(255, 255, 255, 0.3)'
-        focusable
-      >
-        <View style={styles.iconBacking}>
-          <MaterialIcons name='arrow-back-ios' size={18} color='#fff' />
-        </View>
-        <Text style={styles.backText}>Home</Text>
-      </Pressable> */}
-
       {error && <Text style={styles.error}>{error}</Text>}
     </View>
   );
@@ -319,11 +310,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 6,
-  },
-  iconBacking: {
-    backgroundColor: 'rgba(20, 20, 20, 0.6)',
-    borderRadius: 20,
-    padding: 4,
   },
   backText: {
     color: '#fff',
@@ -368,7 +354,9 @@ const styles = StyleSheet.create({
   },
   buttonRow: {
     flexDirection: 'row',
+    justifyContent: 'space-around',
     alignItems: 'center',
+    position: 'relative',
     gap: 24,
   },
   ctrlBtn: {
@@ -377,9 +365,9 @@ const styles = StyleSheet.create({
   },
   focused: {
     backgroundColor: '#6b0ac9',
-    paddingVertical: 4,
+    paddingVertical: 8,
     paddingHorizontal: 8,
-    borderRadius: 20,
+    borderRadius: 30,
   },
   error: {
     position: 'absolute',

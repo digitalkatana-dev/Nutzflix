@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import MainLayout from '../layouts/MainLayout';
 
-const SeriesScreen = () => {
+const SearchScreen = () => {
   const [focusedKey, setFocusedKey] = useState(null);
 
   const handleFocus = (value) => {
@@ -19,11 +19,11 @@ const SeriesScreen = () => {
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
-      <Text>SeriesScreen</Text>
+      <Text>SearchScreen</Text>
     </MainLayout>
   );
 };
 
-export default SeriesScreen;
+export default SearchScreen;
 
 const styles = StyleSheet.create({});

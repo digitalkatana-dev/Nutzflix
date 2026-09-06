@@ -1,25 +1,13 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, Text, View, Image, Pressable } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { Surface } from 'react-native-paper';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
 import { useNavigation } from '@react-navigation/native';
-import { setFocusedKey } from '../redux/slices/appSlice';
 import { getEmbedHtml } from '../util/helpers';
 
-const Trailer = ({ featured, video, onClick }) => {
-  const { focusedKey } = useSelector((state) => state.app);
-  const dispatch = useDispatch();
+const Trailer = ({ featured, video, onClick, focusedKey, onFocus, onBlur }) => {
   const navigation = useNavigation();
-
-  const handleFocus = (value) => {
-    dispatch(setFocusedKey(value));
-  };
-
-  const handleBlur = () => {
-    dispatch(setFocusedKey(null));
-  };
 
   const handlePlay = () => {
     onClick?.();
@@ -46,8 +34,8 @@ const Trailer = ({ featured, video, onClick }) => {
             styles.playBtn,
             focusedKey === 'trailer-play' && styles.focused,
           ]}
-          onFocus={() => handleFocus('trailer-play')}
-          onBlur={handleBlur}
+          onFocus={() => onFocus('trailer-play')}
+          onBlur={onBlur}
           onPress={handlePlay}
           focusable
         >
@@ -71,9 +59,10 @@ const Trailer = ({ featured, video, onClick }) => {
             styles.moreBtn,
             focusedKey === 'trailer-info' && styles.focused,
           ]}
-          onFocus={() => handleFocus('trailer-info')}
-          onBlur={handleBlur}
+          onFocus={() => onFocus('trailer-info')}
+          onBlur={onBlur}
           onPress={handleInfo}
+          focusable
         >
           <MaterialIcons name='info-outline' size={20} color='#fff' />
           <Text style={styles.moreText}>Info</Text>
@@ -119,9 +108,9 @@ const styles = StyleSheet.create({
   container: {
     width: '100%',
   },
-  category: {
-    height: 220,
-  },
+  // category: {
+  //   height: 220,
+  // },
   videoWrapper: {
     width: '100%',
     aspectRatio: 16 / 9,

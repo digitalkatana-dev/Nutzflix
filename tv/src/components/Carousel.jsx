@@ -2,7 +2,16 @@ import { useRef } from 'react';
 import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import CarouselItem from './CarouselItem';
 
-const Carousel = ({ list, series, favs, recent, count = 20 }) => {
+const Carousel = ({
+  list,
+  series,
+  favs,
+  recent,
+  count = 20,
+  focusedKey,
+  onFocus,
+  onBlur,
+}) => {
   const scrollRef = useRef(null);
   const positions = useRef({});
 
@@ -43,6 +52,9 @@ const Carousel = ({ list, series, favs, recent, count = 20 }) => {
                 item.videoType?.toLowerCase() === 'series' ? 'series' : 'movie'
               }
               onFocusItem={() => handleItemFocus(i)}
+              focusedKey={focusedKey}
+              onFocus={onFocus}
+              onBlur={onBlur}
             />
           </View>
         ))}
