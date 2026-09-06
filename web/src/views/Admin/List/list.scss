@@ -1,41 +1,61 @@
 .list {
-	height: inherit;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	margin-top: 0;
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 0;
 
-	header {
-		padding: 30px;
-		margin: 20px;
-		display: flex;
-		justify-content: space-between;
-		-webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
-		box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+  header {
+    padding: 30px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
 
-		h3 {
-			color: var(--text-on-accent);
-		}
+    h3 {
+      color: var(--text-on-accent);
+    }
 
-		.link {
-			text-decoration: none;
-			color: green;
-			font-size: 16px;
-			font-weight: 400;
-			border: 1px solid green;
-			padding: 5px;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-	}
+    .link {
+      text-decoration: none;
+      color: green;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid green;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
 
-	.list-main {
-		flex: 1;
-		padding: 20px;
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: center;
-		overflow-x: hidden;
-		overflow-y: auto;
-	}
+  .list-main {
+    flex: 1;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    overflow-x: hidden;
+    overflow-y: auto;
+
+    &.inventory {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(
+        auto-fit,
+        150px
+      ); // swap 225px for your actual card width
+      justify-content: center; // centers the grid's tracks as a block, without stretching them
+      gap: 10px;
+      padding: 20px 0;
+
+      @media only screen and (min-width: 600px) {
+        grid-template-columns: repeat(
+          auto-fit,
+          300px
+        ); // swap 225px for your actual card width
+        justify-content: space-around; // centers the grid's tracks as a block, without stretching them
+      }
+    }
+  }
 }

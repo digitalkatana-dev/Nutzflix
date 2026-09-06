@@ -50,6 +50,20 @@ export const store = configureStore({
     getDefaultMiddleware({
       serializableCheck: {
         ignoredActions: [FLUSH, PAUSE, PERSIST, PURGE, REGISTER, REHYDRATE],
+        ignoredPaths: [
+          'video.movies',
+          'video.series',
+          'video.recentlyAdded',
+          'video.favorites',
+        ],
+      },
+      immutableCheck: {
+        ignoredPaths: [
+          'video.movies',
+          'video.series',
+          'video.recentlyAdded',
+          'video.favorites',
+        ],
       },
     }),
 });

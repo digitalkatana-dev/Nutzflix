@@ -5,7 +5,6 @@ import {
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
 import { logout } from './userSlice';
-import { shuffleArray } from '../../util/helpers';
 import nutzflixApi from '../../api/nutflixApi';
 
 export const getVideos = createAsyncThunk(
@@ -23,7 +22,6 @@ export const getVideos = createAsyncThunk(
 export const videoAdapter = createEntityAdapter();
 const initialState = videoAdapter.getInitialState({
   loading: false,
-  allVideos: [],
   recentlyAdded: [],
   movies: [],
   series: [],
@@ -44,10 +42,9 @@ export const videoSlice = createSlice({
   initialState,
   reducers: {
     setVideos: (state, action) => {
-      state.allVideos = action.payload.allVideos;
-      state.featured = shuffleArray(action.payload.movies)[0];
-      state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
-      state.favorites = shuffleArray(action.payload.favorites) ?? [];
+      state.featured = action.payload.movies[0];
+      state.recentlyAdded = action.payload.recentlyAdded ?? [];
+      state.favorites = action.payload.favorites ?? [];
       state.selectedVideo = action.payload.newFav ?? null;
       state.movies = action.payload.movies;
       state.series = action.payload.series;
@@ -69,11 +66,12 @@ export const videoSlice = createSlice({
       state.searchTerm = action.payload;
     },
     videoSearch: (state, action) => {
+      const allVideos = [...state.series, ...state.movies];
       const queryWords = action.payload
         .toLowerCase()
         .split(' ')
         .filter(Boolean);
-      state.searchResults = state.allVideos.filter((video) => {
+      state.searchResults = allVideos.filter((video) => {
         const title = video.title.toLowerCase() ?? '';
         return queryWords.every((word) => title.includes(word));
       });
@@ -117,9 +115,8 @@ export const videoSlice = createSlice({
       })
       .addCase(getVideos.fulfilled, (state, action) => {
         state.loading = false;
-        state.allVideos = action.payload.allVideos ?? [];
-        state.favorites = shuffleArray(action.payload.favorites) ?? [];
-        state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
+        state.favorites = action.payload.favorites ?? [];
+        state.recentlyAdded = action.payload.recentlyAdded ?? [];
         state.movies = action.payload.movies ?? [];
         state.series = action.payload.series ?? [];
         state.lastFetched = Date.now();
