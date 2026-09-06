@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet, View, ScrollView, Text, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button, Divider, Menu } from 'react-native-paper';
@@ -13,6 +13,7 @@ const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
   const [menuOpen, setMenuOpen] = useState(false);
   const dispatch = useDispatch();
   const navigation = useNavigation();
+  const route = useRoute();
 
   const openMenu = () => setMenuOpen(true);
   const closeMenu = () => setMenuOpen(false);
@@ -97,24 +98,29 @@ const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
           </Pressable>
         </Menu>
         <View style={styles.links}>
-          {navLinks.map((label) => (
-            <Pressable
-              key={label}
-              onFocus={() => onFocus(label)}
-              onBlur={onBlur}
-              onPress={() => handleLinkPress(label)}
-              focusable
-            >
-              <Text
-                style={[
-                  styles.temp,
-                  focusedKey === label && styles.focusedText,
-                ]}
+          {navLinks.map((label) => {
+            const isCurrentScreen = route.name === label;
+            return (
+              <Pressable
+                key={label}
+                style={[styles.navLink, focusedKey === label && styles.focused]}
+                onFocus={() => onFocus(label)}
+                onBlur={onBlur}
+                onPress={() => handleLinkPress(label)}
+                focusable
+                hasTVPreferredFocus={isCurrentScreen}
               >
-                {label}
-              </Text>
-            </Pressable>
-          ))}
+                <Text
+                  style={[
+                    styles.temp,
+                    focusedKey === label && styles.focusedText,
+                  ]}
+                >
+                  {label}
+                </Text>
+              </Pressable>
+            );
+          })}
         </View>
         <Text style={styles.brand}>NUTZFLIX</Text>
       </View>
@@ -147,19 +153,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   focused: {
-    borderWidth: 2,
-    borderColor: '#6b0ac9',
-  },
-  focusedText: {
-    color: '#6b0ac9',
+    backgroundColor: '#6b0ac9',
   },
   profile: {
     flexDirection: 'row',
     alignItems: 'center',
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 20,
   },
   links: {
     flexDirection: 'row',
     gap: 40,
+  },
+  navLink: {
+    paddingVertical: 8,
+    paddingHorizontal: 10,
+    borderRadius: 20,
   },
   temp: {
     color: '#fff',
