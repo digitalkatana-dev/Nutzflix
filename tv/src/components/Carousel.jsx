@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import CarouselItem from './CarouselItem';
 
 const Carousel = ({
+  carouselId,
   list,
   series,
   favs,
@@ -39,25 +40,32 @@ const Carousel = ({
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.row}
       >
-        {videos?.slice(0, count).map((item, i) => (
-          <View
-            key={item._id ?? i}
-            onLayout={(e) => {
-              positions.current[i] = e.nativeEvent.layout.x;
-            }}
-          >
-            <CarouselItem
-              item={item}
-              type={
-                item.videoType?.toLowerCase() === 'series' ? 'series' : 'movie'
-              }
-              onFocusItem={() => handleItemFocus(i)}
-              focusedKey={focusedKey}
-              onFocus={onFocus}
-              onBlur={onBlur}
-            />
-          </View>
-        ))}
+        {videos?.slice(0, count).map((item, i) => {
+          const itemId = item._id ?? i;
+          const composedKey = `${carouselId}:${itemId}`;
+          return (
+            <View
+              key={itemId}
+              onLayout={(e) => {
+                positions.current[i] = e.nativeEvent.layout.x;
+              }}
+            >
+              <CarouselItem
+                item={item}
+                type={
+                  item.videoType?.toLowerCase() === 'series'
+                    ? 'series'
+                    : 'movie'
+                }
+                onFocusItem={() => handleItemFocus(i)}
+                focused={focusedKey === composedKey}
+                itemKey={composedKey}
+                onFocus={onFocus}
+                onBlur={onBlur}
+              />
+            </View>
+          );
+        })}
       </ScrollView>
     </View>
   );
@@ -74,5 +82,8 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     fontSize: 18,
   },
-  row: { paddingHorizontal: 30, paddingVertical: 15 },
+  row: {
+    paddingHorizontal: 30,
+    paddingVertical: 15,
+  },
 });

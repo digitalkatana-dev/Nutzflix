@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { StyleSheet, View } from 'react-native';
 import {
@@ -6,30 +6,38 @@ import {
   setFeatured,
   setSelectedVideo,
 } from '../redux/slices/videoSlice';
-import { shuffleArray, buildGenreLists } from '../util/helpers';
+import { shuffleArray } from '../util/helpers';
 import MainLayout from '../layouts/MainLayout';
 import Trailer from '../components/Trailer';
 import Carousel from '../components/Carousel';
 
-const TEN_MIN_MS = 10 * 60 * 1000; // 10 minutes
+const TEN_MIN_MS = 10 * 60 * 1000;
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
-const CHECK_INTERVAL_MS = 2 * 60 * 60 * 1000; // check every 2 hours, refetch when stale
+const CHECK_INTERVAL_MS = 2 * 60 * 60 * 1000;
 
 const HomeScreen = () => {
   const [focusedKey, setFocusedKey] = useState(null);
   const { activeUser } = useSelector((state) => state.user);
-  const { featured, movies, series, favorites, recentlyAdded, lastFetched } =
-    useSelector((state) => state.video);
+  const {
+    featured,
+    movies,
+    series,
+    lists,
+    favorites,
+    recentlyAdded,
+    lastFetched,
+  } = useSelector((state) => state.video);
   const dispatch = useDispatch();
-  const lists = buildGenreLists(movies);
 
-  const handleFocus = (value) => {
-    setFocusedKey(value);
-  };
+  // only reshuffle when the underlying data actually changes, not on every focus move
+  const seriesShuffled = useMemo(() => shuffleArray(series ?? []), [series]);
+  const visibleLists = useMemo(
+    () => (lists ?? []).filter((list) => list.movies.length > 0),
+    [lists],
+  );
 
-  const handleBlur = () => {
-    setFocusedKey(null);
-  };
+  const handleFocus = (value) => setFocusedKey(value);
+  const handleBlur = () => setFocusedKey(null);
 
   const handleClick = () => {
     dispatch(setSelectedVideo(featured));
@@ -37,32 +45,26 @@ const HomeScreen = () => {
 
   useEffect(() => {
     if (!activeUser) return;
-    if (!movies?.length || !series?.length) {
+    if (movies?.length <= 0 || series?.length <= 0) {
       dispatch(getVideos());
     }
   }, [activeUser, movies?.length, series?.length, dispatch]);
 
   useEffect(() => {
     if (!activeUser) return;
-
     const checkStaleness = () => {
       const isStale = !lastFetched || Date.now() - lastFetched > ONE_DAY_MS;
-      if (isStale) {
-        dispatch(getVideos());
-      }
+      if (isStale) dispatch(getVideos());
     };
-
     const interval = setInterval(checkStaleness, CHECK_INTERVAL_MS);
     return () => clearInterval(interval);
   }, [activeUser, lastFetched, dispatch]);
 
   useEffect(() => {
     if (!activeUser) return;
-
     const refreshFeatured = () => {
       dispatch(setFeatured(shuffleArray(movies)[0]));
     };
-
     const interval = setInterval(refreshFeatured, TEN_MIN_MS);
     return () => clearInterval(interval);
   }, [activeUser, dispatch, movies]);
@@ -85,6 +87,7 @@ const HomeScreen = () => {
         <View style={styles.carouselWrapper}>
           {favorites?.length > 0 && (
             <Carousel
+              carouselId='favorites'
               favs
               list={favorites}
               focusedKey={focusedKey}
@@ -94,33 +97,34 @@ const HomeScreen = () => {
           )}
           {recentlyAdded?.length > 0 && (
             <Carousel
+              carouselId='recentlyAdded'
               recent
-              list={shuffleArray(recentlyAdded)}
+              list={recentlyAdded}
               focusedKey={focusedKey}
               onFocus={handleFocus}
               onBlur={handleBlur}
             />
           )}
           <Carousel
+            carouselId='series'
             series
-            list={shuffleArray(series ?? [])}
-            count={series.length ?? 0}
+            list={seriesShuffled}
+            count={seriesShuffled?.length ?? 0}
             focusedKey={focusedKey}
             onFocus={handleFocus}
             onBlur={handleBlur}
           />
-          {lists
-            .filter((list) => list.movies.length > 0)
-            .map((list) => (
-              <Carousel
-                key={list.name}
-                list={list}
-                count={10}
-                focusedKey={focusedKey}
-                onFocus={handleFocus}
-                onBlur={handleBlur}
-              />
-            ))}
+          {visibleLists.map((list) => (
+            <Carousel
+              key={list.name}
+              carouselId={list.name}
+              list={list}
+              count={10}
+              focusedKey={focusedKey}
+              onFocus={handleFocus}
+              onBlur={handleBlur}
+            />
+          ))}
         </View>
       </View>
     </MainLayout>
@@ -130,10 +134,7 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 40,
-  },
+  container: { flex: 1, padding: 40 },
   carouselWrapper: {
     width: '100%',
     flexDirection: 'column',

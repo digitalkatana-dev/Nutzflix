@@ -73,7 +73,10 @@ const Trailer = ({ featured, video, onClick, focusedKey, onFocus, onBlur }) => {
 
   return (
     <View style={[styles.container, !featured && styles.category]}>
-      <Surface style={[styles.videoWrapper, !featured && styles.category]}>
+      <Surface
+        style={[styles.videoWrapper, !featured && styles.category]}
+        focusable={false}
+      >
         {getEmbedHtml(video?.trailer) ? (
           <WebView
             source={{
@@ -83,6 +86,8 @@ const Trailer = ({ featured, video, onClick, focusedKey, onFocus, onBlur }) => {
             style={styles.video}
             allowsFullscreenVideo
             mediaPlaybackRequiresUserAction={false}
+            cacheEnabled={false}
+            focusable={false}
           />
         ) : (
           <View style={[styles.video, { backgroundColor: '#000' }]} />
