@@ -44,6 +44,7 @@ export const store = configureStore({
         ignoredPaths: [
           'video.movies',
           'video.series',
+          'video.lists',
           'video.recentlyAdded',
           'video.favorites',
         ],
@@ -52,6 +53,7 @@ export const store = configureStore({
         ignoredPaths: [
           'video.movies',
           'video.series',
+          'video.lists',
           'video.recentlyAdded',
           'video.favorites',
         ],

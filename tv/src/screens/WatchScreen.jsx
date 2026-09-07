@@ -130,7 +130,7 @@ const WatchScreen = () => {
 
     const fetchStreamInfo = async () => {
       try {
-        const res = await nutzflixApi.get(`/api/videos/${videoId}/stream`, {
+        const res = await nutzflixApi.get(`/api/videos/${videoId}/stream/tv`, {
           signal: controller.signal,
         });
         setStreamInfo({ ...res.data, videoId });

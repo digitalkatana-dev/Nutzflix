@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
@@ -26,7 +26,8 @@ const CarouselItem = ({
   item,
   type,
   onFocusItem,
-  focusedKey,
+  focused,
+  itemKey,
   onFocus,
   onBlur,
 }) => {
@@ -34,11 +35,10 @@ const CarouselItem = ({
   const dispatch = useDispatch();
   const navigation = useNavigation();
 
-  const isFocused = focusedKey === item._id ? true : false;
   const isFavorite = activeUser?.favorites?.includes(item._id);
 
   const handleFocus = () => {
-    onFocus(item._id);
+    onFocus(itemKey);
     onFocusItem?.();
   };
 
@@ -54,7 +54,7 @@ const CarouselItem = ({
 
   return (
     <Pressable
-      style={[styles.container, isFocused && styles.focused]}
+      style={[styles.container, focused && styles.focused]}
       onFocus={handleFocus}
       onBlur={onBlur}
       onPress={handlePress}
@@ -64,15 +64,11 @@ const CarouselItem = ({
         style={styles.image}
         resizeMode='cover'
       />
-      {isFocused && (
+      {focused && (
         <View style={styles.overlay}>
           <View style={styles.icons}>
             {isFavorite && (
-              <MaterialIcons
-                name={isFavorite ? 'favorite' : 'favorite-border'}
-                size={18}
-                color={isFavorite ? '#e50914' : '#fff'}
-              />
+              <MaterialIcons name='favorite' size={18} color='#e50914' />
             )}
           </View>
           <Text style={styles.title} numberOfLines={1}>
@@ -88,7 +84,7 @@ const CarouselItem = ({
   );
 };
 
-export default CarouselItem;
+export default memo(CarouselItem);
 
 const styles = StyleSheet.create({
   container: {
@@ -114,13 +110,18 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0,0,0,0.75)',
     padding: 6,
   },
-  icons: { flexDirection: 'row', gap: 8, marginBottom: 4 },
-  iconBtn: {
-    borderWidth: 1,
-    borderColor: '#fff',
-    borderRadius: 20,
-    padding: 4,
+  icons: {
+    flexDirection: 'row',
+    gap: 8,
+    marginBottom: 4,
   },
-  title: { color: '#fff', fontSize: 12, fontWeight: 'bold' },
-  meta: { color: '#ccc', fontSize: 10 },
+  title: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: 'bold',
+  },
+  meta: {
+    color: '#ccc',
+    fontSize: 10,
+  },
 });

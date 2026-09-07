@@ -82,6 +82,8 @@ const LoginScreen = () => {
             onFocus={handleClearErrors}
             value={email}
             onChangeText={setEmail}
+            focusable
+            hasTVPreferredFocus
           />
           {userErrors?.email && (
             <Text style={styles.error}>{userErrors?.email}</Text>
@@ -107,6 +109,7 @@ const LoginScreen = () => {
                 focusable
               />
             }
+            focusable
           />
           {userErrors?.password && (
             <Text style={styles.error}>{userErrors?.password}</Text>

@@ -4,7 +4,7 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
-import { shuffleArray } from '../../util/helpers';
+import { buildGenreLists, shuffleArray } from '../../util/helpers';
 import nutzflixApi from '../../api/nutzflixApi';
 
 export const getVideos = createAsyncThunk(
@@ -24,10 +24,10 @@ export const getVideos = createAsyncThunk(
 export const videoAdapter = createEntityAdapter();
 const initialState = videoAdapter.getInitialState({
   loading: false,
-  allVideos: [],
   recentlyAdded: [],
   movies: [],
   series: [],
+  lists: [],
   lastFetched: null,
   featured: null,
   favorites: [],
@@ -45,13 +45,13 @@ export const videoSlice = createSlice({
   initialState,
   reducers: {
     setVideos: (state, action) => {
-      state.allVideos = action.payload.allVideos;
       state.featured = shuffleArray(action.payload.movies)[0];
-      state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
-      state.favorites = shuffleArray(action.payload.favorites) ?? [];
+      state.recentlyAdded = action.payload.recentlyAdded ?? [];
+      state.favorites = action.payload.favorites ?? [];
       state.selectedVideo = action.payload.newFav ?? null;
       state.movies = action.payload.movies;
       state.series = action.payload.series;
+      state.lists = action.payload.lists;
       state.lastFetched = Date.now();
     },
     setFeatured: (state, action) => {
@@ -70,11 +70,12 @@ export const videoSlice = createSlice({
       state.searchTerm = action.payload;
     },
     videoSearch: (state, action) => {
+      const allVideos = [...state.movies, ...state.series];
       const queryWords = action.payload
         .toLowerCase()
         .split(' ')
         .filter(Boolean);
-      state.searchResults = state.allVideos.filter((video) => {
+      state.searchResults = allVideos.filter((video) => {
         const title = (video.title ?? '').toLowerCase();
         return queryWords.every((word) => title.includes(word));
       });
@@ -118,11 +119,11 @@ export const videoSlice = createSlice({
       })
       .addCase(getVideos.fulfilled, (state, action) => {
         state.loading = false;
-        state.allVideos = action.payload.allVideos ?? [];
-        state.favorites = shuffleArray(action.payload.favorites) ?? [];
-        state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
+        state.favorites = action.payload.favorites ?? [];
+        state.recentlyAdded = action.payload.recentlyAdded ?? [];
         state.movies = action.payload.movies ?? [];
         state.series = action.payload.series ?? [];
+        state.lists = action.payload.lists ?? [];
         state.lastFetched = Date.now();
       })
       .addCase(getVideos.rejected, (state, action) => {
