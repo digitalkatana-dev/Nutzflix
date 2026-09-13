@@ -60,7 +60,7 @@ const CarouselItem = ({
       onPress={handlePress}
     >
       <Image
-        source={{ uri: item?.backdrop }}
+        source={{ uri: item?.landscape }}
         style={styles.image}
         resizeMode='cover'
       />

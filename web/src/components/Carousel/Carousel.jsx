@@ -6,11 +6,12 @@ import './carousel.scss';
 const Slider = SliderModule.default || SliderModule;
 
 const Carousel = ({
+  carouselId,
   list,
-  count = list.length,
   series,
   favs,
   recent,
+  count = 20,
   autoplay,
 }) => {
   const title = series
@@ -36,15 +37,19 @@ const Carousel = ({
     <div className='slider-wrapper'>
       <span className='carousel-title responsive-h4'>{title}</span>
       <Slider className='carousel' {...settings}>
-        {videos?.slice(0, count).map((item, i) => (
-          <CarouselItem
-            key={item + i}
-            item={item}
-            type={
-              item.videoType.toLowerCase() === 'series' ? 'series' : 'movie'
-            }
-          />
-        ))}
+        {videos?.slice(0, count).map((item, i) => {
+          const itemId = item._id ?? i;
+          const composedKey = `${carouselId}:${itemId}`;
+          return (
+            <CarouselItem
+              key={composedKey}
+              item={item}
+              type={
+                item.videoType.toLowerCase() === 'series' ? 'series' : 'movie'
+              }
+            />
+          );
+        })}
       </Slider>
     </div>
   );

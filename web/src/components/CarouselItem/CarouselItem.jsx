@@ -18,7 +18,7 @@ import './carouselItem.scss';
 const HOVER_DELAY = 800; // ms before the preview opens
 const CLOSE_DELAY = 150; // ms grace window to bridge the gap between card and portal
 
-const CarouselItem = ({ type, item }) => {
+const CarouselItem = ({ item, type }) => {
   const { activeUser } = useSelector((state) => state.user);
   const [isHovered, setIsHovered] = useState(false);
   const [rect, setRect] = useState(null);
@@ -101,7 +101,7 @@ const CarouselItem = ({ type, item }) => {
           onMouseLeave={handleMouseLeave}
           elevation={5}
         >
-          <img src={item?.backdrop} alt={item?.title} />
+          <img src={item?.landscape} alt={item?.title} />
         </Paper>
       </Link>
       {type !== 'series' &&
