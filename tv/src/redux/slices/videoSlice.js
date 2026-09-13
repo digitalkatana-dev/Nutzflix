@@ -4,7 +4,7 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
-import { buildGenreLists, shuffleArray } from '../../util/helpers';
+import { shuffleArray } from '../../util/helpers';
 import nutzflixApi from '../../api/nutzflixApi';
 
 export const getVideos = createAsyncThunk(

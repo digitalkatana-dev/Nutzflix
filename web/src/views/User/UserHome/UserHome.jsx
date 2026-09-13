@@ -1,4 +1,4 @@
-import React from 'react';
+import { useMemo } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import {
@@ -7,7 +7,7 @@ import {
   setSearchTerm,
   clearSearchResults,
 } from '../../../redux/slices/videoSlice';
-import { shuffleArray, buildGenreLists } from '../../../util/helpers';
+import { shuffleArray } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
 import Trailer from '../../../components/Trailer';
 import Carousel from '../../../components/Carousel';
@@ -15,10 +15,16 @@ import './userhome.scss';
 
 const UserHome = () => {
   const { drawerOpen } = useSelector((state) => state.app);
-  const { featured, movies, series, searchResults, favorites, recentlyAdded } =
+  const { featured, series, lists, searchResults, favorites, recentlyAdded } =
     useSelector((state) => state.video);
   const dispatch = useDispatch();
-  const lists = buildGenreLists(movies);
+
+  // only reshuffle when the underlying data actually changes, not on every focus move
+  const seriesShuffled = useMemo(() => shuffleArray(series ?? []), [series]);
+  const visibleLists = useMemo(
+    () => (lists ?? []).filter((list) => list.movies.length > 0),
+    [lists],
+  );
 
   const handleSelectedVideo = (video) => {
     if (video.videoType.toLowerCase() === 'series') {
@@ -68,16 +74,33 @@ const UserHome = () => {
         <>
           <Trailer featured video={featured} onClick={handleFeaturedClick} />
           <div className='carousel-wrapper'>
-            {favorites.length && <Carousel favs list={favorites} arrows />}
-            {recentlyAdded.length && (
-              <Carousel recent list={recentlyAdded} arrows />
+            {favorites?.length > 0 && (
+              <Carousel carouselId='favorites' favs list={favorites} arrows />
             )}
-            <Carousel series list={shuffleArray(series)} arrows />
-            {lists
-              .filter((list) => list.movies.length > 0)
-              .map((list) => (
-                <Carousel key={list.name} list={list} arrows count={10} />
-              ))}
+            {recentlyAdded?.length > 0 && (
+              <Carousel
+                carouselId='recentlyAdded'
+                recent
+                list={recentlyAdded}
+                arrows
+              />
+            )}
+            <Carousel
+              carouselId='series'
+              series
+              list={seriesShuffled}
+              count={seriesShuffled?.length ?? 0}
+              arrows
+            />
+            {visibleLists.map((list) => (
+              <Carousel
+                key={list.name}
+                carouselId={list.name}
+                list={list}
+                arrows
+                count={10}
+              />
+            ))}
           </div>
         </>
       )}

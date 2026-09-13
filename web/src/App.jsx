@@ -47,7 +47,7 @@ const App = () => {
 
   useEffect(() => {
     if (!activeUser) return;
-    if (!movies?.length || !series?.length) {
+    if (movies?.length <= 0 || series?.length <= 0) {
       dispatch(getVideos());
     }
   }, [activeUser, movies?.length, series?.length, dispatch]);

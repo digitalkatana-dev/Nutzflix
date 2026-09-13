@@ -4,7 +4,6 @@ import {
   createSlice,
 } from '@reduxjs/toolkit';
 import { PURGE } from 'redux-persist';
-import { logout } from './userSlice';
 import { shuffleArray } from '../../util/helpers';
 import nutzflixApi from '../../api/nutflixApi';
 
@@ -26,6 +25,7 @@ const initialState = videoAdapter.getInitialState({
   recentlyAdded: [],
   movies: [],
   series: [],
+  lists: [],
   lastFetched: null,
   featured: null,
   favorites: [],
@@ -44,11 +44,12 @@ export const videoSlice = createSlice({
   reducers: {
     setVideos: (state, action) => {
       state.featured = shuffleArray(action.payload.movies)[0];
-      state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
-      state.favorites = shuffleArray(action.payload.favorites) ?? [];
+      state.recentlyAdded = action.payload.recentlyAdded ?? [];
+      state.favorites = action.payload.favorites ?? [];
       state.selectedVideo = action.payload.newFav ?? null;
       state.movies = action.payload.movies;
       state.series = action.payload.series;
+      state.lists = action.payload.lists;
       state.lastFetched = Date.now();
     },
     setFeatured: (state, action) => {
@@ -116,19 +117,21 @@ export const videoSlice = createSlice({
       })
       .addCase(getVideos.fulfilled, (state, action) => {
         state.loading = false;
-        state.favorites = shuffleArray(action.payload.favorites) ?? [];
-        state.recentlyAdded = shuffleArray(action.payload.recentlyAdded) ?? [];
+        state.favorites = action.payload.favorites ?? [];
+        state.recentlyAdded = action.payload.recentlyAdded ?? [];
         state.movies = action.payload.movies ?? [];
         state.series = action.payload.series ?? [];
+        state.lists = action.payload.lists ?? [];
         state.lastFetched = Date.now();
       })
       .addCase(getVideos.rejected, (state, action) => {
         state.loading = false;
         state.videoErrors = action.payload;
       })
-      .addCase(logout, () => {
-        return initialState;
-      });
+      .addMatcher(
+        (action) => action.type === 'user/logout/fulfilled',
+        () => initialState,
+      );
   },
 });
 
