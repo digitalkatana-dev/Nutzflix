@@ -36,8 +36,6 @@ const CarouselItem = ({ item, type }) => {
     } else {
       dispatch(setSelectedVideo(item));
     }
-
-    navigate('/watch');
   };
 
   const clearOpenTimer = () => {
@@ -91,7 +89,7 @@ const CarouselItem = ({ item, type }) => {
   return (
     <>
       <Link
-        to={type === 'series' ? '/series-details' : '/watch'}
+        to={type === 'series' ? '/series-details' : '/video-details'}
         onClick={handleClick}
       >
         <Paper
