@@ -18,6 +18,7 @@ import Reset from './views/Auth/Reset';
 import UserHome from './views/User/UserHome';
 import Watch from './views/User/Watch';
 import AdminHome from './views/Admin/AdminHome';
+import Inventory from './views/Admin/Inventory';
 import List from './views/Admin/List';
 import New from './views/Admin/New';
 import VideoDetails from './views/User/VideoDetails';
@@ -169,7 +170,7 @@ const App = () => {
             path='/inventory'
             element={
               <ProtectedRoute
-                element={<AdminLayout children={<List title='Inventory' />} />}
+                element={<AdminLayout children={<Inventory />} />}
               />
             }
           />

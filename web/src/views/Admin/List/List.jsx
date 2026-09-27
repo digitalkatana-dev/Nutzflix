@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import DataTable from '../components/DataTable';
-import Inventory from '../components/Inventory';
 import './list.scss';
 
 const List = ({ title }) => {
@@ -15,12 +14,8 @@ const List = ({ title }) => {
           </Link>
         )}
       </header>
-      <main className={`list-main${title === 'Inventory' && ' inventory'}`}>
-        {title === 'Subscribers' ? (
-          <DataTable />
-        ) : (
-          title === 'Inventory' && <Inventory />
-        )}
+      <main className={`list-main`}>
+        <DataTable />
       </main>
     </div>
   );

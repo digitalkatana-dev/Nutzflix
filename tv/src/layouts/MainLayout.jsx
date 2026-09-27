@@ -20,6 +20,11 @@ const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
 
   const navLinks = ['Home', 'Series', 'Movies', 'My List'];
 
+  const handleProfileFocus = () => {
+    setMenuOpen(true);
+    onFocus('profile');
+  };
+
   const handleEscape = () => {
     setMenuOpen(false);
   };
@@ -51,7 +56,7 @@ const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
                 styles.profile,
                 focusedKey === 'profile' && styles.focused,
               ]}
-              onFocus={() => onFocus('profile')}
+              onFocus={handleProfileFocus}
               onBlur={onBlur}
               onPress={openMenu}
               focusable
@@ -70,6 +75,7 @@ const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
             onBlur={onBlur}
             onPress={handleEscape}
             focusable
+            hasTVPreferredFocus
           >
             <Menu.Item
               leadingIcon={() => (
@@ -103,16 +109,20 @@ const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
             return (
               <Pressable
                 key={label}
-                style={[styles.navLink, focusedKey === label && styles.focused]}
+                style={[
+                  styles.navLink,
+                  isCurrentScreen && styles.youAreHere,
+                  focusedKey === label && styles.focused,
+                ]}
                 onFocus={() => onFocus(label)}
                 onBlur={onBlur}
                 onPress={() => handleLinkPress(label)}
                 focusable
-                hasTVPreferredFocus={isCurrentScreen}
+                hasTVPreferredFocus={label === 'Home' ? true : false}
               >
                 <Text
                   style={[
-                    styles.temp,
+                    styles.label,
                     focusedKey === label && styles.focusedText,
                   ]}
                 >
@@ -155,6 +165,9 @@ const styles = StyleSheet.create({
   focused: {
     backgroundColor: '#6b0ac9',
   },
+  focusedText: {
+    color: '#fff',
+  },
   profile: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -171,7 +184,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     borderRadius: 20,
   },
-  temp: {
+  youAreHere: {
+    backgroundColor: 'rgba(255,255,255,.15)',
+  },
+  youAreHereText: {
+    color: '#000',
+  },
+  label: {
     color: '#fff',
   },
   brand: {
