@@ -14,6 +14,27 @@ const GENRE_NAMES = [
   'Documentary',
 ];
 
+const collator = new Intl.Collator(undefined, {
+  numeric: true,
+  sensitivity: 'base',
+});
+
+const normalize = (t = '') => t.toLocaleLowerCase().trim();
+
+// "a nightmare on elm street part 2: freddy's revenge" -> "a nightmare on elm street"
+const stripSequel = (t) =>
+  t
+    .replace(/\s*(?::|\s-\s|\s–\s).*$/, '') // drop subtitle after ":" or " - "
+    .replace(
+      /\s+(?:(?:part|chapter|vol\.?|volume)\s+)?(?:\d+|ii|iii|iv|v|vi|vii|viii|ix)$/,
+      '',
+    ) // trailing sequel number
+    .replace(/[\s:\-–,]+$/, '');
+
+// Works with a plain year (1984) or a full date string ("1984-11-09")
+const dateValue = (v) =>
+  /^\d{1,4}$/.test(String(v)) ? Number(v) : Date.parse(v);
+
 export const shuffleArray = (arr) => {
   const safeArr = arr ?? [];
   const shuffled = [...safeArr];
@@ -102,4 +123,28 @@ export const buildGenreLists = (movies) => {
 
 export const sortByTitle = (array) => {
   return [...array].sort((a, b) => a.title.localeCompare(b.title));
+};
+
+export const sortByTitleAndSeries = (
+  items,
+  { titleKey = 'title', dateKey = 'year' } = {},
+) => {
+  const existing = new Set(items.map((i) => normalize(i[titleKey])));
+
+  // Group under the stripped title only if that base title is actually in the list
+  const keyOf = (item) => {
+    const full = normalize(item[titleKey]);
+    const base = stripSequel(full);
+    return base !== full && existing.has(base) ? base : full;
+  };
+
+  return items
+    .map((item) => ({ item, key: keyOf(item) }))
+    .sort(
+      (a, b) =>
+        collator.compare(a.key, b.key) ||
+        dateValue(a.item[dateKey]) - dateValue(b.item[dateKey]) ||
+        collator.compare(a.item[titleKey], b.item[titleKey]),
+    )
+    .map(({ item }) => item);
 };

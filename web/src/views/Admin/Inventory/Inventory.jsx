@@ -6,16 +6,14 @@ import {
   setSelectedVideo,
   clearSearchResults,
 } from '../../../redux/slices/videoSlice';
+import { sortByTitleAndSeries } from '../../../util/helpers';
 import VideoItemV from '../../../components/VideoItemV';
 import './inventory.scss';
 
 const Inventory = () => {
   const { movies, series, searchResults } = useSelector((state) => state.video);
   const dispatch = useDispatch();
-
-  const allVideos = [...series, ...movies].sort((a, b) =>
-    a.title.localeCompare(b.title),
-  );
+  const allVideos = sortByTitleAndSeries([...series, ...movies]);
 
   const handleClick = (selected) => {
     if (selected.videoType.toLowerCase() === 'series') {
