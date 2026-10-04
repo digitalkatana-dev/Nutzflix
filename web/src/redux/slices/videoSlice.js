@@ -128,10 +128,8 @@ export const videoSlice = createSlice({
         state.loading = false;
         state.videoErrors = action.payload;
       })
-      .addMatcher(
-        (action) => action.type === 'user/logout/fulfilled',
-        () => initialState,
-      );
+      .addCase('user/logout', () => initialState)
+      .addCase(PURGE, () => initialState);
   },
 });
 
