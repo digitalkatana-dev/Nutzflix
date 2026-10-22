@@ -111,3 +111,11 @@
     }
   }
 }
+
+.title {
+  width: clamp(178px, calc(127.16px + 12.71vw), 437.3px);
+  font-weight: bold;
+  text-align: center;
+  padding: 15px 20px;
+  color: var(--text-primary);
+}
