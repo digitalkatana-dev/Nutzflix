@@ -101,7 +101,7 @@ const CarouselItem = ({ item, type }) => {
         >
           <img src={item?.landscape} alt={item?.title} />
         </Paper>
-        <p className='responsive-p title'>{item?.title}</p>
+        {/* <p className='responsive-p title'>{item?.title}</p> */}
       </Link>
       {type !== 'series' &&
         isHovered &&
