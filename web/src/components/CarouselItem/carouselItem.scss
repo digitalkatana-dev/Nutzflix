@@ -2,6 +2,7 @@
   width: clamp(178px, calc(127.16px + 12.71vw), 437.3px);
   aspect-ratio: 178 / 99.93;
   padding: 0;
+  position: relative;
   background: var(--bg);
   color: var(--text-primary);
   border-radius: 4px;
@@ -22,6 +23,27 @@
     height: 100%;
     object-fit: cover;
     border-radius: inherit;
+  }
+
+  .tag {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background-color: var(--accent);
+    color: var(--text-on-accent);
+    border-radius: 20px;
+    padding: 5px 10px;
+    font-weight: bold;
+    font-family: 'Sour Gummy', sans-serif;
+    font-optical-sizing: auto;
+    text-shadow:
+      0 0 8px black,
+      0 0 20px black,
+      0 0 40px black;
+    box-shadow:
+      0px 6px 6px -3px rgba(107, 10, 201, 0.2),
+      0px 10px 14px 1px rgba(107, 10, 201, 0.14),
+      0px 4px 18px 3px rgba(107, 10, 201, 0.12);
   }
 
   &.preview {

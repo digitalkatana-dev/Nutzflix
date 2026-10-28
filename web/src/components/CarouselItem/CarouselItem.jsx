@@ -100,6 +100,7 @@ const CarouselItem = ({ item, type }) => {
           elevation={5}
         >
           <img src={item?.landscape} alt={item?.title} />
+          {item?.title.includes('Unrated') && <p className='tag'>Unrated</p>}
         </Paper>
         {/* <p className='responsive-p title'>{item?.title}</p> */}
       </Link>
