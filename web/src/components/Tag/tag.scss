@@ -1,0 +1,20 @@
+.tag {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  background-color: var(--accent);
+  color: var(--text-on-accent);
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-family: 'Sour Gummy', sans-serif;
+  font-optical-sizing: auto;
+  font-weight: bold;
+  text-shadow:
+    0 0 8px black,
+    0 0 20px black,
+    0 0 40px black;
+  box-shadow:
+    0px 6px 6px -3px rgba(107, 10, 201, 0.2),
+    0px 10px 14px 1px rgba(107, 10, 201, 0.14),
+    0px 4px 18px 3px rgba(107, 10, 201, 0.12);
+}

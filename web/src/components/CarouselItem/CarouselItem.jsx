@@ -13,6 +13,7 @@ import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import NotFavoriteIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import Paper from '../Paper';
+import Tag from '../Tag';
 import './carouselItem.scss';
 
 const HOVER_DELAY = 800; // ms before the preview opens
@@ -100,7 +101,7 @@ const CarouselItem = ({ item, type }) => {
           elevation={5}
         >
           <img src={item?.landscape} alt={item?.title} />
-          {item?.title.includes('Unrated') && <p className='tag'>Unrated</p>}
+          {item?.title.includes('Unrated') && <Tag tag='Unrated' />}
         </Paper>
         {/* <p className='responsive-p title'>{item?.title}</p> */}
       </Link>
