@@ -11,6 +11,7 @@ import { shuffleArray } from '../../../util/helpers';
 import Paper from '../../../components/Paper';
 import Trailer from '../../../components/Trailer';
 import Carousel from '../../../components/Carousel';
+import Tag from '../../../components/Tag';
 import './userhome.scss';
 
 const UserHome = () => {
@@ -64,6 +65,18 @@ const UserHome = () => {
                     }
                     alt={r.title}
                   />
+                  {r.title?.includes('Unrated') && (
+                    <Tag className='tag vert' tag='UR' />
+                  )}
+                  {r.title?.includes('Super Cut') && (
+                    <Tag className='tag vert' tag='SC' />
+                  )}
+                  {r.title?.includes('Ultimate Edition') && (
+                    <Tag className='tag vert' tag='UE' />
+                  )}
+                  {r.title?.includes('Extended Cut') && (
+                    <Tag className='tag vert' tag='EC' />
+                  )}
                 </Paper>
                 <h6>{r.title}</h6>
               </div>
