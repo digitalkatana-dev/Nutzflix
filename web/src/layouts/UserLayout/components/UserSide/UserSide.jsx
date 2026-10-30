@@ -126,6 +126,7 @@ const UserSide = () => {
                   r.videoType.toLowerCase() === 'series' ? r.folder : r.poster
                 }
                 alt={r.title}
+                tagSrc={r.title}
                 itmClass='side-item'
                 onClick={() => handleSelected(r)}
                 elevation={5}

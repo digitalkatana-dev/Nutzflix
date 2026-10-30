@@ -1,8 +1,8 @@
 import React from 'react';
 import './tag.scss';
 
-const Tag = ({ tag }) => {
-  return <p className='tag'>{tag}</p>;
+const Tag = ({ className, tag }) => {
+  return <p className={className}>{tag}</p>;
 };
 
 export default Tag;

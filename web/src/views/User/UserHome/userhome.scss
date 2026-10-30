@@ -30,6 +30,7 @@
       .poster-wrapper {
         width: 75px;
         height: 112.5px;
+        position: relative; // for the tag positioning
         overflow: hidden; // safety net in case the image ever overflows the box
         border-radius: 4px;
 

@@ -48,6 +48,7 @@ const Inventory = () => {
                     : item.poster
                 }
                 caption={item.title}
+                tagSrc={item.title}
                 elevation={5}
                 onClick={() => handleClick(item)}
               />
@@ -70,6 +71,7 @@ const Inventory = () => {
                     : item.poster
                 }
                 caption={item.title}
+                tagSrc={item.title}
                 elevation={5}
                 onClick={() => handleClick(item)}
               />

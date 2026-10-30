@@ -101,9 +101,19 @@ const CarouselItem = ({ item, type }) => {
           elevation={5}
         >
           <img src={item?.landscape} alt={item?.title} />
-          {item?.title.includes('Unrated') && <Tag tag='Unrated' />}
+          {item?.title.includes('Unrated') && (
+            <Tag className='tag' tag='Unrated' />
+          )}
+          {item?.title?.includes('Super Cut') && (
+            <Tag className='tag' tag='Super Cut' />
+          )}
+          {item?.title?.includes('Ultimate Edition') && (
+            <Tag className='tag' tag='Ultimate' />
+          )}
+          {item?.title?.includes('Extended Cut') && (
+            <Tag className='tag' tag='Extended' />
+          )}
         </Paper>
-        {/* <p className='responsive-p title'>{item?.title}</p> */}
       </Link>
       {type !== 'series' &&
         isHovered &&
