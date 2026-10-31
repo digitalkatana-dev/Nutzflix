@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { Avatar, Box, Divider, IconButton, Stack } from '@mui/material';
 import { setDrawerOpen } from '../../../../redux/slices/appSlice';
-import { logout } from '../../../../redux/slices/userSlice';
+import { logout, getAllUsers } from '../../../../redux/slices/userSlice';
 import {
   setSelectedVideo,
   setSearchTerm,
@@ -64,6 +64,14 @@ const UserSide = () => {
 
   const handleDrawer = () => {
     dispatch(setDrawerOpen(false));
+    setTimeout(() => {
+      dispatch(clearAllSelected());
+    }, 3000);
+  };
+
+  const handleAdminDrawer = () => {
+    dispatch(setDrawerOpen(false));
+    dispatch(getAllUsers());
     setTimeout(() => {
       dispatch(clearAllSelected());
     }, 3000);
@@ -140,7 +148,11 @@ const UserSide = () => {
           <NavItem page='Movies' link='/movies' onClick={handleDrawer} />
           <NavItem page='My List' link='/my-list' onClick={handleDrawer} />
           {roles.includes(activeUser?.role) && (
-            <NavItem page='Admin' link='/home-admin' onClick={handleDrawer} />
+            <NavItem
+              page='Admin'
+              link='/home-admin'
+              onClick={handleAdminDrawer}
+            />
           )}
         </Stack>
       </div>

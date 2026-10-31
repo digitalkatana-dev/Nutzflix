@@ -49,6 +49,18 @@ export const resetPassword = createAsyncThunk(
   },
 );
 
+export const getAllUsers = createAsyncThunk(
+  'user/get_all_users',
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await nutzflixApi.get('/api/profiles');
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
 export const addSubscriber = createAsyncThunk(
   'user/add_sub',
   async (data, { rejectWithValue }) => {
@@ -84,7 +96,6 @@ const initialState = userAdapter.getInitialState({
   firstName: '',
   email: '',
   password: '',
-  apiKey: '',
   allUsers: [],
   userSuccess: null,
   userErrors: null,
@@ -103,12 +114,12 @@ export const userSlice = createSlice({
     setPassword: (state, action) => {
       state.password = action.payload;
     },
-    setApiKey: (state, action) => {
-      state.apiKey = action.payload;
-    },
     logout: () => {
       localStorage.removeItem('token');
       return initialState;
+    },
+    clearAllUsers: (state) => {
+      state.allUsers = [];
     },
     clearUserSuccess: (state) => {
       state.userSuccess = null;
@@ -157,6 +168,18 @@ export const userSlice = createSlice({
         state.loading = false;
         state.userErrors = action.payload;
       })
+      .addCase(getAllUsers.pending, (state) => {
+        state.loading = true;
+        state.userErrors = null;
+      })
+      .addCase(getAllUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.allUsers = action.payload;
+      })
+      .addCase(getAllUsers.rejected, (state, action) => {
+        state.loading = false;
+        state.userErrors = action.payload;
+      })
       .addCase(addSubscriber.pending, (state) => {
         state.loading = true;
         state.userErrors = null;
@@ -168,7 +191,6 @@ export const userSlice = createSlice({
         state.firstName = '';
         state.email = '';
         state.password = '';
-        state.apiKey = '';
         state.userErrors = null;
       })
       .addCase(addSubscriber.rejected, (state, action) => {
@@ -200,8 +222,8 @@ export const {
   setFirstName,
   setEmail,
   setPassword,
-  setApiKey,
   logout,
+  clearAllUsers,
   clearUserErrors,
   clearUserSuccess,
 } = userSlice.actions;

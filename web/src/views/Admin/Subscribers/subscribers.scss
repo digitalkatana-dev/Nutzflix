@@ -1,0 +1,46 @@
+.subscribers {
+  height: inherit;
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+  padding-bottom: 25px;
+  gap: 10px;
+  margin-top: 0;
+
+  header {
+    padding: 30px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+
+    h3 {
+      color: var(--text-on-accent);
+    }
+
+    .link {
+      text-decoration: none;
+      color: green;
+      font-size: 16px;
+      font-weight: 400;
+      border: 1px solid green;
+      padding: 5px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  }
+
+  .table-container {
+    -webkit-box-shadow: 2px 4px 10px 1px rgba(0, 0, 0, 0.47);
+    box-shadow: 2px 4px 10px 1px rgba(201, 201, 201, 0.47);
+    padding: 20px;
+    margin: 10px 20px 40px 20px;
+
+    .table-title {
+      font-weight: 500;
+      margin-bottom: 15px;
+      color: grey;
+    }
+  }
+}

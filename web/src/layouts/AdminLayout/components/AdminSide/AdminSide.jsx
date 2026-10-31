@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Box } from '@mui/material';
 import { setDrawerOpen } from '../../../../redux/slices/appSlice';
-import { logout } from '../../../../redux/slices/userSlice';
+import { logout, clearAllUsers } from '../../../../redux/slices/userSlice';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutlined';
 import PlayIcon from '@mui/icons-material/PlayCircleOutlined';
@@ -18,6 +18,11 @@ const AdminSide = () => {
 
   const handleDrawer = () => {
     dispatch(setDrawerOpen(false));
+  };
+
+  const handleUserHomeClick = () => {
+    dispatch(setDrawerOpen(false));
+    dispatch(clearAllUsers());
   };
 
   const handleLogout = () => {
@@ -44,7 +49,7 @@ const AdminSide = () => {
             className='router-link'
             icon={<PersonOutlineIcon className='icon' />}
             label='User Home'
-            onClick={handleDrawer}
+            onClick={handleUserHomeClick}
           />
           <NavItem
             admin

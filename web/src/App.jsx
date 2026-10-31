@@ -19,7 +19,7 @@ import UserHome from './views/User/UserHome';
 import Watch from './views/User/Watch';
 import AdminHome from './views/Admin/AdminHome';
 import Inventory from './views/Admin/Inventory';
-import List from './views/Admin/List';
+import Subscribers from './views/Admin/Subscribers';
 import New from './views/Admin/New';
 import VideoDetails from './views/User/VideoDetails';
 import SeriesDetails from './views/User/SeriesDetails';
@@ -147,9 +147,7 @@ const App = () => {
               index
               element={
                 <ProtectedRoute
-                  element={
-                    <AdminLayout children={<List title='Subscribers' />} />
-                  }
+                  element={<AdminLayout children={<Subscribers />} />}
                 />
               }
             />
@@ -174,16 +172,6 @@ const App = () => {
               />
             }
           />
-          <Route path='lists'>
-            <Route
-              index
-              element={
-                <ProtectedRoute
-                  element={<UserLayout children={<List title='Lists' />} />}
-                />
-              }
-            />
-          </Route>
           <Route
             path='/video-details'
             element={
