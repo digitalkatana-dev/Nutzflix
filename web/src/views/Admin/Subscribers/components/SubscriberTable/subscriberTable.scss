@@ -1,0 +1,40 @@
+.subscriber-table {
+  .cell-wrapper {
+    display: flex;
+    align-items: center;
+
+    .image {
+      width: 32px;
+      height: 32px;
+      border-radius: 100%;
+      margin-right: 10px;
+      object-fit: cover;
+    }
+  }
+
+  .cell-action {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+
+    .edit-btn {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: darkgreen;
+      border: 1px solid rgba(0, 100, 0, 0.562);
+      cursor: pointer;
+    }
+
+    .delete-btn {
+      padding: 2px 5px;
+      border-radius: 5px;
+      color: crimson;
+      border: 1px solid rgba(220, 20, 60, 0.6);
+      cursor: pointer;
+    }
+  }
+}
+
+.pagination {
+  background: #f5f5f5;
+}
