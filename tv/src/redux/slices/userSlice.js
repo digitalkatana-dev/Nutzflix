@@ -18,9 +18,7 @@ export const userAuth = createAsyncThunk(
       dispatch(setVideos(video));
       return { userProfile, success };
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data ?? { message: err.message || 'Network error' },
-      );
+      return rejectWithValue(err.response?.data);
     }
   },
 );
@@ -35,9 +33,7 @@ export const generatePasswordToken = createAsyncThunk(
       );
       return res.data;
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data ?? { message: err.message || 'Network error' },
-      );
+      return rejectWithValue(err.response?.data);
     }
   },
 );
@@ -49,9 +45,7 @@ export const resetPassword = createAsyncThunk(
       const res = await nutzflixApi.post('/api/users/reset-password', data);
       return res.data;
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data ?? { message: err.message || 'Network error' },
-      );
+      return rejectWithValue(err.response?.data);
     }
   },
 );
@@ -67,9 +61,7 @@ export const addRemoveFavorite = createAsyncThunk(
       dispatch(setVideos(video));
       return { updatedProfile, success };
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data ?? { message: err.message || 'Network error' },
-      );
+      return rejectWithValue(err.response?.data);
     }
   },
 );

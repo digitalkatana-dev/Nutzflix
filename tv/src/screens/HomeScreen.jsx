@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet, View } from 'react-native';
 import {
   getVideos,
   setFeatured,
@@ -75,7 +75,7 @@ const HomeScreen = () => {
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
         <Trailer
           featured
           video={featured}
@@ -126,7 +126,7 @@ const HomeScreen = () => {
             />
           ))}
         </View>
-      </View>
+      </ScrollView>
     </MainLayout>
   );
 };
@@ -134,7 +134,7 @@ const HomeScreen = () => {
 export default HomeScreen;
 
 const styles = StyleSheet.create({
-  container: { flex: 1, padding: 40 },
+  container: { flex: 1, padding: 20 },
   carouselWrapper: {
     width: '100%',
     flexDirection: 'column',

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { StyleSheet, View, ScrollView, Text, Pressable } from 'react-native';
+import { StyleSheet, View, Text, Pressable } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 import { Avatar, Button, Divider, Menu } from 'react-native-paper';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
@@ -134,7 +134,7 @@ const MainLayout = ({ children, focusedKey, onFocus, onBlur }) => {
         </View>
         <Text style={styles.brand}>NUTZFLIX</Text>
       </View>
-      <ScrollView style={styles.main}>{children}</ScrollView>
+      <View style={styles.main}>{children}</View>
     </LinearGradient>
   );
 };
@@ -144,13 +144,14 @@ export default MainLayout;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    position: 'relative',
+    flexDirection: 'column',
+    // position: 'relative',
   },
   topbar: {
     width: '100%',
     height: 60,
-    position: 'absolute',
-    top: 0,
+    // position: 'absolute',
+    // top: 0,
     paddingHorizontal: 30,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -200,7 +201,5 @@ const styles = StyleSheet.create({
   },
   main: {
     flex: 1,
-    flexDirection: 'column',
-    marginTop: 30,
   },
 });

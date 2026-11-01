@@ -14,9 +14,7 @@ export const getVideos = createAsyncThunk(
       const res = await nutzflixApi.get('/api/videos');
       return res.data;
     } catch (err) {
-      return rejectWithValue(
-        err.response?.data ?? { message: err.message || 'Network error' },
-      );
+      return rejectWithValue(err.response?.data);
     }
   },
 );
@@ -130,10 +128,8 @@ export const videoSlice = createSlice({
         state.loading = false;
         state.videoErrors = action.payload;
       })
-      .addMatcher(
-        (action) => action.type === 'user/logout/fulfilled',
-        () => initialState,
-      );
+      .addCase('user/logout', () => initialState)
+      .addCase(PURGE, () => initialState);
   },
 });
 

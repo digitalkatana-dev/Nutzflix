@@ -1,5 +1,12 @@
 import { useState } from 'react';
-import { View, Image, Text, Pressable, StyleSheet } from 'react-native';
+import {
+  ScrollView,
+  View,
+  Image,
+  Text,
+  Pressable,
+  StyleSheet,
+} from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigation } from '@react-navigation/native';
 import { MaterialIcons } from '@react-native-vector-icons/material-icons';
@@ -41,95 +48,97 @@ const VideoDetailsScreen = () => {
       onFocus={handleFocus}
       onBlur={handleBlur}
     >
-      <View style={styles.trailerWrapper}>
-        <Trailer video={selectedVideo} />
-      </View>
+      <ScrollView>
+        <View style={styles.trailerWrapper}>
+          <Trailer video={selectedVideo} />
+        </View>
 
-      <View style={styles.videoInfo}>
-        <View style={styles.flexWrapper}>
-          <View style={styles.posterWrapper}>
-            <Image
-              source={{ uri: selectedVideo?.poster }}
-              style={styles.poster}
-              resizeMode='cover'
-            />
-          </View>
-
-          <View style={styles.commonInfoWrapper}>
-            <View style={styles.stack}>
-              <Text style={styles.title}>{selectedVideo?.title}</Text>
-              <Text style={styles.rating}>{selectedVideo?.rating}</Text>
-              <Text style={styles.year}>{selectedVideo?.year}</Text>
+        <View style={styles.videoInfo}>
+          <View style={styles.flexWrapper}>
+            <View style={styles.posterWrapper}>
+              <Image
+                source={{ uri: selectedVideo?.poster }}
+                style={styles.poster}
+                resizeMode='cover'
+              />
             </View>
-            <Text style={styles.tagline}>{selectedVideo?.tagline}</Text>
-            <Text style={styles.genre}>
-              {selectedVideo?.genre?.map((g) => `${g} `)}
-            </Text>
 
-            <View style={styles.actions}>
-              <Pressable
-                style={[
-                  styles.playBtn,
-                  focusedKey === 'play' && styles.playBtnFocused,
-                ]}
-                onPress={handlePlay}
-                onFocus={() => handleFocus('play')}
-                onBlur={handleBlur}
-                focusable
-                hasTVPreferredFocus
-              >
-                <Text
+            <View style={styles.commonInfoWrapper}>
+              <View style={styles.stack}>
+                <Text style={styles.title}>{selectedVideo?.title}</Text>
+                <Text style={styles.rating}>{selectedVideo?.rating}</Text>
+                <Text style={styles.year}>{selectedVideo?.year}</Text>
+              </View>
+              <Text style={styles.tagline}>{selectedVideo?.tagline}</Text>
+              <Text style={styles.genre}>
+                {selectedVideo?.genre?.map((g) => `${g} `)}
+              </Text>
+
+              <View style={styles.actions}>
+                <Pressable
                   style={[
-                    styles.playText,
-                    focusedKey === 'play' && styles.playTextFocused,
+                    styles.playBtn,
+                    focusedKey === 'play' && styles.playBtnFocused,
                   ]}
+                  onPress={handlePlay}
+                  onFocus={() => handleFocus('play')}
+                  onBlur={handleBlur}
+                  focusable
+                  hasTVPreferredFocus
                 >
-                  PLAY
-                </Text>
-              </Pressable>
+                  <Text
+                    style={[
+                      styles.playText,
+                      focusedKey === 'play' && styles.playTextFocused,
+                    ]}
+                  >
+                    PLAY
+                  </Text>
+                </Pressable>
 
-              <Pressable
-                style={[
-                  styles.favIconWrapper,
-                  focusedKey === 'favorite' && styles.favIconWrapperFocused,
-                  isFavorite &&
-                    focusedKey === 'favorite' &&
-                    styles.favIconWrapperFullFocused,
-                ]}
-                onPress={handleFavorite}
-                onFocus={() => handleFocus('favorite')}
-                onBlur={handleBlur}
-                focusable
-              >
-                <MaterialIcons
-                  name={isFavorite ? 'favorite' : 'favorite-border'}
-                  size={22}
-                  color={isFavorite ? '#e50914' : '#fff'}
-                />
-              </Pressable>
+                <Pressable
+                  style={[
+                    styles.favIconWrapper,
+                    focusedKey === 'favorite' && styles.favIconWrapperFocused,
+                    isFavorite &&
+                      focusedKey === 'favorite' &&
+                      styles.favIconWrapperFullFocused,
+                  ]}
+                  onPress={handleFavorite}
+                  onFocus={() => handleFocus('favorite')}
+                  onBlur={handleBlur}
+                  focusable
+                >
+                  <MaterialIcons
+                    name={isFavorite ? 'favorite' : 'favorite-border'}
+                    size={22}
+                    color={isFavorite ? '#e50914' : '#fff'}
+                  />
+                </Pressable>
+              </View>
+            </View>
+          </View>
+
+          <View style={styles.detailsWrapper}>
+            <View style={styles.synopsis}>
+              <Text style={styles.sectionTitle}>Synopsis</Text>
+              <Text style={styles.synopsisText}>{selectedVideo?.synopsis}</Text>
+            </View>
+
+            <View style={styles.people}>
+              <Text style={styles.sectionTitle}>Cast & Crew</Text>
+              <View style={styles.peopleFlex}>
+                {selectedVideo?.people?.map((p, i) => (
+                  <View style={styles.crew} key={`${p.Id}-${p.Role}-${i}`}>
+                    <Text style={styles.crewRole}>{p.Role}</Text>
+                    <Text style={styles.crewName}>{p.Name}</Text>
+                  </View>
+                ))}
+              </View>
             </View>
           </View>
         </View>
-
-        <View style={styles.detailsWrapper}>
-          <View style={styles.synopsis}>
-            <Text style={styles.sectionTitle}>Synopsis</Text>
-            <Text style={styles.synopsisText}>{selectedVideo?.synopsis}</Text>
-          </View>
-
-          <View style={styles.people}>
-            <Text style={styles.sectionTitle}>Cast & Crew</Text>
-            <View style={styles.peopleFlex}>
-              {selectedVideo?.people?.map((p, i) => (
-                <View style={styles.crew} key={`${p.Id}-${p.Role}-${i}`}>
-                  <Text style={styles.crewRole}>{p.Role}</Text>
-                  <Text style={styles.crewName}>{p.Name}</Text>
-                </View>
-              ))}
-            </View>
-          </View>
-        </View>
-      </View>
+      </ScrollView>
     </MainLayout>
   );
 };
